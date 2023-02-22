@@ -1,9 +1,41 @@
-import { Button } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import { type NextPage } from "next";
 import Head from "next/head";
+import RealEstateCard from "~/components/RealEstateCard";
+import { graphql } from "~/gql";
+import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
 
+const nftModelsDocument = graphql(/* GraphQL */ `
+  query nftModels($appId: ID) {
+    nftModels(appId: $appId) {
+      items {
+        id
+        blockchainId
+        title
+        description
+        quantity
+        status
+        rarity
+        content {
+          files {
+            url
+            contentType
+          }
+          poster {
+            url
+          }
+        }
+      }
+      cursor
+    }
+  }
+`);
+
 const Home: NextPage = () => {
+  const { data, isLoading } = useGraphQL(nftModelsDocument, {
+    appId: process.env.NEXT_PUBLIC_CLIENT_ID,
+  });
   return (
     <>
       <Head>
@@ -13,7 +45,21 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <Layout>
-          <Button>Text</Button>
+          {!isLoading && (
+            <Grid>
+              {data?.nftModels?.items?.map((item) => (
+                <Grid.Col span={4}>
+                  <RealEstateCard
+                    id={item?.id as string}
+                    description={item?.description as string}
+                    image={item?.content?.poster?.url}
+                    price={100}
+                    title={item?.title as string}
+                  />
+                </Grid.Col>
+              ))}
+            </Grid>
+          )}
         </Layout>
       </main>
     </>
