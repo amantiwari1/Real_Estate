@@ -1,21 +1,18 @@
-import {
-  ActionIcon,
-  Avatar,
-  Button,
-  Header as HeaderMantine,
-  TextInput,
-} from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { Avatar, Button, Header as HeaderMantine, Text } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 const Header = () => {
+  const {
+    login,
+    isAuth,
+    user,
+    isLoading: isConnectLoading,
+  } = useConnectWallet();
   const [isLoading, setIsLoading] = useState(false);
   const address = null;
   const router = useRouter();
-
-  const { login } = useConnectWallet();
 
   return (
     <HeaderMantine height={60} p="xs">
@@ -25,39 +22,34 @@ const Header = () => {
         </div>
 
         <div className="flex w-full justify-between">
-          <TextInput
-            rightSection={
-              <ActionIcon>
-                <IconSearch />
-              </ActionIcon>
-            }
-            w={300}
-            ml={100}
-            placeholder="Search..."
-            value={""}
-            onChange={(e) => {}}
-          />
+          <div> </div>
 
           <div className="flex space-x-5 pr-5">
-            <Button
-              variant="gradient"
-              loading={isLoading}
-              onClick={async () => {
-                if (address) {
-                  router.push("/create-campaign");
-                } else {
-                  setIsLoading(true);
-                  await login();
-                  setIsLoading(false);
-                }
-              }}
-            >
-              {address ? `Create a Campaign` : `Sign In`}
-            </Button>
-
-            <Link href="/profile">
-              <Avatar src={null} alt="it's me" radius="xl" />
-            </Link>
+            {isAuth ? (
+              <Link href="/profile">
+                <div className="flex items-center space-x-5 pr-5">
+                  <Avatar src={null} alt="it's me" radius="xl" />
+                  <Text>{user.addr}</Text>
+                </div>
+              </Link>
+            ) : (
+              <Button
+                variant="gradient"
+                loading={isLoading || isConnectLoading}
+                onClick={async () => {
+                  if (address) {
+                    router.push("/create-campaign");
+                  } else {
+                    setIsLoading(true);
+                    console.log("login");
+                    await login();
+                    setIsLoading(false);
+                  }
+                }}
+              >
+                {`Sign In`}
+              </Button>
+            )}
           </div>
         </div>
       </div>

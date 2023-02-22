@@ -1,27 +1,13 @@
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { initFclConfig } from "~/config";
-
 interface UserFlow {
   addr: string;
   cid: string;
   loggedIn: boolean;
 }
 
-interface ProviderFlow {
-  is_required?: boolean;
-  requires_install?: boolean;
-  install_link?: string;
-  login_link?: string;
-}
-
-interface OptionsFlow {
-  service?: {
-    providers?: ProviderFlow;
-  };
-  redir?: boolean;
-}
 export function useConnectWallet() {
   const [user, setUser] = useState<UserFlow>({
     addr: "",
@@ -29,16 +15,41 @@ export function useConnectWallet() {
     loggedIn: false,
   });
   const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const signup = (opts: OptionsFlow = {}) => fcl.signUp(opts);
-  const login = (opts: OptionsFlow = {}) => fcl.logIn(opts);
-  const logout = () => fcl.unauthenticate();
-
-  useEffect(() => {
-    initFclConfig();
-    fcl.currentUser().subscribe(setUser);
-    setIsAuth(user.loggedIn);
+  const signup = useCallback(async () => {
+    setIsLoading(true);
+    fcl.signUp();
+    setIsLoading(false);
   }, []);
 
-  return { isAuth, user, signup, login, logout };
+  const login = useCallback(async () => {
+    setIsLoading(true);
+    fcl.logIn();
+    setIsLoading(false);
+  }, []);
+
+  const logout = useCallback(async () => {
+    setIsLoading(true);
+    fcl.unauthenticate();
+    setIsLoading(false);
+  }, []);
+
+  async function handleUserUpdate() {
+    console.log("handleUserUpdate 3");
+    setIsLoading(true);
+    await initFclConfig();
+    await fcl.currentUser().subscribe((user: UserFlow) => {
+      console.log({ user });
+      setUser(user);
+      setIsAuth(user.loggedIn);
+    });
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    handleUserUpdate();
+  }, []);
+
+  return { isAuth, user, signup, login, logout, isLoading };
 }
