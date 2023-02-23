@@ -155,7 +155,8 @@ const IDPages = () => {
             loading={
               isLoading ||
               isLoadingSignTransaction ||
-              isLoadingCompleteCheckoutWith
+              isLoadingCompleteCheckoutWith ||
+              isLoadingClaimNFT
             }
             onClick={handleClaim}
           >
