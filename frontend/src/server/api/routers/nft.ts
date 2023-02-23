@@ -4,10 +4,12 @@ import {} from "~/gql";
 import { Status } from "~/gql/graphql";
 import {
   CheckoutWithDapperWalletDocument,
+  CompleteCheckoutWithDapperWallet,
   createNftModelsDocument,
   getWalletDocument,
   readyWalletDocument,
   registerWalletDocument,
+  SignTransactionForDapperWallet,
   UploadNFTContentDocument,
   verifyWalletDocument,
 } from "~/graphql";
@@ -15,11 +17,7 @@ import {
 const URL =
   process.env.NEXT_PUBLIC_API_PATH ?? "https://graphql.api.staging.niftory.com";
 
-import {
-  createTRPCRouter,
-  privateProedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, privateProedure } from "~/server/api/trpc";
 
 const headers = {
   "X-Niftory-API-Key": "o4hB8pOhgvYXOwCEEcaf6IJBjaObAc0GPZARd4tHvVo=",
@@ -123,6 +121,40 @@ export const nftRouter = createTRPCRouter({
       headers
     );
   }),
+  SignTransactionForDapperWallet: privateProedure
+    .input(
+      z.object({
+        transaction: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await request(
+        URL,
+        SignTransactionForDapperWallet,
+        {
+          transaction: input.transaction,
+        },
+        headers
+      );
+    }),
+  CompleteCheckoutWithDapperWallet: privateProedure
+    .input(
+      z.object({
+        transactionId: z.string(),
+        nftDatabaseId: z.string(),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await request(
+        URL,
+        CompleteCheckoutWithDapperWallet,
+        {
+          transactionId: input.transactionId,
+          nftDatabaseId: input.nftDatabaseId,
+        },
+        headers
+      );
+    }),
   checkoutWithDapperWallet: privateProedure
     .input(
       z.object({
@@ -141,6 +173,7 @@ export const nftRouter = createTRPCRouter({
           nftModelId: input.id,
           address: ctx.address,
           price: 0.1,
+          expiry: Number.MAX_SAFE_INTEGER,
         },
         headers
       );

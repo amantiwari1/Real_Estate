@@ -22,6 +22,9 @@ const documents = {
     "\n  mutation verifyWallet($address: String!, $signedVerificationCode: JSON!) {\n    verifyWallet(\n      address: $address\n      signedVerificationCode: $signedVerificationCode\n    ) {\n      id\n      address\n      state\n    }\n  }\n": types.VerifyWalletDocument,
     "\n  mutation readyWallet($address: String!) {\n    readyWallet(address: $address) {\n      id\n      address\n      state\n    }\n  }\n": types.ReadyWalletDocument,
     "\n  query contract {\n    contract {\n      name\n      address\n    }\n  }\n": types.ContractDocument,
+    "\n  mutation SignTransactionForDapperWallet($transaction: String) {\n    signTransactionForDapperWallet(transaction: $transaction)\n  }\n": types.SignTransactionForDapperWalletDocument,
+    "\n  mutation CompleteCheckoutWithDapperWallet(\n    $transactionId: String!\n    $nftDatabaseId: String\n  ) {\n    completeCheckoutWithDapperWallet(\n      transactionId: $transactionId\n      nftDatabaseId: $nftDatabaseId\n    ) {\n      id\n      blockchainId\n      serialNumber\n      saleState\n      blockchainState\n    }\n  }\n": types.CompleteCheckoutWithDapperWalletDocument,
+    "\n  mutation transferNFTToUser($nftModelId: ID!, $address: String!) {\n    transfer(nftModelId: $nftModelId, address: $address) {\n      id\n    }\n  }\n": types.TransferNftToUserDocument,
     "\n  query nftModels($appId: ID) {\n    nftModels(appId: $appId) {\n      items {\n        id\n        blockchainId\n        title\n        description\n        quantity\n        status\n        rarity\n        content {\n          files {\n            url\n            contentType\n          }\n          poster {\n            url\n          }\n        }\n      }\n      cursor\n    }\n  }\n": types.NftModelsDocument,
 };
 
@@ -75,6 +78,18 @@ export function graphql(source: "\n  mutation readyWallet($address: String!) {\n
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query contract {\n    contract {\n      name\n      address\n    }\n  }\n"): (typeof documents)["\n  query contract {\n    contract {\n      name\n      address\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation SignTransactionForDapperWallet($transaction: String) {\n    signTransactionForDapperWallet(transaction: $transaction)\n  }\n"): (typeof documents)["\n  mutation SignTransactionForDapperWallet($transaction: String) {\n    signTransactionForDapperWallet(transaction: $transaction)\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CompleteCheckoutWithDapperWallet(\n    $transactionId: String!\n    $nftDatabaseId: String\n  ) {\n    completeCheckoutWithDapperWallet(\n      transactionId: $transactionId\n      nftDatabaseId: $nftDatabaseId\n    ) {\n      id\n      blockchainId\n      serialNumber\n      saleState\n      blockchainState\n    }\n  }\n"): (typeof documents)["\n  mutation CompleteCheckoutWithDapperWallet(\n    $transactionId: String!\n    $nftDatabaseId: String\n  ) {\n    completeCheckoutWithDapperWallet(\n      transactionId: $transactionId\n      nftDatabaseId: $nftDatabaseId\n    ) {\n      id\n      blockchainId\n      serialNumber\n      saleState\n      blockchainState\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation transferNFTToUser($nftModelId: ID!, $address: String!) {\n    transfer(nftModelId: $nftModelId, address: $address) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation transferNFTToUser($nftModelId: ID!, $address: String!) {\n    transfer(nftModelId: $nftModelId, address: $address) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
