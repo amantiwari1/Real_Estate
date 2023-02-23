@@ -1,4 +1,4 @@
-import { Button, Paper, Text } from "@mantine/core";
+import { Button, Loader, Paper, Text } from "@mantine/core";
 import React, { useEffect } from "react";
 import { WalletState } from "~/gql/graphql";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
@@ -6,44 +6,8 @@ import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
-import { useFlowAccountConfiguration } from "~/hooks/useFlowAccountConfiguration";
-
-interface ConfigureWalletProps {
-  refetch: any;
-}
-
-const ConfigureWallet = ({ refetch }: ConfigureWalletProps) => {
-  const { mutateAsync: mutateAsyncReady, isLoading: isLoadingReady } =
-    api.nft.readyWallet.useMutation();
-
-  const {
-    configured,
-    configure,
-    isLoading: isFlowAccountConfigurationLoading,
-  } = useFlowAccountConfiguration();
-
-  useEffect(() => {
-    if (!configured) {
-      return;
-    }
-    handleReady();
-  }, [configured]);
-
-  const handleReady = async () => {
-    await mutateAsyncReady();
-    await refetch();
-  };
-
-  return (
-    <Button
-      variant="gradient"
-      loading={isLoadingReady || isFlowAccountConfigurationLoading}
-      onClick={configure}
-    >
-      {`Configure wallet`}
-    </Button>
-  );
-};
+import ConfigureWallet from "~/components/wallet/ConfigureWallet";
+import { useRouter } from "next/router";
 
 const AccountPage = () => {
   const {
@@ -56,17 +20,29 @@ const AccountPage = () => {
   const { mutateAsync, isLoading: isRegisterLoading } =
     api.nft.registerWallet.useMutation();
 
-  const { data, refetch } = api.nft.getWallet.useQuery(undefined, {
-    enabled: isAuth,
+  const { data, refetch, isLoading } = api.nft.getWallet.useQuery(undefined, {
+    enabled: isAuth ? true : false,
   });
 
   const { mutateAsync: mutateAsyncVerify } = api.nft.verifyWallet.useMutation();
 
+  const router = useRouter();
+
+  const onReadySigin = router.query.isSignin;
+
   const handleLogin = async () => {
-    console.log("login");
     await login();
-    await mutateAsync();
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      mutateAsync();
+    } else {
+      if (onReadySigin === "true") {
+        handleLogin();
+      }
+    }
+  }, [isAuth]);
 
   const handleVerify = async () => {
     const verificationCode = data?.walletByAddress?.verificationCode;
@@ -92,6 +68,8 @@ const AccountPage = () => {
               <Text>You're all set up! Your wallet address is {user.addr}</Text>
             </div>
           )}
+
+          {isLoading && <Loader />}
 
           {/* UNAUTH */}
           {isAuth &&

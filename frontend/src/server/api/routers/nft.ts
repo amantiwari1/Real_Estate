@@ -27,7 +27,7 @@ const headers = {
 };
 
 export const nftRouter = createTRPCRouter({
-  uploadfile: publicProcedure
+  uploadfile: privateProedure
     .input(
       z.object({
         description: z.string(),
@@ -39,7 +39,7 @@ export const nftRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       return await request(URL, UploadNFTContentDocument, input, headers);
     }),
-  createNFTModel: publicProcedure
+  createNFTModel: privateProedure
     .input(
       z.object({
         title: z.string(),

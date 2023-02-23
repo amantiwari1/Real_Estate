@@ -36,7 +36,6 @@ export function useConnectWallet() {
   }, []);
 
   async function handleUserUpdate() {
-    console.log("handleUserUpdate 3");
     setIsLoading(true);
     await initFclConfig();
     await fcl.currentUser().subscribe((user: UserFlow) => {

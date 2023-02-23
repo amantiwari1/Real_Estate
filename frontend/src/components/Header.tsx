@@ -1,19 +1,18 @@
 import { Avatar, Button, Header as HeaderMantine, Text } from "@mantine/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
-import { api } from "~/utils/api";
 const Header = () => {
   const {
-    login,
     isAuth,
     user,
     logout,
     isLoading: isConnectLoading,
   } = useConnectWallet();
-  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <HeaderMantine height={60} p="xs">
@@ -35,7 +34,7 @@ const Header = () => {
               </Link>
             )}
 
-            {!isAuth && (
+            {isAuth && (
               <Button
                 loading={isLoading || isConnectLoading}
                 onClick={async () => {
@@ -45,6 +44,16 @@ const Header = () => {
                 }}
               >
                 Log out
+              </Button>
+            )}
+            {!isAuth && (
+              <Button
+                loading={isLoading || isConnectLoading}
+                onClick={async () => {
+                  router.push("/account?isSignin=true");
+                }}
+              >
+                Sign in
               </Button>
             )}
           </div>
