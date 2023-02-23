@@ -48,7 +48,7 @@ const Home: NextPage = () => {
           {!isLoading && (
             <Grid>
               {data?.nftModels?.items?.map((item) => (
-                <Grid.Col span={4}>
+                <Grid.Col key={item?.id as string} span={4}>
                   <RealEstateCard
                     id={item?.id as string}
                     description={item?.description as string}

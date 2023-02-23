@@ -31,6 +31,7 @@ export function Form<S extends z.ZodType<any, any>>({
   schema,
   initialValues,
   onSubmit,
+
   ...props
 }: FormProps<S>) {
   const ctx = useForm<z.infer<S>>({

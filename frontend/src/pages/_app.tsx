@@ -5,6 +5,7 @@ import { type AppType } from "next/dist/shared/lib/utils";
 import { useState } from "react";
 
 import "~/styles/globals.css";
+import { api } from "~/utils/api";
 
 const myCache = createEmotionCache({
   key: "mantine",
@@ -37,4 +38,4 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+export default api.withTRPC(MyApp);
