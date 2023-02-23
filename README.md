@@ -1,4 +1,6 @@
-# Real_Estate on the Flow Blockchain 
+# FlowEstate
+
+Real-Estate on the Flow Blockchain 
 
 Create a platform for selling and buying of physical Real Estate assets through the use of dynamic NFT’s which would upgrade based upon the property.
 
