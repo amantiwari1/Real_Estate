@@ -17,7 +17,9 @@
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 /** Replace this with an object if you want to pass things to `createContextInner`. */
-type CreateContextOptions = Record<string, never>;
+type CreateContextOptions = {
+  address: string;
+};
 
 /**
  * This helper generates the "internals" for a tRPC context. If you need to use it, you can export
@@ -30,7 +32,9 @@ type CreateContextOptions = Record<string, never>;
  * @see https://create.t3.gg/en/usage/trpc#-servertrpccontextts
  */
 const createInnerTRPCContext = (_opts: CreateContextOptions) => {
-  return {};
+  return {
+    address: _opts.address,
+  };
 };
 
 /**
@@ -40,7 +44,11 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({});
+  const address = getAddressFromCookie(_opts.req, _opts.res);
+
+  return createInnerTRPCContext({
+    address,
+  });
 };
 
 /**
@@ -48,8 +56,9 @@ export const createTRPCContext = (_opts: CreateNextContextOptions) => {
  *
  * This is where the tRPC API is initialized, connecting the context and transformer.
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import { getAddressFromCookie } from "~/utils/cookie";
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
@@ -80,3 +89,14 @@ export const createTRPCRouter = t.router;
  * are logged in.
  */
 export const publicProcedure = t.procedure;
+
+export const privateProedure = publicProcedure.use(async (ctx) => {
+  if (typeof ctx.ctx.address !== "string" || ctx.ctx.address === "") {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to perform this action.",
+    });
+  }
+
+  return ctx.next();
+});

@@ -2,12 +2,24 @@ import request from "graphql-request";
 import { z } from "zod";
 import {} from "~/gql";
 import { Status } from "~/gql/graphql";
-import { createNftModelsDocument, UploadNFTContentDocument } from "~/graphql";
+import {
+  CheckoutWithDapperWalletDocument,
+  createNftModelsDocument,
+  getWalletDocument,
+  readyWalletDocument,
+  registerWalletDocument,
+  UploadNFTContentDocument,
+  verifyWalletDocument,
+} from "~/graphql";
 
 const URL =
   process.env.NEXT_PUBLIC_API_PATH ?? "https://graphql.api.staging.niftory.com";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  privateProedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 const headers = {
   "X-Niftory-API-Key": "o4hB8pOhgvYXOwCEEcaf6IJBjaObAc0GPZARd4tHvVo=",
@@ -60,6 +72,75 @@ export const nftRouter = createTRPCRouter({
             contentId: input.content.id,
             subtitle: "",
           },
+        },
+        headers
+      );
+    }),
+  registerWallet: privateProedure.mutation(async ({ ctx }) => {
+    return await request(
+      URL,
+      registerWalletDocument,
+      {
+        address: ctx.address,
+      },
+      headers
+    );
+  }),
+  getWallet: privateProedure.query(async ({ ctx }) => {
+    return await request(
+      URL,
+      getWalletDocument,
+      {
+        address: ctx.address,
+      },
+      headers
+    );
+  }),
+  verifyWallet: privateProedure
+    .input(
+      z.object({
+        signedVerificationCode: z.any(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      return await request(
+        URL,
+        verifyWalletDocument,
+        {
+          address: ctx.address,
+          signedVerificationCode: input.signedVerificationCode,
+        },
+        headers
+      );
+    }),
+  readyWallet: privateProedure.mutation(async ({ ctx }) => {
+    return await request(
+      URL,
+      readyWalletDocument,
+      {
+        address: ctx.address,
+      },
+      headers
+    );
+  }),
+  checkoutWithDapperWallet: privateProedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      // const data = await request(URL, NftModelDocument, input, headers);
+
+      //  const price = data.nftModel?.attributes.price as number
+
+      return await request(
+        URL,
+        CheckoutWithDapperWalletDocument,
+        {
+          nftModelId: input.id,
+          address: ctx.address,
+          price: 0.1,
         },
         headers
       );

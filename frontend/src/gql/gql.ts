@@ -15,6 +15,13 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation UploadNFTContent(\n    $description: String\n    $contentType: String\n    $posterContentType: String\n    $name: String\n  ) {\n    uploadNFTContent(\n      description: $description\n      contentType: $contentType\n      posterContentType: $posterContentType\n      name: $name\n    ) {\n      id\n      files {\n        id\n        url\n        state\n        md5\n        contentType\n      }\n      poster {\n        id\n        url\n        state\n        contentType\n        md5\n      }\n    }\n  }\n": types.UploadNftContentDocument,
     "\n  mutation createNFTModel($setId: ID!, $data: NFTModelCreateInput!) {\n    createNFTModel(setId: $setId, data: $data) {\n      id\n      quantity\n      title\n      status\n      attributes\n      metadata\n      description\n      content {\n        id\n        files {\n          id\n          url\n        }\n        poster {\n          url\n          id\n        }\n      }\n    }\n  }\n": types.CreateNftModelDocument,
+    "\n  query nftModel($id: ID!) {\n    nftModel(id: $id) {\n      id\n      attributes\n      status\n      blockchainId\n      metadata\n      title\n      description\n      rarity\n      quantity\n      quantityMinted\n      content {\n        id\n        poster {\n          url\n          state\n          contentType\n          id\n          md5\n        }\n        files {\n          url\n          id\n          state\n          contentType\n          md5\n        }\n      }\n      set {\n        id\n        title\n      }\n    }\n  }\n": types.NftModelDocument,
+    "\n  mutation CheckoutWithDapperWallet(\n    $nftModelId: ID!\n    $address: String!\n    $price: UnsignedFloat\n    $expiry: UnsignedInt\n  ) {\n    checkoutWithDapperWallet(\n      nftModelId: $nftModelId\n      address: $address\n      price: $price\n      expiry: $expiry\n    ) {\n      cadence\n      brand\n      expiry\n      nftId\n      nftDatabaseId\n      nftTypeRef\n      price\n      registryAddress\n      setId\n      templateId\n      signerAddress\n      signerKeyId\n    }\n  }\n": types.CheckoutWithDapperWalletDocument,
+    "\n  mutation registerWallet($address: String!) {\n    registerWallet(address: $address) {\n      id\n      address\n      verificationCode\n      state\n    }\n  }\n": types.RegisterWalletDocument,
+    "\n  query walletByAddress($address: String!) {\n    walletByAddress(address: $address) {\n      id\n      address\n      state\n      verificationCode\n    }\n  }\n": types.WalletByAddressDocument,
+    "\n  mutation verifyWallet($address: String!, $signedVerificationCode: JSON!) {\n    verifyWallet(\n      address: $address\n      signedVerificationCode: $signedVerificationCode\n    ) {\n      id\n      address\n      state\n    }\n  }\n": types.VerifyWalletDocument,
+    "\n  mutation readyWallet($address: String!) {\n    readyWallet(address: $address) {\n      id\n      address\n      state\n    }\n  }\n": types.ReadyWalletDocument,
+    "\n  query contract {\n    contract {\n      name\n      address\n    }\n  }\n": types.ContractDocument,
     "\n  query nftModels($appId: ID) {\n    nftModels(appId: $appId) {\n      items {\n        id\n        blockchainId\n        title\n        description\n        quantity\n        status\n        rarity\n        content {\n          files {\n            url\n            contentType\n          }\n          poster {\n            url\n          }\n        }\n      }\n      cursor\n    }\n  }\n": types.NftModelsDocument,
 };
 
@@ -40,6 +47,34 @@ export function graphql(source: "\n  mutation UploadNFTContent(\n    $descriptio
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation createNFTModel($setId: ID!, $data: NFTModelCreateInput!) {\n    createNFTModel(setId: $setId, data: $data) {\n      id\n      quantity\n      title\n      status\n      attributes\n      metadata\n      description\n      content {\n        id\n        files {\n          id\n          url\n        }\n        poster {\n          url\n          id\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation createNFTModel($setId: ID!, $data: NFTModelCreateInput!) {\n    createNFTModel(setId: $setId, data: $data) {\n      id\n      quantity\n      title\n      status\n      attributes\n      metadata\n      description\n      content {\n        id\n        files {\n          id\n          url\n        }\n        poster {\n          url\n          id\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query nftModel($id: ID!) {\n    nftModel(id: $id) {\n      id\n      attributes\n      status\n      blockchainId\n      metadata\n      title\n      description\n      rarity\n      quantity\n      quantityMinted\n      content {\n        id\n        poster {\n          url\n          state\n          contentType\n          id\n          md5\n        }\n        files {\n          url\n          id\n          state\n          contentType\n          md5\n        }\n      }\n      set {\n        id\n        title\n      }\n    }\n  }\n"): (typeof documents)["\n  query nftModel($id: ID!) {\n    nftModel(id: $id) {\n      id\n      attributes\n      status\n      blockchainId\n      metadata\n      title\n      description\n      rarity\n      quantity\n      quantityMinted\n      content {\n        id\n        poster {\n          url\n          state\n          contentType\n          id\n          md5\n        }\n        files {\n          url\n          id\n          state\n          contentType\n          md5\n        }\n      }\n      set {\n        id\n        title\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CheckoutWithDapperWallet(\n    $nftModelId: ID!\n    $address: String!\n    $price: UnsignedFloat\n    $expiry: UnsignedInt\n  ) {\n    checkoutWithDapperWallet(\n      nftModelId: $nftModelId\n      address: $address\n      price: $price\n      expiry: $expiry\n    ) {\n      cadence\n      brand\n      expiry\n      nftId\n      nftDatabaseId\n      nftTypeRef\n      price\n      registryAddress\n      setId\n      templateId\n      signerAddress\n      signerKeyId\n    }\n  }\n"): (typeof documents)["\n  mutation CheckoutWithDapperWallet(\n    $nftModelId: ID!\n    $address: String!\n    $price: UnsignedFloat\n    $expiry: UnsignedInt\n  ) {\n    checkoutWithDapperWallet(\n      nftModelId: $nftModelId\n      address: $address\n      price: $price\n      expiry: $expiry\n    ) {\n      cadence\n      brand\n      expiry\n      nftId\n      nftDatabaseId\n      nftTypeRef\n      price\n      registryAddress\n      setId\n      templateId\n      signerAddress\n      signerKeyId\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation registerWallet($address: String!) {\n    registerWallet(address: $address) {\n      id\n      address\n      verificationCode\n      state\n    }\n  }\n"): (typeof documents)["\n  mutation registerWallet($address: String!) {\n    registerWallet(address: $address) {\n      id\n      address\n      verificationCode\n      state\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query walletByAddress($address: String!) {\n    walletByAddress(address: $address) {\n      id\n      address\n      state\n      verificationCode\n    }\n  }\n"): (typeof documents)["\n  query walletByAddress($address: String!) {\n    walletByAddress(address: $address) {\n      id\n      address\n      state\n      verificationCode\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation verifyWallet($address: String!, $signedVerificationCode: JSON!) {\n    verifyWallet(\n      address: $address\n      signedVerificationCode: $signedVerificationCode\n    ) {\n      id\n      address\n      state\n    }\n  }\n"): (typeof documents)["\n  mutation verifyWallet($address: String!, $signedVerificationCode: JSON!) {\n    verifyWallet(\n      address: $address\n      signedVerificationCode: $signedVerificationCode\n    ) {\n      id\n      address\n      state\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation readyWallet($address: String!) {\n    readyWallet(address: $address) {\n      id\n      address\n      state\n    }\n  }\n"): (typeof documents)["\n  mutation readyWallet($address: String!) {\n    readyWallet(address: $address) {\n      id\n      address\n      state\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query contract {\n    contract {\n      name\n      address\n    }\n  }\n"): (typeof documents)["\n  query contract {\n    contract {\n      name\n      address\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
