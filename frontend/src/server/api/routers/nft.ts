@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import request from "graphql-request";
 import { z } from "zod";
 import {} from "~/gql";
@@ -7,9 +8,11 @@ import {
   CompleteCheckoutWithDapperWallet,
   createNftModelsDocument,
   getWalletDocument,
+  NftModelDocument,
   readyWalletDocument,
   registerWalletDocument,
   SignTransactionForDapperWallet,
+  TransferNftToWalletDocument,
   UploadNFTContentDocument,
   verifyWalletDocument,
 } from "~/graphql";
@@ -155,6 +158,37 @@ export const nftRouter = createTRPCRouter({
         headers
       );
     }),
+
+  claim: privateProedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const nftModelResponse = await request(
+        URL,
+        NftModelDocument,
+        {
+          id: input.id,
+        },
+        headers
+      );
+
+      if (!nftModelResponse?.nftModel?.attributes?.claimable) {
+        return new TRPCError({
+          code: "BAD_REQUEST",
+          message: "NFT is not claimable",
+        });
+      }
+
+      return await request(
+        URL,
+        TransferNftToWalletDocument,
+        {
+          address: ctx.address,
+          nftModelId: input.id,
+        },
+        headers
+      );
+    }),
+
   checkoutWithDapperWallet: privateProedure
     .input(
       z.object({

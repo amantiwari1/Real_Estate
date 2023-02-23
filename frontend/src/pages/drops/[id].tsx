@@ -1,7 +1,7 @@
 import { Button, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
-import { NftModelDocument } from "~/gql/graphql";
+import { NftModelDocument, TransferNftToUserMutation } from "~/gql/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
@@ -51,7 +51,20 @@ const IDPages = () => {
     return response.signTransactionForDapperWallet;
   }, []);
 
-  const handleClaim = async () => {};
+  const { mutateAsync: mutateAsyncClaimNFT, isLoading: isLoadingClaimNFT } =
+    api.nft.claim.useMutation();
+
+  const handleClaim = async () => {
+    try {
+      const data = (await mutateAsyncClaimNFT({
+        id: id as string,
+      })) as TransferNftToUserMutation;
+
+      data.transfer?.id && router.push(`/collection/${data.transfer?.id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleCheckout = async () => {
     const checkout = await mutateAsync({ id: data?.nftModel?.id as string });

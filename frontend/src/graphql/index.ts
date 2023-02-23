@@ -232,6 +232,5 @@ export {
   contractDocument,
   SignTransactionForDapperWallet,
   CompleteCheckoutWithDapperWallet,
-  // NftModelWithIdDocument,
   TransferNftToWalletDocument,
 };
