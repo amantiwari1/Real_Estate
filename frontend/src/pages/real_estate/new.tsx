@@ -68,7 +68,7 @@ const CreateNFTModel = () => {
     return (
       <Layout>
         <Alert color="red">
-          You need to connect your wallet to create a campaign
+          You need to connect your wallet to create an NFT
         </Alert>
       </Layout>
     );
@@ -77,9 +77,10 @@ const CreateNFTModel = () => {
   return (
     <Layout>
       <Title align="center" color="green" order={1}>
-        Start a Campaign
+        Create an NFT for your Property
       </Title>
       <CampaignForm
+        className="my-4"
         submitText="Submit new campaign"
         schema={CreateNFTModelValidation}
         initialValues={{}}
