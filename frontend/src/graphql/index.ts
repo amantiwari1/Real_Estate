@@ -277,6 +277,19 @@ const nftDocument = graphql(/* GraphQL */ `
   }
 `);
 
+const UpdateNFTModelDocument = graphql(/* GraphQL */ `
+  mutation UpdateNFTModel($data: NFTModelUpdateInput!, $updateNftModelId: ID!) {
+    updateNFTModel(data: $data, id: $updateNftModelId) {
+      id
+      description
+      title
+      metadata
+      quantity
+      attributes
+    }
+  }
+`);
+
 export {
   UploadNFTContentDocument,
   createNftModelsDocument,
@@ -292,4 +305,5 @@ export {
   TransferNftToWalletDocument,
   nftsByWalletDocument,
   nftDocument,
+  UpdateNFTModelDocument,
 };

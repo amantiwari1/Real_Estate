@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Center, Loader, Text } from "@mantine/core";
+import { Button, Center, Group, Loader, Text, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import {
@@ -168,36 +168,44 @@ const IDPages = () => {
             className="h-auto w-[400px]"
             alt={data?.nftModel?.title as string}
           />
-          <Text>{data?.nftModel?.title}</Text>
+          <Title align="center" my={20}>
+            {data?.nftModel?.title}
+          </Title>
 
-          {!claimable && (
-            <Button
-              loading={
-                isLoading ||
-                isLoadingSignTransaction ||
-                isLoadingCompleteCheckoutWith ||
-                isLoadingNftModel
-              }
-              onClick={handleCheckout}
-            >
-              Checkout
-            </Button>
-          )}
+          <Group position="apart">
+            {!claimable && (
+              <Button
+                loading={
+                  isLoading ||
+                  isLoadingSignTransaction ||
+                  isLoadingCompleteCheckoutWith ||
+                  isLoadingNftModel
+                }
+                onClick={handleCheckout}
+              >
+                Checkout
+              </Button>
+            )}
 
-          {claimable && (
-            <Button
-              loading={
-                isLoading ||
-                isLoadingSignTransaction ||
-                isLoadingCompleteCheckoutWith ||
-                isLoadingClaimNFT ||
-                isLoadingNftModel
-              }
-              onClick={handleClaim}
-            >
-              Claim This NFT
+            {claimable && (
+              <Button
+                loading={
+                  isLoading ||
+                  isLoadingSignTransaction ||
+                  isLoadingCompleteCheckoutWith ||
+                  isLoadingClaimNFT ||
+                  isLoadingNftModel
+                }
+                onClick={handleClaim}
+              >
+                Claim This NFT
+              </Button>
+            )}
+
+            <Button onClick={() => router.push(`/drops/${id}/edit`)}>
+              Edit
             </Button>
-          )}
+          </Group>
         </div>
       </Center>
     </Layout>

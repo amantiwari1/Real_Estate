@@ -13,6 +13,7 @@ import {
   registerWalletDocument,
   SignTransactionForDapperWallet,
   TransferNftToWalletDocument,
+  UpdateNFTModelDocument,
   UploadNFTContentDocument,
   verifyWalletDocument,
 } from "~/graphql";
@@ -80,6 +81,45 @@ export const nftRouter = createTRPCRouter({
             attributes: input.attributes,
             contentId: input.content.id,
             subtitle: "",
+          },
+        },
+        headers
+      );
+    }),
+  updateNFTModel: privateProedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        description: z.string(),
+        attributes: z.object({
+          location: z.string(),
+          age: z.number(),
+          size: z.number(),
+          bhk: z.number(),
+          is_repair: z.boolean(),
+          price: z.number(),
+        }),
+        content: z.object({
+          id: z.string(),
+          fileId: z.string(),
+          posterId: z.string(),
+        }),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await request(
+        URL,
+        UpdateNFTModelDocument,
+        {
+          updateNftModelId: input.id,
+          data: {
+            title: input.title,
+            description: input.description,
+            quantity: 1,
+            status: Status.Done,
+            attributes: input.attributes,
+            contentId: input.content.id,
           },
         },
         headers
