@@ -6,7 +6,7 @@ const Navbar = () => {
   const router = useRouter();
   return (
     <NavbarMantine
-      width={{ base: 180 }}
+      width={{ base: 210 }}
       className="flex flex-col justify-between"
     >
       <div>

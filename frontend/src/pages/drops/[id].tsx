@@ -1,4 +1,4 @@
-import { Button, Text } from "@mantine/core";
+import { Button, Center, Loader, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import { NftModelDocument, TransferNftToUserMutation } from "~/gql/graphql";
@@ -28,9 +28,13 @@ const IDPages = () => {
   const router = useRouter();
   const id = router.query["id"]?.toString();
 
-  const { data } = useGraphQL(NftModelDocument, {
-    id: id as string,
-  });
+  const { data, isLoading: isLoadingNftModel } = useGraphQL(
+    NftModelDocument,
+    {},
+    {
+      id: id as string,
+    }
+  );
 
   const claimable = data?.nftModel?.attributes?.claimable ?? false;
   const { mutateAsync, isLoading } =
@@ -132,38 +136,57 @@ const IDPages = () => {
     }
   };
 
+  if (isLoadingNftModel) {
+    return (
+      <Layout>
+        <Center h="100%">
+          <Loader />
+        </Center>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
-      <div>
-        <Text>{data?.nftModel?.title}</Text>
+      <Center>
+        <div>
+          <img
+            src={data?.nftModel?.content?.poster?.url}
+            className="h-auto w-[400px]"
+            alt={data?.nftModel?.title}
+          />
+          <Text>{data?.nftModel?.title}</Text>
 
-        {!claimable && (
-          <Button
-            loading={
-              isLoading ||
-              isLoadingSignTransaction ||
-              isLoadingCompleteCheckoutWith
-            }
-            onClick={handleCheckout}
-          >
-            Checkout
-          </Button>
-        )}
+          {!claimable && (
+            <Button
+              loading={
+                isLoading ||
+                isLoadingSignTransaction ||
+                isLoadingCompleteCheckoutWith ||
+                isLoadingNftModel
+              }
+              onClick={handleCheckout}
+            >
+              Checkout
+            </Button>
+          )}
 
-        {claimable && (
-          <Button
-            loading={
-              isLoading ||
-              isLoadingSignTransaction ||
-              isLoadingCompleteCheckoutWith ||
-              isLoadingClaimNFT
-            }
-            onClick={handleClaim}
-          >
-            Claim This NFT
-          </Button>
-        )}
-      </div>
+          {claimable && (
+            <Button
+              loading={
+                isLoading ||
+                isLoadingSignTransaction ||
+                isLoadingCompleteCheckoutWith ||
+                isLoadingClaimNFT ||
+                isLoadingNftModel
+              }
+              onClick={handleClaim}
+            >
+              Claim This NFT
+            </Button>
+          )}
+        </div>
+      </Center>
     </Layout>
   );
 };

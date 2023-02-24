@@ -196,6 +196,7 @@ export const nftRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      console.log({ headers });
       // const data = await request(URL, NftModelDocument, input, headers);
 
       //  const price = data.nftModel?.attributes.price as number

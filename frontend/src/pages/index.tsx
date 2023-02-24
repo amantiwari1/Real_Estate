@@ -33,9 +33,13 @@ const nftModelsDocument = graphql(/* GraphQL */ `
 `);
 
 const Home: NextPage = () => {
-  const { data, isLoading } = useGraphQL(nftModelsDocument, {
-    appId: process.env.NEXT_PUBLIC_CLIENT_ID,
-  });
+  const { data, isLoading } = useGraphQL(
+    nftModelsDocument,
+    {},
+    {
+      appId: process.env.NEXT_PUBLIC_CLIENT_ID,
+    }
+  );
   return (
     <>
       <Head>
@@ -48,7 +52,7 @@ const Home: NextPage = () => {
           {!isLoading && (
             <Grid>
               {data?.nftModels?.items?.map((item) => (
-                <Grid.Col key={item?.id as string} span={4}>
+                <Grid.Col key={item?.id as string} span={3}>
                   <RealEstateCard
                     id={item?.id as string}
                     description={item?.description as string}

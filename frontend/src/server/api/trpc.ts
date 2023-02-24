@@ -46,6 +46,8 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
   const address = getAddressFromCookie(_opts.req, _opts.res);
 
+  console.log("address", address);
+
   return createInnerTRPCContext({
     address,
   });

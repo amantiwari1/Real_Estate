@@ -2,7 +2,9 @@ import request, { Variables } from "graphql-request";
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
 import {
   useMutation,
+  UseMutationOptions,
   useQuery,
+  UseQueryOptions,
   type UseMutationResult,
   type UseQueryResult,
 } from "@tanstack/react-query";
@@ -12,6 +14,7 @@ const URL =
 
 export function useGraphQL<TResult, TVariables>(
   document: TypedDocumentNode<TResult, TVariables>,
+  options?: UseQueryOptions<TResult, unknown, TResult, any[]>,
   ...[variables]: TVariables extends Record<string, never> ? [] : [TVariables]
 ): UseQueryResult<TResult> {
   return useQuery(
@@ -19,12 +22,14 @@ export function useGraphQL<TResult, TVariables>(
     async ({ queryKey }) =>
       request(URL, document, queryKey[1] ? queryKey[1] : undefined, {
         "X-Niftory-API-Key": "o4hB8pOhgvYXOwCEEcaf6IJBjaObAc0GPZARd4tHvVo=",
-      })
+      }),
+    options ?? {}
   );
 }
 
 export function useGraphQLMutation<TResult, TVariables>(
-  document: TypedDocumentNode<TResult, TVariables>
+  document: TypedDocumentNode<TResult, TVariables>,
+  options?: UseMutationOptions<TResult, unknown, TResult, any[]>
 ): UseMutationResult<TResult, unknown, TVariables> {
   return useMutation(
     async (data) =>

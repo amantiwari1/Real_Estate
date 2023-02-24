@@ -11,4 +11,9 @@ export const navlinks = [
     icon: IconHome,
     link: "/real_estate/new",
   },
+  {
+    name: "My Collection",
+    icon: IconHome,
+    link: "/collection",
+  },
 ];

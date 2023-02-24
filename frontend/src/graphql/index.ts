@@ -201,21 +201,78 @@ const CompleteCheckoutWithDapperWallet = graphql(/* GraphQL */ `
   }
 `);
 
-const NftModelWithIdDocument = graphql(/* GraphQL */ `
-  query nftModelWithId($id: ID!, $nftModelId: ID!) {
-    nfts(i: $id) {
+const TransferNftToWalletDocument = graphql(/* GraphQL */ `
+  mutation transferNFTToUser($nftModelId: ID!, $address: String!) {
+    transfer(nftModelId: $nftModelId, address: $address) {
+      id
+    }
+  }
+`);
+
+const nftsByWalletDocument = graphql(/* GraphQL */ `
+  query nftsByWallet($address: String) {
+    nftsByWallet(address: $address) {
       items {
         id
+        blockchainId
+        serialNumber
+        blockchainState
+        model {
+          id
+          title
+          description
+          rarity
+          content {
+            id
+            poster {
+              url
+              state
+              contentType
+              id
+            }
+          }
+        }
+        status
       }
       cursor
     }
   }
 `);
 
-const TransferNftToWalletDocument = graphql(/* GraphQL */ `
-  mutation transferNFTToUser($nftModelId: ID!, $address: String!) {
-    transfer(nftModelId: $nftModelId, address: $address) {
+const nftDocument = graphql(/* GraphQL */ `
+  query nft($id: ID!) {
+    nft(id: $id) {
+      blockchainId
+      metadata
       id
+      serialNumber
+      model {
+        id
+        attributes
+        status
+        blockchainId
+        metadata
+        title
+        description
+        rarity
+        quantity
+        content {
+          id
+          poster {
+            url
+            state
+            contentType
+            id
+          }
+          files {
+            url
+            id
+            state
+            contentType
+          }
+        }
+      }
+      status
     }
   }
 `);
@@ -233,4 +290,6 @@ export {
   SignTransactionForDapperWallet,
   CompleteCheckoutWithDapperWallet,
   TransferNftToWalletDocument,
+  nftsByWalletDocument,
+  nftDocument,
 };

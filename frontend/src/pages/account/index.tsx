@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import * as fcl from "@onflow/fcl";
 import ConfigureWallet from "~/components/wallet/ConfigureWallet";
 import { useRouter } from "next/router";
+import RegisterWallet from "~/components/wallet/RegisterWallet";
 
 const AccountPage = () => {
   const {
@@ -17,14 +18,10 @@ const AccountPage = () => {
     logout,
     isLoading: isConnectLoading,
   } = useConnectWallet();
-  const { mutateAsync, isLoading: isRegisterLoading } =
-    api.nft.registerWallet.useMutation();
 
   const { data, refetch, isLoading } = api.nft.getWallet.useQuery(undefined, {
     enabled: isAuth ? true : false,
   });
-
-  const { mutateAsync: mutateAsyncVerify } = api.nft.verifyWallet.useMutation();
 
   const router = useRouter();
 
@@ -34,29 +31,15 @@ const AccountPage = () => {
     await login();
   };
 
-  useEffect(() => {
-    if (isAuth) {
-      mutateAsync();
-    } else {
-      if (onReadySigin === "true") {
-        handleLogin();
-      }
+  const handleEffect = async () => {
+    if (!isAuth && onReadySigin === "true") {
+      handleLogin();
     }
-  }, [isAuth]);
-
-  const handleVerify = async () => {
-    const verificationCode = data?.walletByAddress?.verificationCode;
-    const signedVerificationCode = await fcl.currentUser.signUserMessage(
-      verificationCode
-    );
-    if (!signedVerificationCode) {
-      return;
-    }
-    await mutateAsyncVerify({
-      signedVerificationCode: signedVerificationCode,
-    });
-    await refetch();
   };
+
+  useEffect(() => {
+    handleEffect();
+  }, []);
 
   return (
     <Layout>
@@ -74,13 +57,7 @@ const AccountPage = () => {
           {/* UNAUTH */}
           {isAuth &&
             data?.walletByAddress?.state === WalletState.Unverified && (
-              <Button
-                variant="gradient"
-                loading={isConnectLoading || isRegisterLoading}
-                onClick={handleVerify}
-              >
-                {`Verify wallet`}
-              </Button>
+              <RegisterWallet data={data} refetch={refetch} />
             )}
 
           {/* UNAUTH */}
@@ -92,7 +69,7 @@ const AccountPage = () => {
           {!isAuth && (
             <Button
               variant="gradient"
-              loading={isConnectLoading || isRegisterLoading}
+              loading={isConnectLoading}
               onClick={handleLogin}
             >
               {`Sign In`}
