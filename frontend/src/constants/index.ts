@@ -7,7 +7,7 @@ export const navlinks = [
     link: "/",
   },
   {
-    name: "Create new NFT",
+    name: "Create NFT",
     icon: IconHome,
     link: "/real_estate/new",
   },
