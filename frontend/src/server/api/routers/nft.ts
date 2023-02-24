@@ -45,6 +45,14 @@ export const nftRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         description: z.string(),
+        attributes: z.object({
+          location: z.string(),
+          age: z.number(),
+          size: z.number(),
+          bhk: z.number(),
+          is_repair: z.boolean(),
+          price: z.number(),
+        }),
         content: z.object({
           id: z.string(),
           fileId: z.string(),
@@ -69,7 +77,7 @@ export const nftRouter = createTRPCRouter({
               posterId: input.content.posterId,
             },
             metadata: {},
-            attributes: {},
+            attributes: input.attributes,
             contentId: input.content.id,
             subtitle: "",
           },

@@ -11,6 +11,7 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 import { useFormContext } from "react-hook-form";
+import getPropertyFromString from "~/utils/errorhandleInput";
 
 const ListOfComponents: any = {
   text: TextInput,
@@ -41,7 +42,7 @@ export const LabeledTextField = forwardRef<
     formState: { isSubmitting, errors },
   } = useFormContext();
 
-  const error = errors[name]?.message as string;
+  const error = getPropertyFromString(name, errors)?.message as string;
 
   const TypedComponents = ListOfComponents[props.type ?? "text"] || TextInput;
 

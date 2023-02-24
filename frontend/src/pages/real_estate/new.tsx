@@ -1,53 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Alert, Container, Grid, Paper, Title } from "@mantine/core";
+import { Alert, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";
 import { z } from "zod";
-import DropZoneForm from "~/components/form/DropZoneForm";
-import Form, { type FormProps, FORM_ERROR } from "~/components/form/Form";
-import LabeledTextField from "~/components/form/FormField";
-import TextAreaForm from "~/components/form/TextAreaForm";
+import FlowEstateForm from "~/components/FlowEstateForm";
+import { FORM_ERROR } from "~/components/form/Form";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
 
-export function CampaignForm<S extends z.ZodType<any, any>>(
-  props: FormProps<S>
-) {
-  return (
-    <Form<S> {...props}>
-      <Container>
-        <Paper shadow="sm" bg="gray" radius="md" p="xl" className="space-y-10">
-          <Grid>
-            <Grid.Col md={12}>
-              <LabeledTextField
-                name="title"
-                label="Your Title"
-                placeholder="Clothing"
-                required
-              />
-            </Grid.Col>
-            <Grid.Col md={12}>
-              <TextAreaForm
-                name="description"
-                label="Your Description"
-                placeholder="Description"
-                required
-              />
-            </Grid.Col>
-            <Grid.Col md={12}>
-              <DropZoneForm name="content" accept={["image/*"]} />
-            </Grid.Col>
-          </Grid>
-        </Paper>
-      </Container>
-    </Form>
-  );
-}
-
 export const CreateNFTModelValidation = z.object({
   title: z.string().min(4),
   description: z.string().min(4),
+  attributes: z.object({
+    location: z.string(),
+    age: z.number(),
+    size: z.number(),
+    bhk: z.string(),
+    is_repair: z.boolean(),
+    price: z.number(),
+  }),
   content: z.object({
     id: z.string(),
     fileId: z.string(),
@@ -80,14 +52,21 @@ const CreateNFTModel = () => {
       <Title align="center" color="green" order={1}>
         Create an NFT for your Property
       </Title>
-      <CampaignForm
+      <FlowEstateForm
         className="my-4"
         submitText="Submit new campaign"
         schema={CreateNFTModelValidation}
         initialValues={{}}
         onSubmit={async (values) => {
           try {
-            await mutateAsync(values);
+            console.log("values", values);
+            await mutateAsync({
+              ...values,
+              attributes: {
+                ...values.attributes,
+                bhk: parseFloat(values.attributes.bhk),
+              },
+            });
 
             showNotification({
               title: "Success",

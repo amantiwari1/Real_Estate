@@ -10,10 +10,12 @@ export interface DropZoneFormProps {
   name: string;
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>;
   accept?: DropzoneProps["accept"];
+  label?: string;
 }
 
 export const DropZoneForm = ({
   outerProps,
+  label,
   name,
   ...props
 }: DropZoneFormProps) => {
@@ -31,6 +33,7 @@ export const DropZoneForm = ({
   return (
     <div {...outerProps}>
       <div className={watch("preview_url") ? "hidden" : ""}>
+        <label>{label}</label>
         <Controller
           control={control}
           {...props}

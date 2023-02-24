@@ -5,6 +5,7 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 import { useFormContext } from "react-hook-form";
+import getPropertyFromString from "~/utils/errorhandleInput";
 
 export interface TextAreaFormProps extends PropsWithoutRef<TextareaProps> {
   /** Field name. */
@@ -24,7 +25,8 @@ export const TextAreaForm = forwardRef<HTMLInputElement, TextAreaFormProps>(
 
       formState: { isSubmitting, errors },
     } = useFormContext();
-    const error = errors[name]?.message as string;
+
+    const error = getPropertyFromString(name, errors)?.message as string;
 
     return (
       <div {...outerProps}>
