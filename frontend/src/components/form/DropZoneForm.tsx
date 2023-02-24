@@ -1,7 +1,6 @@
 import { Alert, Group, Text } from "@mantine/core";
 import { Dropzone, type DropzoneProps } from "@mantine/dropzone";
 import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
-import Image from "next/image";
 import { type PropsWithoutRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 

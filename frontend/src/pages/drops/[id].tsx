@@ -12,7 +12,6 @@ import { api } from "~/utils/api";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
-import Image from "next/image";
 
 interface checkoutWithDapperWalletProps {
   __typename?: "CheckoutWithDapperWalletResponse";
