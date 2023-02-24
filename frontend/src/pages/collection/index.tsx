@@ -2,7 +2,7 @@ import { Alert, Button, Center, SimpleGrid, Text } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 import CollectionCard from "~/components/CollectionCard";
-import { Nft, NftBlockchainState } from "~/gql/graphql";
+import { type Nft, NftBlockchainState } from "~/gql/graphql";
 import { nftsByWalletDocument } from "~/graphql";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import { useGraphQL } from "~/hooks/useGraphql";

@@ -1,5 +1,5 @@
 import { getCookie } from "cookies-next";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export function getAddressFromCookie(
   req: NextApiRequest,

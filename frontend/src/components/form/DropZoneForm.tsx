@@ -1,7 +1,8 @@
 import { Alert, Group, Text } from "@mantine/core";
-import { Dropzone, DropzoneProps } from "@mantine/dropzone";
+import { Dropzone, type DropzoneProps } from "@mantine/dropzone";
 import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
-import { PropsWithoutRef, useState } from "react";
+import Image from "next/image";
+import { type PropsWithoutRef, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 import { api } from "~/utils/api";
@@ -116,7 +117,11 @@ export const DropZoneForm = ({
       </div>
 
       {watch("preview_url") && (
-        <img className="h-auto w-[200px]" src={watch("preview_url")} />
+        <Image
+          className="h-auto w-[200px]"
+          src={watch("preview_url")}
+          alt="preview"
+        />
       )}
       {error && <Alert>{error}</Alert>}
     </div>

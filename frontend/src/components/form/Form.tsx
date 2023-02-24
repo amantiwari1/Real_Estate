@@ -1,7 +1,8 @@
-import { useState, ReactNode, PropsWithoutRef } from "react";
-import { FormProvider, useForm, UseFormProps } from "react-hook-form";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, type ReactNode, type PropsWithoutRef } from "react";
+import { FormProvider, useForm, type UseFormProps } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { type z } from "zod";
 import { Alert, Container, Group } from "@mantine/core";
 
 import { Button } from "@mantine/core";

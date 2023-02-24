@@ -1,4 +1,4 @@
-import { Image, Navbar as NavbarMantine, NavLink } from "@mantine/core";
+import { Navbar as NavbarMantine, NavLink } from "@mantine/core";
 import { useRouter } from "next/router";
 import { navlinks } from "~/constants";
 

@@ -1,10 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   TextInput,
   PasswordInput,
-  TextInputProps,
+  type TextInputProps,
   NumberInput,
 } from "@mantine/core";
-import { forwardRef, PropsWithoutRef, ComponentPropsWithoutRef } from "react";
+import {
+  forwardRef,
+  type PropsWithoutRef,
+  type ComponentPropsWithoutRef,
+} from "react";
 import { useFormContext } from "react-hook-form";
 
 const ListOfComponents: any = {
@@ -29,6 +34,7 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<TextInputProps> {
 export const LabeledTextField = forwardRef<
   HTMLInputElement,
   LabeledTextFieldProps
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 >(({ label, outerProps, labelProps, name, ...props }, ref) => {
   const {
     register,
@@ -55,5 +61,7 @@ export const LabeledTextField = forwardRef<
     </div>
   );
 });
+
+LabeledTextField.displayName = "LabeledTextField";
 
 export default LabeledTextField;

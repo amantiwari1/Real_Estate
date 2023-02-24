@@ -1,12 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Center, Loader, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
-import { NftModelDocument, TransferNftToUserMutation } from "~/gql/graphql";
+import {
+  NftModelDocument,
+  type TransferNftToUserMutation,
+} from "~/gql/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
+import Image from "next/image";
 
 interface checkoutWithDapperWalletProps {
   __typename?: "CheckoutWithDapperWalletResponse";
@@ -53,6 +59,7 @@ const IDPages = () => {
   const signTransaction = useCallback(async (transaction: string) => {
     const response = await mutateAsyncSignTransaction({ transaction });
     return response.signTransactionForDapperWallet;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { mutateAsync: mutateAsyncClaimNFT, isLoading: isLoadingClaimNFT } =
@@ -150,10 +157,10 @@ const IDPages = () => {
     <Layout>
       <Center>
         <div>
-          <img
+          <Image
             src={data?.nftModel?.content?.poster?.url}
             className="h-auto w-[400px]"
-            alt={data?.nftModel?.title}
+            alt={data?.nftModel?.title as string}
           />
           <Text>{data?.nftModel?.title}</Text>
 

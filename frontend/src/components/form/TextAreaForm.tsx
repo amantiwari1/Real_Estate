@@ -1,5 +1,9 @@
-import { Textarea, TextareaProps } from "@mantine/core";
-import { forwardRef, PropsWithoutRef, ComponentPropsWithoutRef } from "react";
+import { Textarea, type TextareaProps } from "@mantine/core";
+import {
+  forwardRef,
+  type PropsWithoutRef,
+  type ComponentPropsWithoutRef,
+} from "react";
 import { useFormContext } from "react-hook-form";
 
 export interface TextAreaFormProps extends PropsWithoutRef<TextareaProps> {
@@ -13,6 +17,7 @@ export interface TextAreaFormProps extends PropsWithoutRef<TextareaProps> {
 }
 
 export const TextAreaForm = forwardRef<HTMLInputElement, TextAreaFormProps>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ label, outerProps, labelProps, name, ...props }, ref) => {
     const {
       register,
@@ -36,5 +41,7 @@ export const TextAreaForm = forwardRef<HTMLInputElement, TextAreaFormProps>(
     );
   }
 );
+
+TextAreaForm.displayName = "TextAreaForm";
 
 export default TextAreaForm;

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
 import { useCallback, useEffect, useState } from "react";
@@ -19,19 +22,19 @@ export function useConnectWallet() {
 
   const signup = useCallback(async () => {
     setIsLoading(true);
-    fcl.signUp();
+    await fcl.signUp();
     setIsLoading(false);
   }, []);
 
   const login = useCallback(async () => {
     setIsLoading(true);
-    fcl.logIn();
+    await fcl.logIn();
     setIsLoading(false);
   }, []);
 
   const logout = useCallback(async () => {
     setIsLoading(true);
-    fcl.unauthenticate();
+    await fcl.unauthenticate();
     setIsLoading(false);
   }, []);
 
@@ -47,6 +50,7 @@ export function useConnectWallet() {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     handleUserUpdate();
   }, []);
 
