@@ -50,7 +50,7 @@ const Home: NextPage = () => {
       <main>
         <Layout>
           {!isLoading && (
-            <Grid>
+            <Grid className="card-container">
               {data?.nftModels?.items?.map((item) => (
                 <Grid.Col key={item?.id as string} span={3}>
                   <RealEstateCard
