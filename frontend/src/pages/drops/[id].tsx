@@ -12,6 +12,7 @@ import { api } from "~/utils/api";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
+import { showNotification } from "@mantine/notifications";
 
 interface checkoutWithDapperWalletProps {
   __typename?: "CheckoutWithDapperWalletResponse";
@@ -77,24 +78,24 @@ const IDPages = () => {
   };
 
   const handleCheckout = async () => {
-    const checkout = await mutateAsync({ id: data?.nftModel?.id as string });
-
-    const {
-      cadence,
-      registryAddress,
-      brand,
-      nftId,
-      nftTypeRef,
-      nftDatabaseId,
-      setId,
-      templateId,
-      price,
-      expiry,
-      signerKeyId,
-      signerAddress,
-    } = checkout.checkoutWithDapperWallet as checkoutWithDapperWalletProps;
-
     try {
+      const checkout = await mutateAsync({ id: data?.nftModel?.id as string });
+
+      const {
+        cadence,
+        registryAddress,
+        brand,
+        nftId,
+        nftTypeRef,
+        nftDatabaseId,
+        setId,
+        templateId,
+        price,
+        expiry,
+        signerKeyId,
+        signerAddress,
+      } = checkout.checkoutWithDapperWallet as checkoutWithDapperWalletProps;
+
       const tx = await fcl.mutate({
         cadence,
         args: (arg: any, t: any) => [
@@ -139,6 +140,12 @@ const IDPages = () => {
       await router.push(`/collection/${nft?.id}`);
     } catch (error) {
       console.log({ error });
+
+      showNotification({
+        title: "Something went wrong",
+        message: "Something went wrong, please try again later",
+        color: "red",
+      });
     }
   };
 
