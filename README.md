@@ -7,6 +7,7 @@ Create a platform for selling and buying of physical Real Estate assets through 
 
  This would enable Purchasing of Property in the form of NFTs using credit cards, and completely abstracting away the presence of the underlying blockchain.
  
+ Published on NFT Catalog - https://www.flow-nft-catalog.com/proposals/testnet/237
 Possible Advantages 
  
 Increased Transparency: Using blockchain technology can increase transparency and reduce the likelihood of fraud or disputes. This is because all the transactions and ownership details would be stored on a decentralized ledger, making it easier to verify the authenticity of the asset and its ownership.
