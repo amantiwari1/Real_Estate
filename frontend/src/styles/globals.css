@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.card-container{
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    transition: transform 0.2s ease-in-out;
+}
+
+ 
+
+.card:hover{
+    transform: rotate(2deg);
+}

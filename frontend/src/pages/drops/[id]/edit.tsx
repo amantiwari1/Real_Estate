@@ -68,7 +68,7 @@ const CreateNFTModel = () => {
       </Title>
       <FlowEstateForm
         className="my-4"
-        submitText="Submit new campaign"
+        submitText="Submit NFT"
         schema={CreateNFTModelValidation}
         initialValues={{
           id: data?.nftModel?.id,

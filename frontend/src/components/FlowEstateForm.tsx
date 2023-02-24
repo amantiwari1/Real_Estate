@@ -98,7 +98,6 @@ export function FlowEstateForm<S extends z.ZodType<any, any>>(
               <SwitchField
                 name="attributes.is_repair"
                 label="Renovations/repairs :"
-                required
               />
             </Grid.Col>
 
