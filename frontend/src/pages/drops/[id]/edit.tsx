@@ -49,7 +49,7 @@ const CreateNFTModel = () => {
     }
   );
 
-  const { mutateAsync } = api.nft.createNFTModel.useMutation();
+  const { mutateAsync } = api.nft.updateNFTModel.useMutation();
 
   if (!isAuth || isLoadingNftModel) {
     return (
