@@ -117,7 +117,7 @@ export const DropZoneForm = ({
       </div>
 
       {watch("preview_url") && (
-        <Image
+        <img
           className="h-auto w-[200px]"
           src={watch("preview_url")}
           alt="preview"
