@@ -157,7 +157,7 @@ const IDPages = () => {
     <Layout>
       <Center>
         <div>
-          <img
+          <Image
             src={data?.nftModel?.content?.poster?.url}
             className="h-auto w-[400px]"
             alt={data?.nftModel?.title as string}

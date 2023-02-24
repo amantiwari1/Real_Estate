@@ -22,7 +22,7 @@ const RealEstateCard = ({
     <Link className="cursor-pointer" href={`/drops/${id}`}>
       <Card shadow="sm" p="lg" radius="md" withBorder>
         <Card.Section>
-          <img src={image} alt={title} />
+          <Image src={image} alt={title} />
         </Card.Section>
         <Card.Section>
           <Text weight={500}>{title}</Text>
