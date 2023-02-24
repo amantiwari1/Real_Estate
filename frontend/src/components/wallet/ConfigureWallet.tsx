@@ -4,6 +4,7 @@ import { useFlowAccountConfiguration } from "~/hooks/useFlowAccountConfiguration
 import { api } from "~/utils/api";
 
 interface ConfigureWalletProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refetch: any;
 }
 
@@ -22,6 +23,7 @@ const ConfigureWallet = ({ refetch }: ConfigureWalletProps) => {
       return;
     }
     handleReady();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [configured]);
 
   const handleReady = async () => {

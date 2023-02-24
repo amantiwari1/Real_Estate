@@ -1,10 +1,10 @@
-import request, { Variables } from "graphql-request";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import request from "graphql-request";
 import { type TypedDocumentNode } from "@graphql-typed-document-node/core";
 import {
   useMutation,
-  UseMutationOptions,
   useQuery,
-  UseQueryOptions,
+  type UseQueryOptions,
   type UseMutationResult,
   type UseQueryResult,
 } from "@tanstack/react-query";
@@ -28,8 +28,7 @@ export function useGraphQL<TResult, TVariables>(
 }
 
 export function useGraphQLMutation<TResult, TVariables>(
-  document: TypedDocumentNode<TResult, TVariables>,
-  options?: UseMutationOptions<TResult, unknown, TResult, any[]>
+  document: TypedDocumentNode<TResult, TVariables>
 ): UseMutationResult<TResult, unknown, TVariables> {
   return useMutation(
     async (data) =>

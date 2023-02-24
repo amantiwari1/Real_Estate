@@ -1,7 +1,8 @@
 import { Card, Text } from "@mantine/core";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Nft } from "~/gql/graphql";
+import { type Nft } from "~/gql/graphql";
 
 interface CollectionCardProps {
   nft: Nft;
@@ -12,7 +13,10 @@ const CollectionCard = ({ nft }: CollectionCardProps) => {
     <Link href={`/collection/${nft.id}`}>
       <Card shadow="sm" p="lg" radius="md" withBorder>
         <Card.Section>
-          <img src={nft.model?.content?.poster?.url} alt={nft.model?.title} />
+          <Image
+            src={nft.model?.content?.poster?.url}
+            alt={nft.model?.title as string}
+          />
         </Card.Section>
         <Card.Section>
           <Text>{nft.model?.title}</Text>

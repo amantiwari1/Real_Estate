@@ -2,15 +2,13 @@
 module.exports = {
   overrides: [
     {
-      extends: [
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
-      ],
       files: ["*.ts", "*.tsx"],
       parserOptions: {
         project: "tsconfig.json",
       },
     },
   ],
+  ignorePatterns: ["node_modules/", "src/gql"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "./tsconfig.json",

@@ -4,8 +4,6 @@ import { WalletState } from "~/gql/graphql";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
-// @ts-ignore
-import * as fcl from "@onflow/fcl";
 import ConfigureWallet from "~/components/wallet/ConfigureWallet";
 import { useRouter } from "next/router";
 import RegisterWallet from "~/components/wallet/RegisterWallet";
@@ -39,6 +37,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     handleEffect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -48,7 +47,9 @@ const AccountPage = () => {
         <div className="space-y-5">
           {isAuth && data?.walletByAddress?.state === WalletState.Ready && (
             <div className="flex items-center space-x-5 pr-5">
-              <Text>You're all set up! Your wallet address is {user.addr}</Text>
+              <Text>
+                You&apos;re all set up! Your wallet address is {user.addr}
+              </Text>
             </div>
           )}
 

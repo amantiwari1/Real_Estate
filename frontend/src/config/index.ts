@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
 import { getCookie, setCookie } from "cookies-next";

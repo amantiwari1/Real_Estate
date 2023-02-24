@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Alert, Container, Grid, Paper, Title } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";
 import { z } from "zod";
 import DropZoneForm from "~/components/form/DropZoneForm";
-import Form, { FormProps, FORM_ERROR } from "~/components/form/Form";
+import Form, { type FormProps, FORM_ERROR } from "~/components/form/Form";
 import LabeledTextField from "~/components/form/FormField";
 import TextAreaForm from "~/components/form/TextAreaForm";
 import { useConnectWallet } from "~/hooks/useConnectWallet";

@@ -1,11 +1,11 @@
 import { contractDocument } from "~/graphql";
 import { useGraphQL } from "./useGraphql";
 
-const nonFungibleTokenAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
-const metadataViewsAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS;
-const niftoryAddress = process.env.NEXT_PUBLIC_NIFTORY_ADDRESS;
-const registryAddress = process.env.NEXT_PUBLIC_REGISTRY_ADDRESS;
-const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+const nonFungibleTokenAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS as string;
+const metadataViewsAddress = process.env.NEXT_PUBLIC_NFT_ADDRESS as string;
+const niftoryAddress = process.env.NEXT_PUBLIC_NIFTORY_ADDRESS as string;
+const registryAddress = process.env.NEXT_PUBLIC_REGISTRY_ADDRESS as string;
+const clientId = process.env.NEXT_PUBLIC_CLIENT_ID as string;
 
 const IS_ACCOUNT_CONFIGURED_SCRIPT = `
     import NonFungibleToken from ${nonFungibleTokenAddress}
@@ -73,8 +73,8 @@ export function useContractCadence() {
 
   const isFetched = !isFetching && !error;
 
-  let isAccountConfigured_script: string = "";
-  let configureAccount_transaction: string = "";
+  let isAccountConfigured_script = "";
+  let configureAccount_transaction = "";
   if (isFetched) {
     const { name, address } = data?.contract as {
       name: string;

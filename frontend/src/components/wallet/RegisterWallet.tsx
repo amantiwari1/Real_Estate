@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@mantine/core";
 import React, { useEffect } from "react";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import { api } from "~/utils/api";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
-import { WalletByAddressQuery } from "~/gql/graphql";
+import { type WalletByAddressQuery } from "~/gql/graphql";
 
 interface RegisterWalletProps {
   refetch: any;
@@ -31,6 +33,7 @@ const RegisterWallet = ({ refetch, data }: RegisterWalletProps) => {
 
   useEffect(() => {
     handleEffect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, isConnectLoading, user.addr]);
 
   const handleVerify = async () => {
