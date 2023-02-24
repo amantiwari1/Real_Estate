@@ -2,7 +2,7 @@ import { IconHome } from "@tabler/icons-react";
 
 export const navlinks = [
   {
-    name: "dashboard",
+    name: "market",
     icon: IconHome,
     link: "/",
   },

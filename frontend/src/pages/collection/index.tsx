@@ -36,9 +36,9 @@ const CollectionPage = () => {
       {!nfts?.length && (
         <Center>
           <div>
-            <Text>Your collection is empty. Start Collecting!</Text>
+            <Text className="text-center">You don't own any FlowEstate yet</Text>
             <Link href="/">
-              <Button>Go to Drops</Button>
+              <Button className="my-6">Checkout the Market</Button>
             </Link>
           </div>
         </Center>
