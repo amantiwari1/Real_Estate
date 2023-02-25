@@ -56,11 +56,15 @@ const IDPages = () => {
     isLoading: isLoadingCompleteCheckoutWith,
   } = api.nft.CompleteCheckoutWithDapperWallet.useMutation();
 
+
+
   const signTransaction = useCallback(async (transaction: string) => {
     const response = await mutateAsyncSignTransaction({ transaction });
     return response.signTransactionForDapperWallet;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   const { mutateAsync: mutateAsyncClaimNFT, isLoading: isLoadingClaimNFT } =
     api.nft.claim.useMutation();
@@ -72,6 +76,23 @@ const IDPages = () => {
       })) as TransferNftToUserMutation;
 
       data.transfer?.id && router.push(`/collection/${data.transfer?.id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const {
+    mutateAsync : mutateAsyncMintNFTModel,
+    isLoading : isLoadingMintNFTModel,
+  } = api.nft.mintNFTModel.useMutation();
+
+
+  const handleMint = async () => {
+    try {
+      const data = (await mutateAsyncMintNFTModel({
+        id: id as string,
+        
+      })) as TransferNftToUserMutation;
     } catch (error) {
       console.log(error);
     }
@@ -201,6 +222,10 @@ const IDPages = () => {
                 Claim This NFT
               </Button>
             )}
+
+            <Button onClick={handleMint}>
+              Mint Nft
+            </Button>
 
             <Button onClick={() => router.push(`/drops/${id}/edit`)}>
               Edit
