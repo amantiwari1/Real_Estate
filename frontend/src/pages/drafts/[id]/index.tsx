@@ -2,12 +2,15 @@
 import { Button, Center, Group, Loader, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { NftModelDocument } from "~/gql/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
-
-import { showNotification } from "@mantine/notifications";
+import { api } from "~/utils/api";
+// import { showNotification } from "@mantine/notifications";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
+import {
+  NftModelDocument,
+  type TransferNftToUserMutation,
+} from "~/gql/graphql";
 
 const IDPages = () => {
   const router = useRouter();
@@ -21,17 +24,18 @@ const IDPages = () => {
     }
   );
 
+  const { mutateAsync: mutateAsyncClaimNFT, isLoading: isLoadingClaimNFT } =
+    api.nft.claim.useMutation();
+
   const handlePublish = async () => {
     try {
-      // handle checkout
-    } catch (error) {
-      console.log({ error });
+      const data = (await mutateAsyncClaimNFT({
+        id: id as string,
+      })) as TransferNftToUserMutation;
 
-      showNotification({
-        title: "Something went wrong",
-        message: "Something went wrong, please try again later",
-        color: "red",
-      });
+      data.transfer?.id && router.push(`/collection/${data.transfer?.id}`);
+    } catch (error) {
+      console.log(error);
     }
   };
 
