@@ -290,6 +290,34 @@ const UpdateNFTModelDocument = graphql(/* GraphQL */ `
   }
 `);
 
+const nftModelsDocument = graphql(/* GraphQL */ `
+  query nftModels($appId: ID) {
+    nftModels(appId: $appId) {
+      items {
+        id
+        blockchainId
+        title
+        description
+        attributes
+        quantity
+        state
+        status
+        rarity
+        content {
+          files {
+            url
+            contentType
+          }
+          poster {
+            url
+          }
+        }
+      }
+      cursor
+    }
+  }
+`);
+
 export {
   UploadNFTContentDocument,
   createNftModelsDocument,
@@ -306,4 +334,5 @@ export {
   nftsByWalletDocument,
   nftDocument,
   UpdateNFTModelDocument,
+  nftModelsDocument,
 };

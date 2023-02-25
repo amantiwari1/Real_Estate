@@ -125,7 +125,7 @@ export const DropZoneForm = ({
           alt="preview"
         />
       )}
-      {error && <Alert>{error}</Alert>}
+      {error && <Alert color="red">{error}</Alert>}
     </div>
   );
 };

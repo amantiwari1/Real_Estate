@@ -31,17 +31,21 @@ export const SelectField = forwardRef<
         control={control}
         name={name}
         render={({ field: { onChange, onBlur, value, name, ref } }) => (
-          <Select
-            error={error}
-            disabled={isSubmitting}
-            name={name}
-            label={label}
-            onBlur={onBlur} // notify when input is touched
-            onChange={onChange} // send value to hook form
-            value={value}
-            ref={ref}
-            {...props}
-          />
+          <>
+            <Select
+              error={error}
+              disabled={isSubmitting}
+              defaultValue={`${value}`}
+              searchValue={`${value}`}
+              value={`${value}`}
+              name={name}
+              label={label}
+              onBlur={onBlur} // notify when input is touched
+              onChange={onChange} // send value to hook form
+              ref={ref}
+              {...props}
+            />
+          </>
         )}
       />
     </div>

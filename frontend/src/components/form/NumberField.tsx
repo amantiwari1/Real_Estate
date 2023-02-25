@@ -35,6 +35,7 @@ export const NumberField = forwardRef<
             error={error}
             disabled={isSubmitting}
             name={name}
+            defaultValue={value}
             label={label}
             onBlur={onBlur} // notify when input is touched
             onChange={onChange} // send value to hook form

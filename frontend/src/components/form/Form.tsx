@@ -3,7 +3,7 @@ import { useState, type ReactNode, type PropsWithoutRef } from "react";
 import { FormProvider, useForm, type UseFormProps } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
-import { Alert, Container, Group } from "@mantine/core";
+import { Alert, Center, Container, Group } from "@mantine/core";
 
 import { Button } from "@mantine/core";
 import { IconCircle } from "@tabler/icons-react";
@@ -65,9 +65,16 @@ export function Form<S extends z.ZodType<any, any>>({
         {children}
 
         {formError && (
-          <Alert icon={<IconCircle size={16} />} title={formError} color="red">
-            {}
-          </Alert>
+          <Center>
+            <Alert
+              my={20}
+              maw={500}
+              icon={<IconCircle size={16} />}
+              color="red"
+            >
+              {formError}
+            </Alert>
+          </Center>
         )}
 
         {submitText && (

@@ -19,7 +19,7 @@ const LandingCardData = [
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
     title: "Lorem ipsum dolor",
     buttonText: "Create",
-    href: "/drops",
+    href: "/marketplace",
   },
   {
     description:
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
           <div className="flex items-center justify-between">
             <p>Flow Estate logo</p>
             <div className="flex space-x-5">
-              <Link href="/drops">
+              <Link href="/marketplace">
                 <Button radius="xl" variant="light">
                   Explore
                 </Button>
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
           Unlock the Future of <br /> Real Estate Investment
         </h1>
         <Center>
-          <Link href="/drops">
+          <Link href="/marketplace">
             <Button
               size="xl"
               variant="gradient"

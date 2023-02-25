@@ -74,12 +74,19 @@ const CreateNFTModel = () => {
           id: data?.nftModel?.id,
           title: data?.nftModel?.title,
           description: data?.nftModel?.description,
-          attributes: data?.nftModel?.attributes,
+          attributes: {
+            ...data?.nftModel?.attributes,
+            bhk: data?.nftModel?.attributes?.bhk?.toString(),
+          },
           preview_url: data?.nftModel?.content?.poster?.url,
+          content: {
+            id: data?.nftModel?.content?.id,
+            fileId: data?.nftModel?.content?.files?.[0]?.id,
+            posterId: data?.nftModel?.content?.poster?.id,
+          },
         }}
         onSubmit={async (values) => {
           try {
-            console.log("values", values);
             await mutateAsync({
               ...values,
               attributes: {
@@ -95,7 +102,7 @@ const CreateNFTModel = () => {
               color: "green",
             });
 
-            router.push("/");
+            router.push("/marketplace");
           } catch (error: any) {
             console.error(error);
             showNotification({

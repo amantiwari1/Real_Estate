@@ -61,7 +61,7 @@ export const nftRouter = createTRPCRouter({
         }),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       return await request(
         URL,
         createNftModelsDocument,
@@ -78,7 +78,7 @@ export const nftRouter = createTRPCRouter({
               posterId: input.content.posterId,
             },
             metadata: {},
-            attributes: input.attributes,
+            attributes: { ...input.attributes, address: ctx.address },
             contentId: input.content.id,
             subtitle: "",
           },
@@ -107,7 +107,23 @@ export const nftRouter = createTRPCRouter({
         }),
       })
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
+      const data = await request(
+        URL,
+        NftModelDocument,
+        {
+          id: input.id,
+        },
+        headers
+      );
+
+      if (data.nftModel?.attributes.address !== ctx.address) {
+        throw new TRPCError({
+          message: "You are not the owner of this NFT",
+          code: "UNAUTHORIZED",
+        });
+      }
+
       return await request(
         URL,
         UpdateNFTModelDocument,
@@ -118,7 +134,10 @@ export const nftRouter = createTRPCRouter({
             description: input.description,
             quantity: 1,
             status: Status.Done,
-            attributes: input.attributes,
+            attributes: {
+              ...input.attributes,
+              address: ctx.address,
+            },
             contentId: input.content.id,
           },
         },
@@ -244,10 +263,9 @@ export const nftRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      console.log({ headers });
-      // const data = await request(URL, NftModelDocument, input, headers);
+      const data = await request(URL, NftModelDocument, input, headers);
 
-      //  const price = data.nftModel?.attributes.price as number
+      const price = data.nftModel?.attributes?.price ?? 0;
 
       return await request(
         URL,
@@ -255,7 +273,7 @@ export const nftRouter = createTRPCRouter({
         {
           nftModelId: input.id,
           address: ctx.address,
-          price: 0.1,
+          price: price,
           expiry: Number.MAX_SAFE_INTEGER,
         },
         headers
