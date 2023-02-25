@@ -238,12 +238,13 @@ export const nftRouter = createTRPCRouter({
         headers
       );
 
-      if (!nftModelResponse?.nftModel?.attributes?.claimable) {
-        return new TRPCError({
-          code: "BAD_REQUEST",
-          message: "NFT is not claimable",
-        });
-      }
+      // for claiming before minting in the drafts commenting this out 
+      // if (!nftModelResponse?.nftModel?.attributes?.claimable) {
+      //   return new TRPCError({
+      //     code: "BAD_REQUEST",
+      //     message: "NFT is not claimable",
+      //   });
+      // }
 
       return await request(
         URL,
