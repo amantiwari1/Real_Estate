@@ -19,11 +19,18 @@ const RealEstateCard = ({
 }: RealEstateCard) => {
   return (
     <Link className="cursor-pointer" href={`/drops/${id}`}>
-      <Card shadow="sm" p="lg" radius="md" withBorder>
+      <Card
+        className="hover:scale-105"
+        shadow="sm"
+        h="100%"
+        p="lg"
+        radius="md"
+        withBorder
+      >
         <Card.Section>
           <img src={image} alt={title} />
         </Card.Section>
-        <Card.Section>
+        <Card.Section p={10}>
           <Text weight={500}>{title}</Text>
           <Text size="sm" weight={400}>
             {description}
