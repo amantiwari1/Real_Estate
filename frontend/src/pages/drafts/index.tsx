@@ -57,7 +57,7 @@ const Home: NextPage = () => {
                     link={`/drafts/${item?.id}`}
                     description={item?.description as string}
                     image={item?.content?.poster?.url}
-                    price={100}
+                    price={item?.attributes?.price}
                     title={item?.title as string}
                   />
                 </Grid.Col>
