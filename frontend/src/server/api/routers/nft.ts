@@ -16,6 +16,7 @@ import {
   UpdateNFTModelDocument,
   UploadNFTContentDocument,
   verifyWalletDocument,
+  mintNFTModel
 } from "~/graphql";
 
 const URL =
@@ -236,6 +237,53 @@ export const nftRouter = createTRPCRouter({
         headers
       );
     }),
+
+    mintNFTModel : privateProedure
+    .input(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        attributes: z.object({
+          location: z.string(),
+          age: z.number(),
+          size: z.number(),
+          bhk: z.number(),
+          is_repair: z.boolean(),
+          price: z.number(),
+        }),
+        content: z.object({
+          id: z.string(),
+          fileId: z.string(),
+          posterId: z.string(),
+        }),
+      })
+    )
+    .mutation(async ({ input }) => {
+      return await request(
+        URL,
+        mintNFTModel,
+        {
+          setId: "11e39381-a415-43e9-920b-3b6ace796148",
+          data: {
+            title: input.title,
+            description: input.description,
+            tags: [],
+            quantity: 1,
+            status: Status.Done,
+            content: {
+              fileId: input.content.fileId,
+              posterId: input.content.posterId,
+            },
+            metadata: {},
+            attributes: input.attributes,
+            contentId: input.content.id,
+            subtitle: "",
+          },
+        },
+        headers
+      );
+    }),
+
 
   checkoutWithDapperWallet: privateProedure
     .input(

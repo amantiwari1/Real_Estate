@@ -290,6 +290,45 @@ const UpdateNFTModelDocument = graphql(/* GraphQL */ `
   }
 `);
 
+const mintNFTModel = graphql(/* GraphQL */ `
+  mutation mintNFTModel(
+    $appId: ID,
+    $id: ID!,
+    $quantity: PositiveInt
+  ) {
+    mintNFTModel(
+      appId: $appId,
+      id: $id,
+      quantity: $quantity
+    ) {
+      attributes
+      blockchainId
+      content {
+        ...NFTContentFragment
+      }
+      createdAt
+      description
+      id
+      metadata
+      nftListings {
+        ...NFTListingFragment
+      }
+      nfts {
+        ...NFTFragment
+      }
+      quantity
+      quantityMinted
+      rarity
+      set {
+        ...NFTSetFragment
+      }
+      state
+      status
+      title
+      updatedAt
+    }
+  }
+
 export {
   UploadNFTContentDocument,
   createNftModelsDocument,
@@ -306,4 +345,6 @@ export {
   nftsByWalletDocument,
   nftDocument,
   UpdateNFTModelDocument,
+  mintNFTModel,
 };
+`);
