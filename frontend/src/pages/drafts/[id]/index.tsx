@@ -41,6 +41,8 @@ const IDPages = () => {
 
   const { isAuth, user, isLoading: isAuthLoading } = useConnectWallet();
 
+
+
   useEffect(() => {
     if (
       !isAuthLoading &&
@@ -84,6 +86,7 @@ const IDPages = () => {
             <Button onClick={() => router.push(`/drafts/${id}/edit`)}>
               Edit
             </Button>
+
           </Group>
         </div>
       </Center>
