@@ -11,21 +11,21 @@ const LandingCardData = [
     description:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
     title: "Lorem ipsum dolor",
-    buttonText: "Lorem ipsum",
+    buttonText: "Sign up",
     href: "/account?isSignin=true",
   },
   {
     description:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
     title: "Lorem ipsum dolor",
-    buttonText: "Lorem ipsum",
+    buttonText: "Create",
     href: "/drops",
   },
   {
     description:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
     title: "Lorem ipsum dolor",
-    buttonText: "Lorem ipsum",
+    buttonText: "Publish",
     href: "/drafts",
   },
 ];
