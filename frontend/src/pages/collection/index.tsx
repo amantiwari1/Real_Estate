@@ -46,7 +46,7 @@ const CollectionPage = () => {
         </Center>
       )}
 
-      {nfts?.length > 1 && (
+      {nfts?.length > 0 && (
         <SimpleGrid cols={3}>
           {nfts
             .filter((nft) =>
