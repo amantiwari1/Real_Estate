@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import ConfigureWallet from "~/components/wallet/ConfigureWallet";
 import { useRouter } from "next/router";
 import RegisterWallet from "~/components/wallet/RegisterWallet";
+import VerifyWallet from "~/components/wallet/VerifyWallet";
 
 const AccountPage = () => {
   const {
@@ -55,10 +56,14 @@ const AccountPage = () => {
 
           {isLoading && <Loader />}
 
+          {!data?.walletByAddress && !data?.walletByAddress?.address && (
+            <RegisterWallet refetch={refetch} />
+          )}
+
           {/* UNAUTH */}
           {isAuth &&
             data?.walletByAddress?.state === WalletState.Unverified && (
-              <RegisterWallet data={data} refetch={refetch} />
+              <VerifyWallet data={data} refetch={refetch} />
             )}
 
           {/* UNAUTH */}

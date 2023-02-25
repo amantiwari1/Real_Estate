@@ -10,23 +10,21 @@ import { type WalletByAddressQuery } from "~/gql/graphql";
 
 interface RegisterWalletProps {
   refetch: any;
+  data: WalletByAddressQuery;
 }
 
-const RegisterWallet = ({ refetch }: RegisterWalletProps) => {
-  const {
-    isAuth,
-    user,
-    login,
-    isLoading: isConnectLoading,
-  } = useConnectWallet();
+const VerifyWallet = ({ refetch, data }: RegisterWalletProps) => {
+  const { isAuth, user, isLoading: isConnectLoading } = useConnectWallet();
   const { mutateAsync, isLoading: isRegisterLoading } =
     api.nft.registerWallet.useMutation();
+
+  const { mutateAsync: mutateAsyncVerify, isLoading: isLoadingVerify } =
+    api.nft.verifyWallet.useMutation();
 
   const handleEffect = async () => {
     if (isAuth && user.addr !== "") {
       try {
         await mutateAsync();
-        await refetch();
       } catch (e) {
         console.log(e);
       }
@@ -38,17 +36,31 @@ const RegisterWallet = ({ refetch }: RegisterWalletProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, isConnectLoading, user.addr]);
 
+  const handleVerify = async () => {
+    const verificationCode = data?.walletByAddress?.verificationCode;
+    const signedVerificationCode = await fcl.currentUser.signUserMessage(
+      verificationCode
+    );
+    if (!signedVerificationCode) {
+      return;
+    }
+    await mutateAsyncVerify({
+      signedVerificationCode: signedVerificationCode,
+    });
+    await refetch();
+  };
+
   return (
     <div>
       <Button
         variant="gradient"
-        loading={isConnectLoading || isRegisterLoading}
-        onClick={login}
+        loading={isConnectLoading || isRegisterLoading || isLoadingVerify}
+        onClick={handleVerify}
       >
-        {`Link or create your wallet`}
+        {`Verify wallet`}
       </Button>
     </div>
   );
 };
 
-export default RegisterWallet;
+export default VerifyWallet;
