@@ -56,9 +56,20 @@ const IDPages = () => {
     isLoading: isLoadingCompleteCheckoutWith,
   } = api.nft.CompleteCheckoutWithDapperWallet.useMutation();
 
+  const {
+    mutateAsync : mutateAsyncMintNFTModel,
+    isLoading : isLoadingMintNFTModel,
+  } = api.nft.mintNFTModel.useMutation();
+
   const signTransaction = useCallback(async (transaction: string) => {
     const response = await mutateAsyncSignTransaction({ transaction });
     return response.signTransactionForDapperWallet;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const mintNFTModel = useCallback(async (id: string) => {
+    const response = await mutateAsyncMintNFTModel({ id });
+    return response.mintNFTModel;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -201,6 +212,10 @@ const IDPages = () => {
                 Claim This NFT
               </Button>
             )}
+
+            <Button onClick={mintNFTModel}>
+              Mint Nft
+            </Button>
 
             <Button onClick={() => router.push(`/drops/${id}/edit`)}>
               Edit

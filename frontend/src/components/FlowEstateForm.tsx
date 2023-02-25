@@ -23,8 +23,6 @@ import TextAreaForm from "./form/TextAreaForm";
 // Age of the property: [input field]
 // Renovations/repairs: [bool]
 
-// Market Trends:
-// Demand for real estate in the area: [input field]
 
 export function FlowEstateForm<S extends z.ZodType<any, any>>(
   props: FormProps<S>
