@@ -77,6 +77,25 @@ const IDPages = () => {
     }
   };
 
+  const {
+    mutateAsync : mutateAsyncMintNFTModel,
+    isLoading : isLoadingMintNFTModel,
+  } = api.nft.mintNFTModel.useMutation();
+
+
+  const handleMint = async () => {
+    try {
+      const data = (await mutateAsyncMintNFTModel({
+        id: id as string,
+
+      })) as TransferNftToUserMutation;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+
   const handleCheckout = async () => {
     try {
       const checkout = await mutateAsync({ id: data?.nftModel?.id as string });
@@ -201,6 +220,10 @@ const IDPages = () => {
                 Claim This NFT
               </Button>
             )}
+
+            <Button onClick={handleMint}>
+              Mint
+            </Button>
 
             {/* <Button onClick={() => router.push(`/marketplace/${id}/edit`)}>
               Edit
