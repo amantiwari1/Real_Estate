@@ -27,7 +27,7 @@ const LandingCard = ({
           <p className="text-gray-500">{description}</p>
 
           <Link href={href}>
-            <Button variant="light" color="pink" radius="xl" maw={240} w="100%">
+            <Button variant="light" color="green" radius="xl" maw={240} w="100%" className="my-4">
               {buttonText}
             </Button>
           </Link>

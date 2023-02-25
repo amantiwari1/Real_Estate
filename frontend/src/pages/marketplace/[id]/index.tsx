@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Center, Group, Loader, Text, Title } from "@mantine/core";
+import { Button, Center, Group, Loader, Title } from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import {
