@@ -3,28 +3,29 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import LandingCard from "~/components/LandingCard";
+import logo from "../assets/logo.png";
 
 const textgradient = `bg-gradient-to-r from-fuchsia-500 via-purple-500 to-rose-500 bg-clip-text text-transparent`;
 
 const LandingCardData = [
   {
     description:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
-    title: "Lorem ipsum dolor",
+      "Simply sign up with your email and you are ready to go. No need to create a wallet or install any wallet.",
+    title: "Walletless onboarding",
     buttonText: "Sign up",
     href: "/account?isSignin=true",
   },
   {
     description:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
-    title: "Lorem ipsum dolor",
+      "Draft your Property NFT and add all the details you want to show to your buyers. You can also add a video and images to your NFT.",
+    title: "Create your first draft nft",
     buttonText: "Create",
-    href: "/drops",
+    href: "/marketplace",
   },
   {
     description:
-      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam consequuntur repellendus dolorem nemo dolores molestias perferendis est maxime officiis! Harum eligendi quam eos nesciunt maiores iste debitis, eaque perferendis id!",
-    title: "Lorem ipsum dolor",
+      "When you are ready to publish your NFT, you can publish it on the marketplace by minting it.",
+    title: "Publish your NFT on the marketplace",
     buttonText: "Publish",
     href: "/drafts",
   },
@@ -43,7 +44,7 @@ const Home: NextPage = () => {
           <div className="flex items-center justify-between">
             <p>Flow Estate logo</p>
             <div className="flex space-x-5">
-              <Link href="/drops">
+              <Link href="/marketplace">
                 <Button radius="xl" variant="light">
                   Explore
                 </Button>
@@ -59,10 +60,10 @@ const Home: NextPage = () => {
         <h1
           className={` p-10 text-center text-5xl  font-extrabold ${textgradient}`}
         >
-          Unlock the Future of <br /> Real Estate Investment
+          Unlock the Future of <br /> Real Estate with FlowEstate
         </h1>
         <Center>
-          <Link href="/drops">
+          <Link href="/marketplace">
             <Button
               size="xl"
               variant="gradient"

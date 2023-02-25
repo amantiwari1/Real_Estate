@@ -4,7 +4,7 @@ export const navlinks = [
   {
     name: "market",
     icon: IconHome,
-    link: "/drops",
+    link: "/marketplace",
   },
   {
     name: "Create NFT",

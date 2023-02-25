@@ -64,7 +64,7 @@ const CreateNFTModel = () => {
   return (
     <Layout>
       <Title align="center" color="green" order={1}>
-        Edit an NFT for your Property
+        Edit the NFT for your Property
       </Title>
       <FlowEstateForm
         className="my-4"

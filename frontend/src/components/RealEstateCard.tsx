@@ -18,7 +18,7 @@ const RealEstateCard = ({
   image,
 }: RealEstateCard) => {
   return (
-    <Link className="cursor-pointer" href={`/drops/${id}`}>
+    <Link className="cursor-pointer" href={`/marketplace/${id}`}>
       <Card
         className="hover:scale-105"
         shadow="sm"
