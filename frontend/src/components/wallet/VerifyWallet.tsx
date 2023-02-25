@@ -14,27 +14,10 @@ interface RegisterWalletProps {
 }
 
 const VerifyWallet = ({ refetch, data }: RegisterWalletProps) => {
-  const { isAuth, user, isLoading: isConnectLoading } = useConnectWallet();
-  const { mutateAsync, isLoading: isRegisterLoading } =
-    api.nft.registerWallet.useMutation();
+  const { isLoading: isConnectLoading } = useConnectWallet();
 
   const { mutateAsync: mutateAsyncVerify, isLoading: isLoadingVerify } =
     api.nft.verifyWallet.useMutation();
-
-  const handleEffect = async () => {
-    if (isAuth && user.addr !== "") {
-      try {
-        await mutateAsync();
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
-
-  useEffect(() => {
-    handleEffect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth, isConnectLoading, user.addr]);
 
   const handleVerify = async () => {
     const verificationCode = data?.walletByAddress?.verificationCode;
@@ -54,7 +37,7 @@ const VerifyWallet = ({ refetch, data }: RegisterWalletProps) => {
     <div>
       <Button
         variant="gradient"
-        loading={isConnectLoading || isRegisterLoading || isLoadingVerify}
+        loading={isConnectLoading || isLoadingVerify}
         onClick={handleVerify}
       >
         {`Verify wallet`}
