@@ -117,23 +117,7 @@ const IDPages = () => {
           </div>
 
           <div className="space-y-5">
-            <Group position="apart">
-              <Button onClick={() => router.push(`/drafts/${id}/edit`)}>
-                Edit
-              </Button>
-
-              <Button
-                loading={isLoadingNftModel || isLoadingClaimNFT}
-                onClick={handlePublish}
-              >
-                Publish
-              </Button>
-              
-              <Button onClick={() => handleMint(data)}>
-                Mint
-              </Button>
             
-            </Group>
             <Title>{data?.nftModel?.title}</Title>
 
             <Text> {data?.nftModel?.description}</Text>
@@ -169,7 +153,23 @@ const IDPages = () => {
                 </tr>
               </tbody>
             </Table>
+            <Group position="apart">
+              <Button onClick={() => router.push(`/drafts/${id}/edit`)}>
+                Edit
+              </Button>
+
+              <Button
+                loading={isLoadingNftModel || isLoadingClaimNFT}
+                onClick={handlePublish}
+              >
+                Transfer me
+              </Button>
+              
+              <Button onClick={() => handleMint(data)}>
+                Publish
+              </Button>
             
+            </Group>
           </div>
 
         </div>
