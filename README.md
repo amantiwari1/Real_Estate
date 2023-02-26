@@ -13,6 +13,13 @@ Create a platform for selling and buying of physical Real Estate assets through 
  
 # Features
 
+*> Built on Flow
+
+We chose Flow as the  blockchain to build because of their track record of enabling great Web3 user experiences, low fees and commitment to user safety. 
+
+
+
+Flow is also one of the greenest blockchains. Minting an NFT on Flow produces less carbon than posting on Instagram!
 1> See other users Flovatars on the app and verify them 
 
 We are Querying from the mainnet, for testing - https://www.flowty.io/listing/906283794 
