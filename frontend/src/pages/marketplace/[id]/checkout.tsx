@@ -1,4 +1,7 @@
-import { CircleCheckout } from "@circle-fin/circle-widgets-sdk";
+import {
+  CircleCheckout,
+  type PaymentMethodType,
+} from "@circle-fin/circle-widgets-sdk";
 import { Center, Loader } from "@mantine/core";
 import React from "react";
 import Layout from "~/layouts/layout";
@@ -7,6 +10,13 @@ import "@circle-fin/circle-widgets-sdk/lib/dist/base.css";
 import "@circle-fin/circle-widgets-sdk/lib/dist/components.css";
 import "@circle-fin/circle-widgets-sdk/lib/dist/fonts.css";
 // import { useRouter } from "next/router";
+
+export interface PaymentSuccessResult {
+  paymentId?: string;
+  paymentIntentId?: string;
+  redirectUrl?: string;
+  paymentMethodType?: PaymentMethodType;
+}
 
 const Checkout = () => {
   // const router = useRouter();
@@ -40,8 +50,8 @@ const Checkout = () => {
             onError={(error) => {
               console.log(error);
             }}
-            onPaymentSuccess={(res) => {
-              console.log(res);
+            onPaymentSuccess={(res: PaymentSuccessResult) => {
+              console.log({ res });
             }}
           />
         </div>
