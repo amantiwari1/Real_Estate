@@ -48,7 +48,7 @@ const Home: NextPage = () => {
           )}
 
           {!isLoading && nftsModelWithAddress?.length ? (
-            <Grid className="card-container">
+            <Grid className="card-container bg-amber-400 min-h-screen  py-6 flex flex-col justify-center sm:py-12">
               {nftsModelWithAddress?.map((item) => (
                 <Grid.Col key={item?.id as string} span={3}>
                   <RealEstateCard

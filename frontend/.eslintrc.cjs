@@ -8,7 +8,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ["node_modules/", "src/gql"],
+  ignorePatterns: ["node_modules/", "src/gql","src/pages/account/flovatar.jsx"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: "./tsconfig.json",

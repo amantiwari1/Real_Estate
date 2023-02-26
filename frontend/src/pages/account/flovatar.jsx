@@ -75,9 +75,12 @@ export default function Flovatar() {
           </span>{" "}
           flovatars in its storage.
         </p>
-        <div className="grid grid-cols-3 gap-2 place-content-center mx-24 p-8">
+        <div className="grid grid-cols-3 gap-2 mx-24 p-8 my-44">
           {flovatars.map((flovatar) => (
+            <>
             <img key={flovatar.id} src={`https://flovatar.com/api/image/${flovatar.id}`} className="h-40 hover:scale-150 cursor-pointer shadow-lg shadow-emerald-800 my-10" alt="images"/>
+            <p>Flovatar {flovatar.id}</p>
+            </>
           ))}
         </div>
       </div>

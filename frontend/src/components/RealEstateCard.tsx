@@ -32,13 +32,8 @@ const RealEstateCard = ({
 }: RealEstateCard) => {
   return (
     <Link className="cursor-pointer" href={link}>
-      <Card
-        className="hover:scale-105"
-        shadow="sm"
-        h="100%"
-        p="lg"
-        radius="md"
-        withBorder
+      <div
+        className="hover:scale-105 bg-white shadow-lg sm:rounded-3xl sm:p-6 bg-clip-padding bg-opacity-60 border border-gray-200 card h-full"
       >
         <Card.Section>
           <img src={image} alt={title} />
@@ -48,14 +43,14 @@ const RealEstateCard = ({
             <Badge>{state && StatusMap[state]}</Badge>
           </Card.Section>
         )}
-        <Card.Section p={10}>
+        <Card.Section p={10} className="text-black text-center">
           <Text weight={500}>{title}</Text>
           <Text size="sm" weight={400}>
             {description}
           </Text>
           Price: {price}
         </Card.Section>
-      </Card>
+      </div>
     </Link>
   );
 };
