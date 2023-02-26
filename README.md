@@ -9,7 +9,12 @@ Create a platform for selling and buying of physical Real Estate assets through 
  
  Published on NFT Catalog - https://www.flow-nft-catalog.com/catalog/testnet/RealEstate
  
- 
+# Features
+
+1> See other users Flovatars on the app and verify them 
+
+We are Querying from the mainnet, for testing - https://www.flowty.io/listing/906283794 
+
 ## Possible Advantages 
  
 • Increased Transparency: Using blockchain technology can increase transparency and reduce the likelihood of fraud or disputes. This is because all the transactions and ownership details would be stored on a decentralized ledger, making it easier to verify the authenticity of the asset and its ownership.
