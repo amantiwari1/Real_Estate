@@ -37,4 +37,9 @@ export const navlinks = [
     icon: IconUser,
     link: "/account",
   },
+  {
+    name: "My Flowns",
+    icon: IconUser,
+    link: "/account/flown",
+  }
 ];

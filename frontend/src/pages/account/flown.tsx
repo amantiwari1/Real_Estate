@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {  TextInput } from "@mantine/core";
+import Layout from "~/layouts/layout";
 
 interface DomainData {
     id: string;
@@ -49,6 +50,7 @@ function Domains() {
   }
 
   return (
+    <Layout>
     <div>
       <div className="my-5 flex justify-center space-x-5">
           <TextInput
@@ -96,6 +98,7 @@ function Domains() {
         svg object not supported
       </object> */}
     </div>
+    </Layout>
   );
 }
 
