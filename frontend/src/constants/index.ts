@@ -1,4 +1,10 @@
-import { IconHome , IconSquarePlus , IconClipboardPlus , IconNotes , IconUser} from "@tabler/icons-react";
+import {
+  IconHome,
+  IconSquarePlus,
+  IconClipboardPlus,
+  IconNotes,
+  IconUser,
+} from "@tabler/icons-react";
 
 export const navlinks = [
   {
@@ -25,5 +31,10 @@ export const navlinks = [
     name: "My Flovatars",
     icon: IconUser,
     link: "/account/flovatar",
+  },
+  {
+    name: "My Account",
+    icon: IconUser,
+    link: "/account",
   },
 ];
