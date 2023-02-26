@@ -245,10 +245,6 @@ const IDPages = () => {
                   Claim This NFT
                 </Button>
               )}
-
-              {/* <Button onClick={() => router.push(`/marketplace/${id}/edit`)}>
-              Edit
-            </Button> */}
             </Group>
           </div>
         </div>

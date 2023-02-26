@@ -75,11 +75,11 @@ const Home: NextPage = () => {
           </Link>
         </Center>
         <Center px={50} pt={50}>
-          <Group p={10} position="apart" maw={1300}>
+          <div className="grid grid-cols-3  gap-5">
             {LandingCardData.map((data, index) => (
               <LandingCard key={index} number={index + 1} {...data} />
             ))}
-          </Group>
+          </div>
         </Center>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { Grid } from "@mantine/core";
+import { Center, Grid, Loader } from "@mantine/core";
 import { type NextPage } from "next";
 import Head from "next/head";
 import RealEstateCard from "~/components/RealEstateCard";
@@ -16,19 +16,32 @@ const Home: NextPage = () => {
     }
   );
   async function getDomainList() {
-    const endpoint = 'https://testnet.flowns.org/api/data/address/0x3c09a556ecca42dc';
+    const endpoint =
+      "https://testnet.flowns.org/api/data/address/0x3c09a556ecca42dc";
     const response = await fetch(endpoint);
     const data = await response.json();
     return data;
   }
-  
+
   // Call the async function and log the result
-  getDomainList().then((data) => {
-    console.log(data);
-  }).catch((error) => {
-    console.error(error);
-  });
-  
+  getDomainList()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <Center h="100%">
+          <Loader />
+        </Center>
+      </Layout>
+    );
+  }
+
   return (
     <>
       <Head>
