@@ -12,6 +12,7 @@ import {
   type TransferNftToUserMutation,
 } from "~/gql/graphql";
 
+
 const IDPages = () => {
   const router = useRouter();
   const id = router.query["id"]?.toString();
@@ -34,6 +35,23 @@ const IDPages = () => {
       })) as TransferNftToUserMutation;
 
       data.transfer?.id && router.push(`/collection/${data.transfer?.id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const {
+    mutateAsync : mutateAsyncMintNFTModel,
+    isLoading : isLoadingMintNFTModel,
+  } = api.nft.mintNFTModel.useMutation();
+
+
+  const handleMint = async () => {
+    try {
+      const data = (await mutateAsyncMintNFTModel({
+        id: id as string,
+
+      })) as MintMutation;
     } catch (error) {
       console.log(error);
     }
@@ -79,6 +97,10 @@ const IDPages = () => {
           <Group position="apart">
             <Button loading={isLoadingNftModel} onClick={handlePublish}>
               Publish
+            </Button>
+
+            <Button onClick={handleMint}>
+              Mint
             </Button>
 
             <Button onClick={() => router.push(`/drafts/${id}/edit`)}>
