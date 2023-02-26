@@ -38,7 +38,7 @@ const RealEstateCard = ({
             <img
               src={image}
               alt={title}
-              className="aspect-square h-auto w-[300px]"
+              className="aspect-square h-full w-full rounded-md"
             />
           </Card.Section>
 
