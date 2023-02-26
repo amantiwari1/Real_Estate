@@ -286,6 +286,9 @@ export const nftRouter = createTRPCRouter({
     mintNFTModel : privateProedure
     .input(
       z.object({
+        appId: z.string(),
+        id: z.string(),
+        quantity: z.number(),
         title: z.string(),
         description: z.string(),
         attributes: z.object({
@@ -308,7 +311,12 @@ export const nftRouter = createTRPCRouter({
         URL,
         mintNFTModel,
         {
-          setId: "11e39381-a415-43e9-920b-3b6ace796148",
+          appId: input.appId,
+          id: input.id,
+          quantity: input.quantity,
+          title: input.title,
+          description: input.description,
+          attributes: input.attributes,
           data: {
             title: input.title,
             description: input.description,
