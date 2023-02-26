@@ -8,14 +8,20 @@ const circle = new Circle(
 
 export const circleRouter = createTRPCRouter({
   createCheckoutSesstion: privateProedure.query(async ({}) => {
-    const data = await circle.checkoutSessions.createCheckoutSession({
-      successUrl: "https://www.example.com/success",
+    try {
+      const data = await circle.checkoutSessions.createCheckoutSession({
+        successUrl: "https://www.example.com/success",
 
-      amount: {
-        amount: "3.14",
-        currency: "USD",
-      },
-    });
-    return data.data.data;
+        amount: {
+          amount: "1",
+          currency: "USD",
+        },
+      });
+
+      return data.data.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error?.response?.data);
+    }
   }),
 });

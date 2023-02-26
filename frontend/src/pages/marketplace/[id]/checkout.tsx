@@ -3,9 +3,21 @@ import { Center, Loader } from "@mantine/core";
 import React from "react";
 import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
+import "@circle-fin/circle-widgets-sdk/lib/dist/base.css";
+import "@circle-fin/circle-widgets-sdk/lib/dist/components.css";
+import "@circle-fin/circle-widgets-sdk/lib/dist/fonts.css";
+// import { useRouter } from "next/router";
 
 const Checkout = () => {
-  const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery();
+  // const router = useRouter();
+  // const id = router.query["id"]?.toString();
+
+  const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   if (isLoading) {
     return (
