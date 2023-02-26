@@ -1,4 +1,4 @@
-import { IconHome } from "@tabler/icons-react";
+import { IconHome , IconSquarePlus , IconClipboardPlus , IconNotes , IconUser} from "@tabler/icons-react";
 
 export const navlinks = [
   {
@@ -8,17 +8,22 @@ export const navlinks = [
   },
   {
     name: "Create NFT",
-    icon: IconHome,
+    icon: IconSquarePlus,
     link: "/real_estate/new",
   },
   {
     name: "My Collection",
-    icon: IconHome,
+    icon: IconClipboardPlus,
     link: "/collection",
   },
   {
     name: "My Drafts",
-    icon: IconHome,
+    icon: IconNotes,
     link: "/drafts",
+  },
+  {
+    name: "My Flovatars",
+    icon: IconUser,
+    link: "/account/flovatar",
   },
 ];

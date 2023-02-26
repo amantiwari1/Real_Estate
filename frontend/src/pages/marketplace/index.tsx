@@ -15,6 +15,20 @@ const Home: NextPage = () => {
       appId: process.env.NEXT_PUBLIC_CLIENT_ID,
     }
   );
+  async function getDomainList() {
+    const endpoint = 'https://testnet.flowns.org/api/data/address/0x3c09a556ecca42dc';
+    const response = await fetch(endpoint);
+    const data = await response.json();
+    return data;
+  }
+  
+  // Call the async function and log the result
+  getDomainList().then((data) => {
+    console.log(data);
+  }).catch((error) => {
+    console.error(error);
+  });
+  
   return (
     <>
       <Head>
