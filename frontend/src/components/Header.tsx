@@ -17,8 +17,12 @@ const Header = () => {
   return (
     <HeaderMantine height={60} p="xs">
       <div className="flex">
-        <div className="flex w-[170px] justify-center">
-          <div>{/* <img src={} className="h-10 w-auto" /> */}</div>
+        <div className="flex w-[170px] items-center justify-center">
+          <div>
+            <Link href="/marketplace">
+              <img src="/flowestate.svg" alt="logo" />
+            </Link>
+          </div>
         </div>
 
         <div className="flex w-full justify-between">

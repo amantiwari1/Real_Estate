@@ -1,9 +1,9 @@
-import { Button, Center, Flex, Group } from "@mantine/core";
+import { Button, Center } from "@mantine/core";
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import LandingCard from "~/components/LandingCard";
-import logo from "../assets/logo.png";
+import FlowEstateLogo from "~/assets/flowestate.svg";
 
 const textgradient = `bg-gradient-to-r from-fuchsia-500 via-purple-500 to-rose-500 bg-clip-text text-transparent`;
 
@@ -42,7 +42,9 @@ const Home: NextPage = () => {
       <div className="h-screen bg-gradient-to-r from-gray-700 via-slate-800 to-slate-900">
         <nav className=" w-full border-b-[1px] border-gray-700 bg-gray-900/40 bg-opacity-30 p-5 backdrop-blur-lg backdrop-filter">
           <div className="flex items-center justify-between">
-            <p>Flow Estate logo</p>
+            <p>
+              <img src="/flowestate.svg" alt="logo" />
+            </p>
             <div className="flex space-x-5">
               <Link href="/marketplace">
                 <Button radius="xl" variant="light">

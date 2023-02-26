@@ -89,8 +89,6 @@ const IDPages = () => {
     );
   }
 
-  console.log(data);
-
   return (
     <Layout>
       <Center>
