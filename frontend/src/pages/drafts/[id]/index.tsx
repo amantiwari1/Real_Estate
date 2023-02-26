@@ -139,8 +139,6 @@ const IDPages = () => {
             <Text> {data?.nftModel?.description}</Text>
 
 
-          </Group>
-
             <Table>
               <tbody>
                 <tr>
