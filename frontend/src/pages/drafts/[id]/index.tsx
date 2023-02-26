@@ -15,13 +15,7 @@ import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
 // import { showNotification } from "@mantine/notifications";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
-import {
-  NftModelDocument,
-  type TransferNftToUserMutation,
-} from "~/gql/graphql";
-import {
-  type MintNftModelMutation,
-} from "~/gql/graphql";
+import { NftModelDocument } from "~/graphql";
 
 const IDPages = () => {
   const router = useRouter();
@@ -40,9 +34,9 @@ const IDPages = () => {
 
   const handlePublish = async () => {
     try {
-      const data = (await mutateAsyncClaimNFT({
+      const data = await mutateAsyncClaimNFT({
         id: id as string,
-      })) as TransferNftToUserMutation;
+      });
 
       data.transfer?.id && router.push(`/collection/${data.transfer?.id}`);
     } catch (error) {
@@ -51,32 +45,25 @@ const IDPages = () => {
   };
 
   const {
-    mutateAsync : mutateAsyncMintNFTModel,
-    isLoading : isLoadingMintNFTModel,
+    mutateAsync: mutateAsyncMintNFTModel,
+    isLoading: isLoadingMintNFTModel,
   } = api.nft.mintNFTModel.useMutation();
 
-
-  const handleMint = async (mintdata : any) => {
+  const handleMint = async () => {
     try {
-      const data = await (mutateAsyncMintNFTModel({
-        appId: '11e39381-a415-43e9-920b-3b6ace796148',
-        id: mintdata?.nftModel?.id,
+      await mutateAsyncMintNFTModel({
+        appId: "11e39381-a415-43e9-920b-3b6ace796148",
+        id: data?.nftModel?.id as string,
         quantity: 1,
-        title: mintdata?.nftModel?.title,
-        description: mintdata?.nftModel?.description,
-        attributes: mintdata?.nftModel?.attributes,
-        content: {
-          id: 'NFT Content ID',
-          fileId: 'NFT File ID',
-          posterId: 'NFT Poster ID',
-        }
-      })) as MintNftModelMutation;
+      });
+
+      data?.nftModel?.id && router.push(`/marketplace/${data?.nftModel?.id}`);
+
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   const { isAuth, user, isLoading: isAuthLoading } = useConnectWallet();
 
@@ -117,11 +104,9 @@ const IDPages = () => {
           </div>
 
           <div className="space-y-5">
-            
             <Title>{data?.nftModel?.title}</Title>
 
             <Text> {data?.nftModel?.description}</Text>
-
 
             <Table>
               <tbody>
@@ -164,14 +149,12 @@ const IDPages = () => {
               >
                 Transfer me
               </Button>
-              
-              <Button onClick={() => handleMint(data)}>
+
+              <Button loading={isLoadingMintNFTModel} onClick={handleMint}>
                 Publish
               </Button>
-            
             </Group>
           </div>
-
         </div>
       </Center>
     </Layout>

@@ -239,7 +239,7 @@ export const nftRouter = createTRPCRouter({
         headers
       );
 
-      // for claiming before minting in the drafts commenting this out 
+      // for claiming before minting in the drafts commenting this out
       // if (!nftModelResponse?.nftModel?.attributes?.claimable) {
       //   return new TRPCError({
       //     code: "BAD_REQUEST",
@@ -282,28 +282,13 @@ export const nftRouter = createTRPCRouter({
       );
     }),
 
-    // mintnftmodel
-    mintNFTModel : privateProedure
+  // mintnftmodel
+  mintNFTModel: privateProedure
     .input(
       z.object({
         appId: z.string(),
         id: z.string(),
         quantity: z.number(),
-        title: z.string(),
-        description: z.string(),
-        attributes: z.object({
-          location: z.string(),
-          age: z.number(),
-          size: z.number(),
-          bhk: z.number(),
-          is_repair: z.boolean(),
-          price: z.number(),
-        }),
-        content: z.object({
-          id: z.string(),
-          fileId: z.string(),
-          posterId: z.string(),
-        }),
       })
     )
     .mutation(async ({ input }) => {
@@ -314,24 +299,6 @@ export const nftRouter = createTRPCRouter({
           appId: input.appId,
           id: input.id,
           quantity: input.quantity,
-          title: input.title,
-          description: input.description,
-          attributes: input.attributes,
-          data: {
-            title: input.title,
-            description: input.description,
-            tags: [],
-            quantity: 1,
-            status: Status.Done,
-            content: {
-              fileId: input.content.fileId,
-              posterId: input.content.posterId,
-            },
-            metadata: {},
-            attributes: input.attributes,
-            contentId: input.content.id,
-            subtitle: "",
-          },
         },
         headers
       );
