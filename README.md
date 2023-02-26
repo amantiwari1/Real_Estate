@@ -15,6 +15,10 @@ Create a platform for selling and buying of physical Real Estate assets through 
 
 We are Querying from the mainnet, for testing - https://www.flowty.io/listing/906283794 
 
+2> You can query other User's collection too using his flown address 
+![image](https://user-images.githubusercontent.com/95926324/221442058-60e360a4-5719-401e-aec5-a3cadf86c57f.png)
+
+
 ## Possible Advantages 
  
 • Increased Transparency: Using blockchain technology can increase transparency and reduce the likelihood of fraud or disputes. This is because all the transactions and ownership details would be stored on a decentralized ledger, making it easier to verify the authenticity of the asset and its ownership.
