@@ -38,7 +38,7 @@ export function FlowEstateForm<S extends z.ZodType<any, any>>(
               <LabeledTextField
                 name="title"
                 label="Your Title"
-                placeholder="Clothing"
+                placeholder="Flat for sale"
                 required
               />
             </Grid.Col>

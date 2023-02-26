@@ -19,6 +19,9 @@ import {
   NftModelDocument,
   type TransferNftToUserMutation,
 } from "~/gql/graphql";
+import {
+  type MintNftModelMutation,
+} from "~/gql/graphql";
 
 const IDPages = () => {
   const router = useRouter();
@@ -47,6 +50,34 @@ const IDPages = () => {
     }
   };
 
+  const {
+    mutateAsync : mutateAsyncMintNFTModel,
+    isLoading : isLoadingMintNFTModel,
+  } = api.nft.mintNFTModel.useMutation();
+
+
+  const handleMint = async (mintdata : any) => {
+    try {
+      const data = await (mutateAsyncMintNFTModel({
+        appId: '11e39381-a415-43e9-920b-3b6ace796148',
+        id: mintdata?.nftModel?.id,
+        quantity: 1,
+        title: mintdata?.nftModel?.title,
+        description: mintdata?.nftModel?.description,
+        attributes: mintdata?.nftModel?.attributes,
+        content: {
+          id: 'NFT Content ID',
+          fileId: 'NFT File ID',
+          posterId: 'NFT Poster ID',
+        }
+      })) as MintNftModelMutation;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
   const { isAuth, user, isLoading: isAuthLoading } = useConnectWallet();
 
   useEffect(() => {
@@ -70,6 +101,8 @@ const IDPages = () => {
       </Layout>
     );
   }
+
+  console.log(data);
 
   return (
     <Layout>
@@ -95,10 +128,16 @@ const IDPages = () => {
               >
                 Publish
               </Button>
+              
+              <Button onClick={() => handleMint(data)}>
+                Mint
+              </Button>
+            
             </Group>
             <Title>{data?.nftModel?.title}</Title>
 
             <Text> {data?.nftModel?.description}</Text>
+
 
             <Table>
               <tbody>
@@ -130,7 +169,9 @@ const IDPages = () => {
                 </tr>
               </tbody>
             </Table>
+            
           </div>
+
         </div>
       </Center>
     </Layout>
