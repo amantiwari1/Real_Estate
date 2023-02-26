@@ -27,9 +27,10 @@ const Header = () => {
           <div className="flex space-x-5 pr-5">
             {isAuth && (
               <Link href="/account">
-                <div className="flex items-center space-x-5 pr-5">
+                <div className="flex items-center space-x-5 pr-1">
                   <Avatar src={null} alt="it's me" radius="xl" />
                   <Text>{user.addr}</Text>
+                  <Button>My Account</Button>
                 </div>
               </Link>
             )}

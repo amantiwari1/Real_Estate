@@ -1,7 +1,7 @@
-import { Alert, Button, Center, SimpleGrid, Text } from "@mantine/core";
+import { Alert, Button, Center, Loader, SimpleGrid, Text } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
-import CollectionCard from "~/components/CollectionCard";
+import RealEstateCard from "~/components/RealEstateCard";
 import { type Nft, NftBlockchainState } from "~/gql/graphql";
 import { nftsByWalletDocument } from "~/graphql";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
@@ -11,7 +11,7 @@ import Layout from "~/layouts/layout";
 const CollectionPage = () => {
   const { user, isAuth } = useConnectWallet();
 
-  const { data } = useGraphQL(
+  const { data, isLoading } = useGraphQL(
     nftsByWalletDocument,
     {
       enabled: isAuth ? true : false,
@@ -27,6 +27,16 @@ const CollectionPage = () => {
     return (
       <Layout>
         <Alert color="red">You need to sign in to display a collection</Alert>
+      </Layout>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <Layout>
+        <Center h="100%">
+          <Loader />
+        </Center>
       </Layout>
     );
   }
@@ -47,7 +57,7 @@ const CollectionPage = () => {
       )}
 
       {nfts?.length > 0 && (
-        <SimpleGrid cols={3}>
+        <SimpleGrid cols={4}>
           {nfts
             .filter((nft) =>
               [
@@ -56,7 +66,15 @@ const CollectionPage = () => {
               ].includes(nft?.blockchainState as NftBlockchainState)
             )
             .map((nft) => (
-              <CollectionCard nft={nft} key={nft?.id} />
+              <RealEstateCard
+                title={nft?.model?.title as string}
+                image={nft?.model?.content?.poster?.url}
+                description={nft?.model?.description as string}
+                link={`/collection/${nft?.id}`}
+                price={nft?.model?.attributes?.price ?? 0.1}
+                state={nft?.model?.state}
+                key={nft?.id}
+              />
             ))}
         </SimpleGrid>
       )}

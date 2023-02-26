@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Center, Group, Loader, Title } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Group,
+  Loader,
+  Table,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useRouter } from "next/router";
 import React, { useCallback } from "react";
 import {
@@ -162,50 +170,83 @@ const IDPages = () => {
   return (
     <Layout>
       <Center>
-        <div>
-          <img
-            src={data?.nftModel?.content?.poster?.url}
-            className="h-auto w-[400px]"
-            alt={data?.nftModel?.title as string}
-          />
-          <Title align="center" my={20}>
-            {data?.nftModel?.title}
-          </Title>
+        <div className="grid grid-cols-2 gap-10">
+          <div>
+            <img
+              src={data?.nftModel?.content?.poster?.url}
+              className="aspect-square h-full w-full rounded-md"
+              alt={data?.nftModel?.title as string}
+            />
+          </div>
 
-          <Group position="apart">
-            {!claimable && (
-              <Button
-                loading={
-                  isLoading ||
-                  isLoadingSignTransaction ||
-                  isLoadingCompleteCheckoutWith ||
-                  isLoadingNftModel
-                }
-                onClick={handleCheckout}
-              >
-                Checkout
-              </Button>
-            )}
+          <div className="space-y-5">
+            <Title>{data?.nftModel?.title}</Title>
 
-            {claimable && (
-              <Button
-                loading={
-                  isLoading ||
-                  isLoadingSignTransaction ||
-                  isLoadingCompleteCheckoutWith ||
-                  isLoadingClaimNFT ||
-                  isLoadingNftModel
-                }
-                onClick={handleClaim}
-              >
-                Claim This NFT
-              </Button>
-            )}
+            <Text> {data?.nftModel?.description}</Text>
 
-            {/* <Button onClick={() => router.push(`/marketplace/${id}/edit`)}>
-              Edit
-            </Button> */}
-          </Group>
+            <Table>
+              <tbody>
+                <tr>
+                  <td>Price</td>
+                  <td>{data?.nftModel?.attributes?.price ?? 0.1}</td>
+                </tr>
+                <tr>
+                  <td>Size (square footage) </td>
+                  <td>{data?.nftModel?.attributes?.size ?? "N/A"}</td>
+                </tr>
+                <tr>
+                  <td>Location </td>
+                  <td>{data?.nftModel?.attributes?.location ?? "N/A"}</td>
+                </tr>
+                <tr>
+                  <td>Age of the property </td>
+                  <td>{data?.nftModel?.attributes?.age + " years" ?? "N/A"}</td>
+                </tr>
+                <tr>
+                  <td>Number of BHK </td>
+                  <td>{data?.nftModel?.attributes?.bhk + " BHK" ?? "N/A"}</td>
+                </tr>
+                <tr>
+                  <td>Renovations/repairs </td>
+                  <td>
+                    {data?.nftModel?.attributes?.is_repair ? "Yes" : "No"}
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+
+            <Group position="center">
+              {!claimable && (
+                <Button
+                  size="xl"
+                  loading={
+                    isLoading ||
+                    isLoadingSignTransaction ||
+                    isLoadingCompleteCheckoutWith ||
+                    isLoadingNftModel
+                  }
+                  onClick={handleCheckout}
+                >
+                  Checkout
+                </Button>
+              )}
+
+              {claimable && (
+                <Button
+                  loading={
+                    isLoading ||
+                    isLoadingSignTransaction ||
+                    isLoadingCompleteCheckoutWith ||
+                    isLoadingClaimNFT ||
+                    isLoadingNftModel
+                  }
+                  onClick={handleClaim}
+                >
+                  Claim This NFT
+                </Button>
+              )}
+            </Group>
+          </div>
         </div>
       </Center>
     </Layout>

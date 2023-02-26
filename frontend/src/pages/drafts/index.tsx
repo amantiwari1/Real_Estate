@@ -48,21 +48,23 @@ const Home: NextPage = () => {
           )}
 
           {!isLoading && nftsModelWithAddress?.length ? (
-            <Grid className="card-container bg-amber-400 min-h-screen  py-6 flex flex-col justify-center sm:py-12">
-              {nftsModelWithAddress?.map((item) => (
-                <Grid.Col key={item?.id as string} span={3}>
-                  <RealEstateCard
-                    isDraft
-                    state={item?.state}
-                    link={`/drafts/${item?.id}`}
-                    description={item?.description as string}
-                    image={item?.content?.poster?.url}
-                    price={item?.attributes?.price ?? 0.1}
-                    title={item?.title as string}
-                  />
-                </Grid.Col>
-              ))}
-            </Grid>
+            <div className="card-container h-full min-h-screen">
+              <Grid className="p-5 py-6 sm:py-12">
+                {nftsModelWithAddress?.map((item) => (
+                  <Grid.Col key={item?.id as string} span={3}>
+                    <RealEstateCard
+                      isDraft
+                      state={item?.state}
+                      link={`/drafts/${item?.id}`}
+                      description={item?.description as string}
+                      image={item?.content?.poster?.url}
+                      price={item?.attributes?.price ?? 0.1}
+                      title={item?.title as string}
+                    />
+                  </Grid.Col>
+                ))}
+              </Grid>
+            </div>
           ) : (
             ""
           )}

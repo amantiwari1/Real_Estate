@@ -1,4 +1,4 @@
-import { Badge, Card, Text } from "@mantine/core";
+import { Badge, Card, Center, Text } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 import { type NftModelBlockchainState } from "~/gql/graphql";
@@ -32,24 +32,37 @@ const RealEstateCard = ({
 }: RealEstateCard) => {
   return (
     <Link className="cursor-pointer" href={link}>
-      <div
-        className="hover:scale-105 bg-white shadow-lg sm:rounded-3xl sm:p-6 bg-clip-padding bg-opacity-60 border border-gray-200 card h-full"
-      >
-        <Card.Section>
-          <img src={image} alt={title} />
-        </Card.Section>
-        {isDraft && (
-          <Card.Section px={10} pt={10}>
-            <Badge>{state && StatusMap[state]}</Badge>
+      <div className="card h-full border border-gray-200 bg-white bg-opacity-60 bg-clip-padding shadow-lg hover:scale-105 sm:rounded-3xl sm:p-6">
+        <div className="flex h-full flex-col justify-between">
+          <Card.Section>
+            <img
+              src={image}
+              alt={title}
+              className="aspect-square h-full w-full rounded-md"
+            />
           </Card.Section>
-        )}
-        <Card.Section p={10} className="text-black text-center">
-          <Text weight={500}>{title}</Text>
-          <Text size="sm" weight={400}>
-            {description}
-          </Text>
-          Price: {price}
-        </Card.Section>
+
+          {isDraft && (
+            <Card.Section px={10} pt={10}>
+              <Center>
+                <Badge
+                  variant="gradient"
+                  gradient={{ from: "teal", to: "lime", deg: 105 }}
+                >
+                  {state && StatusMap[state]}
+                </Badge>
+              </Center>
+            </Card.Section>
+          )}
+
+          <Card.Section p={10} className="text-center text-black">
+            <Text weight={500}>{title}</Text>
+            <Text size="sm" weight={400}>
+              {description}
+            </Text>
+            Price: {price}
+          </Card.Section>
+        </div>
       </div>
     </Link>
   );

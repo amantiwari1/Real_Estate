@@ -10,7 +10,16 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <AppShell padding="md" navbar={<Navbar />} header={<Header />} footer={<Footer />}>
+    <AppShell
+      style={{
+        // light gray background
+        background: "#27272a",
+      }}
+      padding="md"
+      navbar={<Navbar />}
+      header={<Header />}
+      footer={<Footer />}
+    >
       {children}
     </AppShell>
   );
