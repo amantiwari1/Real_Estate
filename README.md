@@ -9,6 +9,8 @@ Create a platform for selling and buying of physical Real Estate assets through 
  
  Published on NFT Catalog - https://www.flow-nft-catalog.com/catalog/testnet/RealEstate
  
+ Slides Link- https://docs.google.com/presentation/d/1BtGbyGJ0GE1Hh2u0qvtc9WmcDF1UEVoQako8FqWCKRw/edit?usp=sharing
+ 
 # Features
 
 1> See other users Flovatars on the app and verify them 
