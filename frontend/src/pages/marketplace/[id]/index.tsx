@@ -21,6 +21,7 @@ import { api } from "~/utils/api";
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
 import { showNotification } from "@mantine/notifications";
+import Link from "next/link";
 
 interface checkoutWithDapperWalletProps {
   __typename?: "CheckoutWithDapperWalletResponse";
@@ -215,7 +216,7 @@ const IDPages = () => {
               </tbody>
             </Table>
 
-            <Group position="center">
+            <Group position="apart">
               {!claimable && (
                 <Button
                   size="xl"
@@ -230,6 +231,9 @@ const IDPages = () => {
                   Checkout
                 </Button>
               )}
+              <Link href={`/marketplace/${data?.nftModel?.id}/checkout`}>
+                <Button size="xl">Circle Checkout</Button>
+              </Link>
 
               {claimable && (
                 <Button

@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { nftRouter } from "~/server/api/routers/nft";
+import { circleRouter } from "~/server/api/routers/circle";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { nftRouter } from "~/server/api/routers/nft";
  */
 export const appRouter = createTRPCRouter({
   nft: nftRouter,
+  circle: circleRouter,
 });
 
 // export type definition of API

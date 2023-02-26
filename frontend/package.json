@@ -10,6 +10,8 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@circle-fin/circle-sdk": "^1.5.0",
+    "@circle-fin/circle-widgets-sdk": "^1.0.5",
     "@emotion/react": "^11.10.6",
     "@emotion/server": "^11.10.0",
     "@graphql-codegen/client-preset": "^2.1.0",

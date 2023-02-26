@@ -1,7 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import request from "graphql-request";
 import { z } from "zod";
-import {} from "~/gql";
 import { Status } from "~/gql/graphql";
 import {
   CheckoutWithDapperWalletDocument,
