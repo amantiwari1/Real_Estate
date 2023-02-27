@@ -9,11 +9,26 @@ Create a platform for selling and buying of physical Real Estate assets through 
  
  Published on NFT Catalog - https://www.flow-nft-catalog.com/catalog/testnet/RealEstate
  
+ For seeing the NFT's on testnet - https://testnet.flowview.app/account/0x8add986bc5f20a17/collection
+ 
+ Slides Link- https://docs.google.com/presentation/d/1BtGbyGJ0GE1Hh2u0qvtc9WmcDF1UEVoQako8FqWCKRw/edit?usp=sharing
+ 
 # Features
 
+*> Built on Flow
+
+We chose Flow as the  blockchain to build because of their track record of enabling great Web3 user experiences, low fees and commitment to user safety. 
+
+
+
+Flow is also one of the greenest blockchains. Minting an NFT on Flow produces less carbon than posting on Instagram!
 1> See other users Flovatars on the app and verify them 
 
 We are Querying from the mainnet, for testing - https://www.flowty.io/listing/906283794 
+
+2> You can query other User's collection too using his flown address 
+![image](https://user-images.githubusercontent.com/95926324/221442058-60e360a4-5719-401e-aec5-a3cadf86c57f.png)
+
 
 ## Possible Advantages 
  
