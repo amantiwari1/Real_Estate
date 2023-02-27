@@ -36,17 +36,19 @@ explore and potentially purchase Flown domain names.
 
 6. Circle Payment:
 Hassle-free and simplified payment on blockchain without using web3 wallet and cryptocurrency
-<img src="https://user-images.githubusercontent.com/95926324/221572205-dbe85d57-927e-4e95-9cc6-9024d89250f9.png" alt="circle" width="400px"></img>
 
-user2  does checkout ✅ 
+> <img src="https://user-images.githubusercontent.com/95926324/221572205-dbe85d57-927e-4e95-9cc6-9024d89250f9.png" alt="circle" width="400px"></img>
 
-user2 verify payment ✅
+> How it will work:
+>> Buyer does checkout
 
-we pay to user1 payment 
+>> Buyer verfies the payment
 
-transfer to user2 ✅
+>> Circle will send payment to seller
 
-redirect to user2's colllection id page ✅
+>> Asset transfer to Buyer
+
+>> Buyer redirected to collection page
 
 
 ## Advantages of Decenralizing Real Estate
