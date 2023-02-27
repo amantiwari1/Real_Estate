@@ -77,3 +77,14 @@ Overall, Flow blockchain can provide a suitable foundation for building a secure
 ° Historical Significance: Properties that have historical or cultural significance might have more value and could potentially attract a broader audience.
 
 ° Market Value: The market value of the property is an important factor to consider when selecting properties to represent as NFTs. The value of the property should be high enough to make it an attractive investment for buyers.
+
+
+# Tech Stack
+> For Frontend:
+- [Next.js](https://nextjs.org)
+- [NextAuth.js](https://next-auth.js.org)
+- [Prisma](https://prisma.io)
+- [Tailwind CSS](https://tailwindcss.com)
+- [tRPC](https://trpc.io)
+> For Smart Contract:
+- Cadence
