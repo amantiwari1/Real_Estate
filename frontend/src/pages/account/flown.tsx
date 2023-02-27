@@ -85,12 +85,17 @@ function Domains() {
               <h2 className="text-3xl text-blue-400">{data.name}</h2>
               <p className="text-2xl text-green-200">Owner: {data.owner}</p>
               <p>Namehash: {data.nameHash}</p>
+              <Link href={`/account/${data.name}`}>
+                <Button color="violet" variant="light" mt={10} size="xs">
+                  View Flowestate nft Collection
+                </Button>
+              </Link>
             </div>
           </Center>
         )}
         <div className="mt-5 flex justify-center">
           <Button color="indigo" onClick={() => setShow(!show)}>
-            Show All
+            Show List of fn Domains
           </Button>
         </div>
         {show && (
