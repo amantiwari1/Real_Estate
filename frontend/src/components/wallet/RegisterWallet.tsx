@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button } from "@mantine/core";
+import { Button, Center, Text } from "@mantine/core";
 import React, { useEffect } from "react";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import { api } from "~/utils/api";
@@ -36,13 +36,18 @@ const RegisterWallet = ({ refetch }: RegisterWalletProps) => {
 
   return (
     <div>
-      <Button
-        variant="gradient"
-        loading={isConnectLoading || isRegisterLoading}
-        onClick={login}
-      >
-        {`Link or create your wallet`}
-      </Button>
+      <Text my={20}>Step 1 - Register your wallet, 2 step left</Text>
+
+      <Center>
+        <Button
+          size="xl"
+          variant="gradient"
+          loading={isConnectLoading || isRegisterLoading}
+          onClick={login}
+        >
+          {`Link or create your wallet`}
+        </Button>
+      </Center>
     </div>
   );
 };

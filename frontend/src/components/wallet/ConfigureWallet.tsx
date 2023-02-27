@@ -1,4 +1,4 @@
-import { Button } from "@mantine/core";
+import { Button, Center, Text } from "@mantine/core";
 import React, { useEffect } from "react";
 import { useFlowAccountConfiguration } from "~/hooks/useFlowAccountConfiguration";
 import { api } from "~/utils/api";
@@ -32,13 +32,23 @@ const ConfigureWallet = ({ refetch }: ConfigureWalletProps) => {
   };
 
   return (
-    <Button
-      variant="gradient"
-      loading={isLoadingReady || isFlowAccountConfigurationLoading}
-      onClick={configure}
-    >
-      {`Configure wallet`}
-    </Button>
+    <div>
+      <Text my={20}>
+        Step 3 - Configure your wallet, it is getting close to complete your
+        wallet
+      </Text>
+
+      <Center>
+        <Button
+          size="xl"
+          variant="gradient"
+          loading={isLoadingReady || isFlowAccountConfigurationLoading}
+          onClick={configure}
+        >
+          {`Configure wallet`}
+        </Button>
+      </Center>
+    </div>
   );
 };
 
