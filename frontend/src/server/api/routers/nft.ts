@@ -261,6 +261,7 @@ export const nftRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string(),
+        address: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -273,7 +274,7 @@ export const nftRouter = createTRPCRouter({
         CheckoutWithDapperWalletDocument,
         {
           nftModelId: input.id,
-          address: ctx.address,
+          address: input.address,
           price: price,
           expiry: Number.MAX_SAFE_INTEGER,
         },

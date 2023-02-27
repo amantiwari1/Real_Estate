@@ -88,7 +88,10 @@ const IDPages = () => {
 
   const handleCheckout = async () => {
     try {
-      const checkout = await mutateAsync({ id: data?.nftModel?.id as string });
+      const checkout = await mutateAsync({
+        id: data?.nftModel?.id as string,
+        address: data?.nftModel?.attributes?.address,
+      });
 
       const {
         cadence,
