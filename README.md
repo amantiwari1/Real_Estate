@@ -28,7 +28,10 @@ Flow is also one of the greenest blockchains. Minting an NFT on Flow produces le
 We are Querying from the mainnet, for testing - https://www.flowty.io/listing/906283794 
 
 2> You can query other User's collection too using his flown address 
+
 ![image](https://user-images.githubusercontent.com/95926324/221442058-60e360a4-5719-401e-aec5-a3cadf86c57f.png)
+
+![image](https://user-images.githubusercontent.com/95926324/221573120-4f199065-59e6-45cc-979a-f5213d203e6b.png)
 
 3> Circle Payments 
 
