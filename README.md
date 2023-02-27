@@ -87,4 +87,4 @@ Overall, Flow blockchain can provide a suitable foundation for building a secure
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 > For Smart Contract:
-- Cadence
+- [Cadence](https://developers.flow.com/cadence)
