@@ -54,7 +54,7 @@ const AccountPage = () => {
             </div>
           )}
 
-          {isLoading && <Loader />}
+          {isAuth && isLoading && <Loader />}
 
           {!data?.walletByAddress && !data?.walletByAddress?.address && (
             <RegisterWallet refetch={refetch} />

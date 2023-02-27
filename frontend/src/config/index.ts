@@ -22,8 +22,20 @@ const initFclConfig = async () => {
       "app.detail.title": "real estate",
     })
     .put("accessNode.api", process.env.NEXT_PUBLIC_FLOW_ACCESS_API)
-    .put("discovery.wallet", process.env.NEXT_PUBLIC_WALLET_API)
-    .put("discovery.wallet.method", "POP/RPC")
+    .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn")
+    .put("discovery.authn.include", ["0x82ec283f88a62e65"])
+
+    // .put("discovery.wallet.method", "POP/RPC")
+    // use Blocto testnet wallet
+    // .put("challenge.handshake", "https://flow-wallet-testnet.blocto.app/authn")
+    // .put("challenge.wallet", "https://flow-wallet-testnet.blocto.app/authn")
+    // .put("discovery.wallet.method", "EXT/RPC")
+    // .put(
+    //   "discovery.wallet",
+    //   "chrome-extension://hpclkefagolihohboafpheddmmgdffjm/popup.html"
+    // )
+    // .put("discovery.wallet", process.env.NEXT_PUBLIC_WALLET_API)
+    // .put("discovery.wallet.method", "POP/RPC")
     .put("fcl.storage", fclCookieStorage);
 };
 
