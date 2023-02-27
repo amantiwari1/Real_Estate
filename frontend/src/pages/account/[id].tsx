@@ -1,48 +1,44 @@
 import { Alert, Button, Center, Loader, SimpleGrid, Text } from "@mantine/core";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import RealEstateCard from "~/components/RealEstateCard";
 import { type Nft, NftBlockchainState } from "~/gql/graphql";
 import { nftsByWalletDocument } from "~/graphql";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { type DomainData } from "./flown";
+import { useQuery } from "@tanstack/react-query";
 
+async function getDomainDetails(id: string): Promise<DomainData> {
+  const apiUrl = `https://testnet.flowns.org/api/data/domain/${id}`;
+  const response = await fetch(apiUrl);
+  const flowndata = await response.json();
+  return flowndata;
+}
 
 const CollectionPage = () => {
   const { isAuth } = useConnectWallet();
-
   const router = useRouter();
-  const { id } = router.query;
+  const id = router.query["id"]?.toString();
 
-  const [domainOwner, setDomainOwner] = useState(null);
-  console.log('domain owner is',domainOwner);
+  const { data: domainOwner, isLoading: isLoadingDomain } = useQuery(
+    ["domain", id],
+    async () => await getDomainDetails(id as string)
+  );
+
   const { data, isLoading } = useGraphQL(
     nftsByWalletDocument,
     {
       enabled: isAuth ? true : false,
     },
     {
-      address: domainOwner,
+      address: domainOwner?.owner,
     }
   );
 
   const nfts = data?.nftsByWallet?.items as Nft[];
-
-  useEffect(() => {
-    async function getDomainDetails(): Promise<any> {
-      const apiUrl = `https://testnet.flowns.org/api/data/domain/${id}`;
-      const response = await fetch(apiUrl);
-      const flowndata = await response.json();
-      console.log(flowndata.owner);
-      setDomainOwner(flowndata.owner);
-    }
-
-    if (data && router.query.id) {
-      getDomainDetails();
-    }
-  }, [data, id, router.query.id]);
 
   if (!isAuth) {
     return (
@@ -52,7 +48,7 @@ const CollectionPage = () => {
     );
   }
 
-  if (isLoading) {
+  if (isLoading || isLoadingDomain) {
     return (
       <Layout>
         <Center h="100%">
@@ -76,7 +72,6 @@ const CollectionPage = () => {
           </div>
         </Center>
       )}
-
 
       {nfts?.length > 0 && (
         <SimpleGrid cols={4}>

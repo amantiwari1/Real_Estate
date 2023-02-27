@@ -12,8 +12,9 @@ import {
 import Layout from "~/layouts/layout";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { IconCheck, IconCopy } from "@tabler/icons-react";
+import Link from "next/link";
 
-interface DomainData {
+export interface DomainData {
   id: string;
   name: string;
   owner: string;
@@ -127,6 +128,11 @@ const DomainCard = ({ domain }: { domain: DomainData }) => {
       <div className="p-5">
         <IconCopyButton value={domain.owner} label={domain.owner} />
         <IconCopyButton value={domain.name} label={domain.name} />
+        <Link href={`/account/${domain.name}`}>
+          <Button color="violet" variant="light" mt={10} size="xs">
+            View FlowEstate Collection
+          </Button>
+        </Link>
       </div>
     </Paper>
   );
