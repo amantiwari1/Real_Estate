@@ -9,7 +9,8 @@ import { api } from "~/utils/api";
 import "@circle-fin/circle-widgets-sdk/lib/dist/base.css";
 import "@circle-fin/circle-widgets-sdk/lib/dist/components.css";
 import "@circle-fin/circle-widgets-sdk/lib/dist/fonts.css";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
+import { showNotification } from "@mantine/notifications";
 
 export interface PaymentSuccessResult {
   paymentId?: string;
@@ -19,8 +20,8 @@ export interface PaymentSuccessResult {
 }
 
 const Checkout = () => {
-  // const router = useRouter();
-  // const id = router.query["id"]?.toString();
+  const router = useRouter();
+  const id = router.query["id"]?.toString();
 
   const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery(
     undefined,
@@ -28,6 +29,15 @@ const Checkout = () => {
       refetchOnWindowFocus: false,
     }
   );
+
+  const { mutateAsync } = api.circle.handlePaymentSuccess.useMutation({
+    onError: (error) => {
+      showNotification({
+        title: "Something went wrong",
+        message: error.message,
+      });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -48,10 +58,21 @@ const Checkout = () => {
             environment="sandbox"
             clientKey={data?.clientToken as string}
             onError={(error) => {
+              showNotification({
+                title: "Something went wrong",
+                message: "Payment failed, Please try again later",
+              });
               console.log(error);
             }}
-            onPaymentSuccess={(res: PaymentSuccessResult) => {
+            onPaymentSuccess={async (res: PaymentSuccessResult) => {
               console.log({ res });
+
+              const data = await mutateAsync({
+                nftModelId: id as string,
+                paymentId: res.paymentId as string,
+              });
+
+              data.success && router.push(`/collection/${id}`);
             }}
           />
         </div>
