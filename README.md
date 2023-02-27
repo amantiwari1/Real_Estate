@@ -40,15 +40,15 @@ Hassle-free and simplified payment on blockchain without using web3 wallet and c
 > <img src="https://user-images.githubusercontent.com/95926324/221572205-dbe85d57-927e-4e95-9cc6-9024d89250f9.png" alt="circle" width="400px"></img>
 
 > How it will work:
->> Buyer does checkout
+>> 1. Buyer does checkout
 
->> Buyer verfies the payment
+>> 2. Buyer verfies the payment
 
->> Circle will send payment to seller
+>> 3. Circle will send payment to seller
 
->> Asset transfer to Buyer
+>> 4. Asset transfer to Buyer
 
->> Buyer redirected to collection page
+>> 5. Buyer redirected to collection page
 
 
 ## Advantages of Decenralizing Real Estate
