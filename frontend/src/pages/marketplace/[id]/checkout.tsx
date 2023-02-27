@@ -1,11 +1,43 @@
-import { CircleCheckout } from "@circle-fin/circle-widgets-sdk";
+import {
+  CircleCheckout,
+  type PaymentMethodType,
+} from "@circle-fin/circle-widgets-sdk";
 import { Center, Loader } from "@mantine/core";
 import React from "react";
 import Layout from "~/layouts/layout";
 import { api } from "~/utils/api";
+import "@circle-fin/circle-widgets-sdk/lib/dist/base.css";
+import "@circle-fin/circle-widgets-sdk/lib/dist/components.css";
+import "@circle-fin/circle-widgets-sdk/lib/dist/fonts.css";
+import { useRouter } from "next/router";
+import { showNotification } from "@mantine/notifications";
+
+export interface PaymentSuccessResult {
+  paymentId?: string;
+  paymentIntentId?: string;
+  redirectUrl?: string;
+  paymentMethodType?: PaymentMethodType;
+}
 
 const Checkout = () => {
-  const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery();
+  const router = useRouter();
+  const id = router.query["id"]?.toString();
+
+  const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery(
+    undefined,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const { mutateAsync } = api.circle.handlePaymentSuccess.useMutation({
+    onError: (error) => {
+      showNotification({
+        title: "Something went wrong",
+        message: error.message,
+      });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -26,10 +58,21 @@ const Checkout = () => {
             environment="sandbox"
             clientKey={data?.clientToken as string}
             onError={(error) => {
+              showNotification({
+                title: "Something went wrong",
+                message: "Payment failed, Please try again later",
+              });
               console.log(error);
             }}
-            onPaymentSuccess={(res) => {
-              console.log(res);
+            onPaymentSuccess={async (res: PaymentSuccessResult) => {
+              console.log({ res });
+
+              const data = await mutateAsync({
+                nftModelId: id as string,
+                paymentId: res.paymentId as string,
+              });
+
+              data.success && router.push(`/collection/${id}`);
             }}
           />
         </div>
