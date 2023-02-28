@@ -19,6 +19,7 @@ import { showNotification } from "@mantine/notifications";
 import { FORM_ERROR } from "~/components/form/Form";
 import { z } from "zod";
 import RentalForm from "~/components/RentalForm";
+import createRental from "cadence/transactions/rental";
 
 const CreateRentFormValidation = z.object({
   amount: z.number(),
@@ -141,8 +142,19 @@ const CollectionID = () => {
           initialValues={{}}
           onSubmit={async (values) => {
             try {
+              // calculate the term = duration * 86400
+              const term = String(values.duration * 86400);
+              console.log(term);
+              const expiry = String(2592000.000000);
               console.log("values", values);
-
+              createRental(
+                22,
+                String(values.amount),
+                String(values.deposit),
+                term,
+                expiry,
+                undefined
+              )
               // TODO - Rent it
             } catch (error: any) {
               console.error(error);

@@ -9,10 +9,10 @@ fcl.authenticate();
 
 async function createRental(
   listItemID: number,
-  amount: number,
-  deposit: number,
+  amount: string | undefined,
+  deposit: string | undefined,
   term: string | undefined,
-  expiry: number,
+  expiry: string | undefined,
   renter: string | undefined
 ) {
   const txId = await fcl.mutate({
@@ -114,9 +114,9 @@ async function createRental(
     args: (arg: any, t: any) => [
       arg(listItemID, t.UInt64),
       arg(amount, t.UFix64),
-      arg(deposit, t.Fix64),
+      arg(deposit, t.UFix64),
       arg(term, t.UFix64),
-      arg(expiry, t.UInt64),
+      arg(expiry, t.UFix64),
       arg(renter, t.Optional(t.Address))
       
     ],
