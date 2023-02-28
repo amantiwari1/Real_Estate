@@ -59,6 +59,7 @@ const createNftModelsDocument = graphql(/* GraphQL */ `
 const NftModelDocument = graphql(/* GraphQL */ `
   query nftModel($id: ID!) {
     nftModel(id: $id) {
+      state
       nfts {
         blockchainState
       }
