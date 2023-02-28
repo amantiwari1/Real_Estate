@@ -65,6 +65,8 @@ export const circleRouter = createTRPCRouter({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         getPaymentResponse?.data?.data as any;
 
+      console.log({ getPayment });
+
       if (getPayment.status === "failed") {
         throw new TRPCError({
           code: "PRECONDITION_FAILED",
@@ -72,24 +74,30 @@ export const circleRouter = createTRPCRouter({
         });
       }
 
-      if (getPayment.status === "paid") {
+      if (getPayment.status === "confirmed") {
         // TODO: Pay this NFT model's owner
-        const createTransfer = await circle.transfers.createTransfer({
-          amount: getPayment.amount,
-          destination: {
-            address: nftModel.nftModel?.attributes?.address,
-            type: "blockchain",
-            chain: "FLOW",
-          },
-          idempotencyKey: input.paymentId,
-          source: {
-            id: getPayment.id,
-            type: "wallet",
-          },
-        });
+        const createTransfer = await circle.transfers
+          .createTransfer({
+            amount: getPayment.amount,
+            destination: {
+              address: nftModel.nftModel?.attributes?.address,
+              type: "blockchain",
+              chain: "FLOW",
+            },
+            idempotencyKey: input.paymentId,
+            source: {
+              id: getPayment.id,
+              type: "wallet",
+            },
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+          });
+
+        console.log({ createTransfer });
 
         // Transter NFT model to buyer after pay to owner condition
-        if (createTransfer.data.data?.status === "complete") {
+        if (createTransfer?.data.data?.status === "complete") {
           await request(
             URL,
             TransferNftToWalletDocument,
@@ -99,7 +107,6 @@ export const circleRouter = createTRPCRouter({
             },
             headers
           );
-
           return {
             success: true,
           };
