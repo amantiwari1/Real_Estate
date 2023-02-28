@@ -143,14 +143,14 @@ const CollectionID = () => {
           onSubmit={async (values) => {
             try {
               // calculate the term = duration * 86400
-              const term = values.duration * 86400.001;
+              const term = String(values.duration * 86400.0001);
               console.log(term);
-              const expiry = 2592000.001;
+              const expiry = String(2592000.0001);
               console.log("values", values);
               createRental(
-                22,
-                values.amount + 0.01,
-                values.deposit + 0.01,
+                String(blockchainid),
+                String(values.amount + 0.0001),
+                String(values.deposit + 0.0001),
                 term,
                 expiry,
                 undefined
