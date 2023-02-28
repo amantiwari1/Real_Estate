@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, privateProedure } from "~/server/api/trpc";
 import {
@@ -61,13 +62,12 @@ export const circleRouter = createTRPCRouter({
         input.paymentId
       );
 
-      const getPayment: FiatPaymentPolymorphic =
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getPaymentResponse?.data?.data as any;
+      const getPayment: FiatPaymentPolymorphic = getPaymentResponse?.data
+        ?.data as any;
 
       console.log({ getPayment });
 
-      if (getPayment.status === "failed") {
+      if (getPayment?.status === "failed") {
         throw new TRPCError({
           code: "PRECONDITION_FAILED",
           message: "Payment failed",
@@ -76,28 +76,26 @@ export const circleRouter = createTRPCRouter({
 
       if (getPayment.status === "confirmed") {
         // TODO: Pay this NFT model's owner
-        const createTransfer = await circle.transfers
-          .createTransfer({
-            amount: getPayment.amount,
-            destination: {
-              address: nftModel.nftModel?.attributes?.address,
-              type: "blockchain",
-              chain: "FLOW",
-            },
-            idempotencyKey: input.paymentId,
-            source: {
-              id: getPayment.id,
-              type: "wallet",
-            },
-          })
-          .catch((error) => {
-            console.log(error.response.data);
-          });
+        const createTransferResponse = await circle.transfers.createTransfer({
+          amount: getPayment.amount,
+          destination: {
+            address: nftModel.nftModel?.attributes?.address,
+            type: "blockchain",
+            chain: "FLOW",
+          },
+          idempotencyKey: input.paymentId,
+          source: {
+            id: "1013850122",
+            type: "wallet",
+          },
+        });
+
+        const createTransfer = createTransferResponse?.data.data;
 
         console.log({ createTransfer });
 
         // Transter NFT model to buyer after pay to owner condition
-        if (createTransfer?.data.data?.status === "complete") {
+        if (createTransfer?.status === "complete") {
           await request(
             URL,
             TransferNftToWalletDocument,
