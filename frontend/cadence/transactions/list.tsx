@@ -5,8 +5,14 @@ import * as fcl from "@onflow/fcl";
 
 fcl.authenticate();
 
-async function createListing(collectionIdentifier: string, saleItemID: number, saleItemPrice: number, customID: string | undefined, buyer: string | undefined, expiry: number) {
-
+async function createListing(
+  collectionIdentifier: string,
+  saleItemID: number,
+  saleItemPrice: number,
+  customID: string | undefined,
+  buyer: string | undefined,
+  expiry: number
+) {
   const txId = await fcl.mutate({
     cadence: `
       import DapperUtilityCoin from 0x82ec283f88a62e65
@@ -85,18 +91,15 @@ async function createListing(collectionIdentifier: string, saleItemID: number, s
           }
       }
     `,
-    args: (arg: (arg0: string | number | undefined, arg1: any) => any , t: { String: any; UInt64: any; UFix64: any; Address: any; }) => [
+    args: (arg: any, t: any) => [
       arg(collectionIdentifier, t.String),
       arg(saleItemID, t.UInt64),
       arg(saleItemPrice, t.UFix64),
-      arg(customID, t.String),
-      arg(buyer, t.Address),
+      arg(customID, t.Optional(t.String)),
+      arg(buyer, t.Optional(t.Address)),
       arg(expiry, t.UInt64),
     ],
   });
-
-
-
 }
 
 export default createListing;
