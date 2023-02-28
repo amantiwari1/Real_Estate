@@ -1,12 +1,34 @@
-import { Center, Loader, Table, Text, Title } from "@mantine/core";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  Button,
+  Center,
+  Loader,
+  Modal,
+  Table,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { nftDocument } from "~/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
 import createListing from "cadence/transactions/list";
+import FlowEstateForm from "~/components/FlowEstateForm";
+import { showNotification } from "@mantine/notifications";
+import { FORM_ERROR } from "~/components/form/Form";
+import { z } from "zod";
+import RentalForm from "~/components/RentalForm";
+
+const CreateRentFormValidation = z.object({
+  amount: z.number(),
+  deposit: z.number(),
+  duration: z.number(),
+});
 
 const CollectionID = () => {
+  const [opened, setOpened] = useState(false);
+
   const router = useRouter();
   const id = router.query["id"]?.toString() as string;
 
@@ -28,8 +50,8 @@ const CollectionID = () => {
     );
   }
 
-  const blockchainid= Number(data?.nft?.blockchainId);
-  
+  const blockchainid = Number(data?.nft?.blockchainId);
+
   return (
     <Layout>
       <Center>
@@ -45,7 +67,10 @@ const CollectionID = () => {
           <div className="space-y-5">
             <Title>{data?.nft?.model?.title}</Title>
 
-            <Text> {data?.nft?.model?.description} {data?.nft?.blockchainId} </Text>
+            <Text>
+              {" "}
+              {data?.nft?.model?.description} {data?.nft?.blockchainId}{" "}
+            </Text>
 
             <Table>
               <tbody>
@@ -79,22 +104,60 @@ const CollectionID = () => {
                 </tr>
               </tbody>
             </Table>
-            <div className="flex gap-20">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={async () => {
-                
-                await createListing("RealEstate", blockchainid, 1.75000000, undefined, undefined, 86400)
-                .then((txid)=> console.log("txid", txid))
-                .catch((err)=> console.log("err", err));
-              }}>List for Sale</button>
+            <div className="flex items-center justify-between">
+              <Button
+                onClick={async () => {
+                  await createListing(
+                    "RealEstate",
+                    blockchainid,
+                    1.75,
+                    undefined,
+                    undefined,
+                    86400
+                  )
+                    .then((txid) => console.log("txid", txid))
+                    .catch((err) => console.log("err", err));
+                }}
+              >
+                List for Sale
+              </Button>
 
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Rental
-              </button>
+              <Button onClick={() => setOpened(true)}>Rental</Button>
             </div>
           </div>
         </div>
       </Center>
+
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Enter Details for rent"
+        centered
+      >
+        <RentalForm
+          className="my-4"
+          submitText="Rent NFT"
+          schema={CreateRentFormValidation}
+          initialValues={{}}
+          onSubmit={async (values) => {
+            try {
+              console.log("values", values);
+
+              // TODO - Rent it
+            } catch (error: any) {
+              console.error(error);
+              showNotification({
+                title: "Something went wrong",
+                message: "Failed to create campaign",
+                color: "red",
+              });
+              return {
+                [FORM_ERROR]: error.toString(),
+              };
+            }
+          }}
+        />
+      </Modal>
     </Layout>
   );
 };
