@@ -28,6 +28,8 @@ const CollectionID = () => {
     );
   }
 
+  const blockchainid= Number(data?.nft?.blockchainId);
+  
   return (
     <Layout>
       <Center>
@@ -43,7 +45,7 @@ const CollectionID = () => {
           <div className="space-y-5">
             <Title>{data?.nft?.model?.title}</Title>
 
-            <Text> {data?.nft?.model?.description}</Text>
+            <Text> {data?.nft?.model?.description} {data?.nft?.blockchainId} </Text>
 
             <Table>
               <tbody>
@@ -80,7 +82,8 @@ const CollectionID = () => {
             <div className="flex gap-20">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               onClick={async () => {
-                await createListing("RealEstate", 4, 0.75000000, undefined, undefined, 86400)
+                
+                await createListing("RealEstate", blockchainid, 1.75000000, undefined, undefined, 86400)
                 .then((txid)=> console.log("txid", txid))
                 .catch((err)=> console.log("err", err));
               }}>List for Sale</button>

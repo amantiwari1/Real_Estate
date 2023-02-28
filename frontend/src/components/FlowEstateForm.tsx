@@ -88,7 +88,7 @@ export function FlowEstateForm<S extends z.ZodType<any, any>>(
             <Grid.Col md={6}>
               <NumberField
                 name="attributes.price"
-                label="Property Value"
+                label="Property Value in USDC"
                 placeholder="15000"
                 required
               />
