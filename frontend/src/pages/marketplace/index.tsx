@@ -2,7 +2,7 @@ import { Center, Grid, Loader } from "@mantine/core";
 import { type NextPage } from "next";
 import Head from "next/head";
 import RealEstateCard from "~/components/RealEstateCard";
-import { NftModelBlockchainState } from "~/gql/graphql";
+import { NftBlockchainState, NftModelBlockchainState } from "~/gql/graphql";
 import { nftModelsDocument } from "~/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
@@ -55,7 +55,10 @@ const Home: NextPage = () => {
             <Grid className="card-container">
               {data?.nftModels?.items
                 ?.filter(
-                  (item) => item?.state === NftModelBlockchainState.Minted
+                  (item) =>
+                    item?.state === NftModelBlockchainState.Minted &&
+                    item.nfts?.[0]?.blockchainState !==
+                      NftBlockchainState.Transferred
                 )
                 .map((item) => (
                   <Grid.Col key={item?.id as string} span={3}>
