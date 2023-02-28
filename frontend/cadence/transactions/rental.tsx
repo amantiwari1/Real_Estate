@@ -9,10 +9,10 @@ fcl.authenticate();
 
 async function createRental(
   listItemID: number,
-  amount: string | undefined,
-  deposit: string | undefined,
-  term: string | undefined,
-  expiry: string | undefined,
+  amount: number,
+  deposit: number,
+  term: number,
+  expiry: number,
   renter: string | undefined
 ) {
   const txId = await fcl.mutate({
@@ -117,12 +117,11 @@ async function createRental(
       arg(deposit, t.UFix64),
       arg(term, t.UFix64),
       arg(expiry, t.UFix64),
-      arg(renter, t.Optional(t.Address))
-      
+      arg(renter, t.Optional(t.Address)),
     ],
     // proposer : fcl.proposer,
     // payer: fcl.currentUser,
-    limit: 9999
+    limit: 9999,
   });
 
   const txn = await fcl.tx(txId).onceSealed();

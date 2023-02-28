@@ -143,18 +143,18 @@ const CollectionID = () => {
           onSubmit={async (values) => {
             try {
               // calculate the term = duration * 86400
-              const term = String(values.duration * 86400);
+              const term = values.duration * 86400.001;
               console.log(term);
-              const expiry = String(2592000.000000);
+              const expiry = 2592000.001;
               console.log("values", values);
               createRental(
                 22,
-                String(values.amount),
-                String(values.deposit),
+                values.amount + 0.01,
+                values.deposit + 0.01,
                 term,
                 expiry,
                 undefined
-              )
+              );
               // TODO - Rent it
             } catch (error: any) {
               console.error(error);
