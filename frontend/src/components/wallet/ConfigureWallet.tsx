@@ -33,11 +33,6 @@ const ConfigureWallet = ({ refetch }: ConfigureWalletProps) => {
 
   return (
     <div>
-      <Text my={20}>
-        Step 3 - Configure your wallet, it is getting close to complete your
-        wallet
-      </Text>
-
       <Center>
         <Button
           size="xl"

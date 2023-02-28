@@ -1,5 +1,13 @@
-import { Button, Center, Loader, Paper, Text, Title } from "@mantine/core";
-import React, { useEffect } from "react";
+import {
+  Button,
+  Center,
+  Loader,
+  Paper,
+  Stepper,
+  Text,
+  Title,
+} from "@mantine/core";
+import React, { useCallback, useEffect, useState } from "react";
 import { WalletState } from "~/gql/graphql";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import Layout from "~/layouts/layout";
@@ -14,13 +22,33 @@ const AccountPage = () => {
     login,
     isAuth,
     user,
-    logout,
     isLoading: isConnectLoading,
   } = useConnectWallet();
 
   const { data, refetch, isLoading } = api.nft.getWallet.useQuery(undefined, {
     enabled: isAuth ? true : false,
   });
+
+  const active = useCallback((): number => {
+    if (!data?.walletByAddress && !data?.walletByAddress?.address) {
+      return 0;
+    }
+
+    if (isAuth && data?.walletByAddress?.state === WalletState.Unverified) {
+      return 1;
+    }
+
+    if (isAuth && data?.walletByAddress?.state === WalletState.Verified) {
+      return 2;
+    }
+
+    if (isAuth && data?.walletByAddress?.state === WalletState.Ready) {
+      return 3;
+    }
+
+    return 3;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.walletByAddress?.state, isAuth]);
 
   const router = useRouter();
 
@@ -48,33 +76,52 @@ const AccountPage = () => {
         <div className="space-y-5">
           <Center>
             <div>
-              {isAuth && data?.walletByAddress?.state === WalletState.Ready && (
-                <div className="flex items-center space-x-5 pr-5">
-                  <Title order={2}>
-                    You&apos;re all set up! Your wallet address is {user.addr}
-                  </Title>
-                </div>
-              )}
               {isAuth && isLoading && <Loader />}
+              {isAuth && (
+                <Stepper active={active()} breakpoint="sm">
+                  <Stepper.Step
+                    label="First Step"
+                    description="Link or create your wallet"
+                    p={20}
+                  >
+                    <RegisterWallet refetch={refetch} />
+                  </Stepper.Step>
+
+                  <Stepper.Step
+                    label="Second step"
+                    description="Verify your wallet"
+                    p={20}
+                  >
+                    {isAuth &&
+                      data?.walletByAddress?.state ===
+                        WalletState.Unverified && (
+                        <VerifyWallet data={data} refetch={refetch} />
+                      )}
+                  </Stepper.Step>
+
+                  <Stepper.Step
+                    label="Final step"
+                    description="Configure your wallet"
+                    p={20}
+                  >
+                    <ConfigureWallet refetch={refetch} />
+                  </Stepper.Step>
+
+                  <Stepper.Completed>
+                    {isAuth &&
+                      data?.walletByAddress?.state === WalletState.Ready && (
+                        <div className="flex items-center space-x-5 pr-5">
+                          <Title my={20} order={2}>
+                            You&apos;re all set up! Your wallet address is{" "}
+                            {user.addr}
+                          </Title>
+                        </div>
+                      )}
+                  </Stepper.Completed>
+                </Stepper>
+              )}
 
               <Center my={20}>
-                {!data?.walletByAddress && !data?.walletByAddress?.address && (
-                  <RegisterWallet refetch={refetch} />
-                )}
-
-                {/* UNAUTH */}
-                {isAuth &&
-                  data?.walletByAddress?.state === WalletState.Unverified && (
-                    <VerifyWallet data={data} refetch={refetch} />
-                  )}
-
-                {/* UNAUTH */}
-                {isAuth &&
-                  data?.walletByAddress?.state === WalletState.Verified && (
-                    <ConfigureWallet refetch={refetch} />
-                  )}
-
-                {/* UNAUTH */}
                 {data?.walletByAddress &&
                   data?.walletByAddress?.address &&
                   !isAuth && (

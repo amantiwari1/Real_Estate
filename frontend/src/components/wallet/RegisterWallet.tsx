@@ -36,8 +36,6 @@ const RegisterWallet = ({ refetch }: RegisterWalletProps) => {
 
   return (
     <div>
-      <Text my={20}>Step 1 - Register your wallet, 2 step left</Text>
-
       <Center>
         <Button
           size="xl"

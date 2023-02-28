@@ -35,7 +35,6 @@ const VerifyWallet = ({ refetch, data }: RegisterWalletProps) => {
 
   return (
     <div>
-      <Text my={20}>Step 1 - Verify your wallet, 1 step left</Text>
       <Center>
         <Button
           size="xl"
