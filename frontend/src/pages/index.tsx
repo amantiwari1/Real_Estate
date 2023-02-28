@@ -3,6 +3,8 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import LandingCard from "~/components/LandingCard";
+import Feature from "~/components/Feature";
+
 import FlowEstateLogo from "~/assets/flowestate.svg";
 
 const textgradient = `bg-gradient-to-r from-fuchsia-500 via-purple-500 to-rose-500 bg-clip-text text-transparent`;
@@ -30,6 +32,31 @@ const LandingCardData = [
     href: "/drafts",
   },
 ];
+
+const featureData = [
+  {
+    title: "Decentralized Marketplace",
+    description:
+      "FlowEstate is a decentralized platform that allows you to buy, sell, and trade real estate properties as NFTs.",
+    buttonText: "Learn more",
+    href: "/marketplace",
+  },
+  {
+    title: "Secure Transactions",
+    description:
+      "By using blockchain technology, FlowEstate ensures that your transactions are secure, transparent, and immutable.",
+    buttonText: "How it works",
+    href: "/marketplace",
+  },
+  {
+    title: "Easy Onboarding",
+    description:
+      "Simply sign up with your email and you are ready to go. No need to create a wallet or install any wallet.",
+    buttonText: "Get started",
+    href: "/account?isSignin=true",
+  },
+];
+
 
 const Home: NextPage = () => {
   return (
@@ -59,11 +86,16 @@ const Home: NextPage = () => {
             </div>
           </div>
         </nav>
-        <h1
-          className={` p-10 text-center text-5xl  font-extrabold ${textgradient}`}
-        >
-          Unlock the Future of <br /> Real Estate with FlowEstate
-        </h1>
+        <div className="h-screen bg-gradient-to-r from-gray-700 via-slate-800 to-slate-900">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center py-20">
+            <h1 className={`text-center text-5xl font-extrabold ${textgradient}`}>
+              Unlock the Future of <br /> Real Estate with FlowEstate
+            </h1>
+            <p className="max-w-2xl text-center mt-10 text-gray-300">
+              FlowEstate is a decentralized platform that allows you to buy, sell, and trade real estate properties as NFTs. With FlowEstate, you can create a Property NFT by adding all the necessary details, including images and videos, and sell it to the highest bidder. By using blockchain technology, FlowEstate ensures that your transactions are secure, transparent, and immutable.
+            </p>
+            </div>
         <Center>
           <Link href="/marketplace">
             <Button
@@ -77,13 +109,43 @@ const Home: NextPage = () => {
           </Link>
         </Center>
         <Center px={50} pt={50}>
-          <div className="grid grid-cols-3 max-w-5xl p-2 gap-6">
+          <div className="grid grid-cols-3  gap-5">
             {LandingCardData.map((data, index) => (
               <LandingCard key={index} number={index + 1} {...data} />
             ))}
           </div>
         </Center>
+        <div className="bg-gray-900/40 py-20" >
+  <div className="container mx-auto px-4">
+    <h2 className="text-4xl font-bold text-center text-white mb-16">Features</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      {featureData.map((data, index) => (
+        <Feature key={index} {...data} />
+      ))}
+    </div>
+  </div>
+</div>
+
+      
       </div>
+      <div className="bg-gray-900/40 border-t-[1px] border-gray-700 p-5 text-gray-300 text-sm flex justify-between items-center">
+        <p>&copy; 2023 Flow Estate. All rights reserved.</p>
+        <div className="flex items-center space-x-3">
+          <Link href="#" legacyBehavior>
+            <a className="text-gray-300 hover:text-gray-100">Terms of Service</a>
+          </Link>
+          <Link href="#" legacyBehavior>
+            <a className="text-gray-300 hover:text-gray-100">Privacy Policy</a>
+          </Link>
+          <Link href="#" legacyBehavior>
+            <a className="text-gray-300 hover:text-gray-100">Contact Us</a>
+          </Link>
+        </div>
+      </div>
+          </div>
+        </div>
+        
+      
     </>
   );
 };
