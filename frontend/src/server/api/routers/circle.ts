@@ -7,7 +7,7 @@ import {
 } from "@circle-fin/circle-sdk";
 import { z } from "zod";
 import request from "graphql-request";
-import { TransferNftToWalletDocument } from "~/graphql";
+import { NftModelDocument, TransferNftToWalletDocument } from "~/graphql";
 
 const circle = new Circle(
   process.env.NEXT_PUBLIC_CIRCLE_API_KEY as string,
@@ -48,6 +48,15 @@ export const circleRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input, ctx }) => {
+      const nftModel = await request(
+        URL,
+        NftModelDocument,
+        {
+          id: input.nftModelId,
+        },
+        headers
+      );
+
       const getPaymentResponse = await circle.payments.getPayment(
         input.paymentId
       );
@@ -65,9 +74,22 @@ export const circleRouter = createTRPCRouter({
 
       if (getPayment.status === "paid") {
         // TODO: Pay this NFT model's owner
+        const createTransfer = await circle.transfers.createTransfer({
+          amount: getPayment.amount,
+          destination: {
+            address: nftModel.nftModel?.attributes?.address,
+            type: "blockchain",
+            chain: "FLOW",
+          },
+          idempotencyKey: input.paymentId,
+          source: {
+            id: getPayment.id,
+            type: "wallet",
+          },
+        });
 
         // Transter NFT model to buyer after pay to owner condition
-        if (true) {
+        if (createTransfer.data.data?.status === "complete") {
           await request(
             URL,
             TransferNftToWalletDocument,
