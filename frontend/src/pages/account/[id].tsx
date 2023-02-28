@@ -8,7 +8,7 @@ import { useConnectWallet } from "~/hooks/useConnectWallet";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
 import { useRouter } from "next/router";
-import { type DomainData } from "./flown";
+import { type DomainData } from "./flowns";
 import { useQuery } from "@tanstack/react-query";
 
 async function getDomainDetails(id: string): Promise<DomainData> {

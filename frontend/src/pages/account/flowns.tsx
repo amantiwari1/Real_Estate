@@ -95,7 +95,7 @@ function Domains() {
         )}
         <div className="mt-5 flex justify-center">
           <Button color="indigo" onClick={() => setShow(!show)}>
-            Show List of fn Domains
+            Show List of Flowns Domains
           </Button>
         </div>
         {show && (

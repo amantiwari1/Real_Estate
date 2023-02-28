@@ -77,7 +77,7 @@ const Home: NextPage = () => {
           </Link>
         </Center>
         <Center px={50} pt={50}>
-          <div className="grid grid-cols-3  gap-5">
+          <div className="grid grid-cols-3 max-w-5xl p-2 gap-6">
             {LandingCardData.map((data, index) => (
               <LandingCard key={index} number={index + 1} {...data} />
             ))}
