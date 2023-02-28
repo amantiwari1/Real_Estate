@@ -1,6 +1,7 @@
 # FlowEstate
 
-![image](https://user-images.githubusercontent.com/95926324/221268137-b0d2e17e-610c-4ee6-8a9e-eebb498bd781.png)
+![logoflow](https://user-images.githubusercontent.com/95926324/221815593-505a9b8a-f696-4d41-8040-effbd127247f.png)
+
 
 # Introduction
 FlowEstate aims to create a platform for buying and selling physical Real Estate assets using dynamic NFTs, which will upgrade based upon the property. This platform will allow for the purchase of property in the form of NFTs using credit cards, abstracting away the underlying blockchain technology's complexity using Flow Blockchain. FlowEstate seeks to create a more inclusive and efficient real estate market by leveraging Flow blockchain to offer a seamless buying and selling experience for physical Real Estate assets resulting in the mainstream adoption and onboarding.
