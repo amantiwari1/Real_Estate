@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+  /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Paper, Grid, Container } from "@mantine/core";
 import { type z } from "zod";
 import DateForm from "./form/DateForm";
@@ -17,6 +17,7 @@ export function RentalForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
               label="Your amount"
               placeholder="Your amount"
               required
+              min={0.001}
             />
           </Grid.Col>
           <Grid.Col md={6}>
@@ -25,6 +26,7 @@ export function RentalForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
               label="Your deposit"
               placeholder="Your deposit"
               required
+              min={0.001}
             />
           </Grid.Col>
 

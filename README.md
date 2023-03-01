@@ -19,8 +19,11 @@ FlowEstate aims to create a platform for buying and selling physical Real Estate
 1. Marketplace:
 A one stop marketplace to check, buy and sell NFTs of Real Estate
 
+2. WalletLess Onboarding
+![image](https://user-images.githubusercontent.com/95926324/222019168-21c3657b-458a-4298-9ac7-20238bb65e00.png)
+
 2. Create NFT:
-generate a unique digital asset of your Real Estate using blockchain technology
+Generate a unique digital asset of your Real Estate using blockchain technology
 
 3. Check your collection:
 view and manage set of owned NFTs + you can check other user's collection using his Flown address
@@ -59,6 +62,12 @@ Hassle-free and simplified payment on blockchain without using web3 wallet and c
 • Liquidity: NFTs can make it easier to buy and sell real estate assets because they can be fractionalized, meaning that they can be broken down into smaller portions, allowing more people to invest in them. This could potentially make real estate investment more accessible to a wider range of investors.
 
 • Speed: Traditional real estate transactions can be slow and require a lot of paperwork. Using NFTs on the blockchain could speed up the process by making it easier to transfer ownership of the asset.
+
+• Flowty Integration 
+
+Take Loan , Rent it and Even List it for sale 
+
+![image](https://user-images.githubusercontent.com/95926324/222017110-fb286250-4b7f-4907-99a7-c7132b923b05.png)
 
 # Why we chose Flow to build the decentralized real estate platform FlowEstate
 We found out Flow blockchain as a most suitable choice for building a real estate platform because of its scalability, high throughput, and ability to handle complex smart contracts.

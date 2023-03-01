@@ -16,6 +16,7 @@ import { api } from "~/utils/api";
 // import { showNotification } from "@mantine/notifications";
 import { useConnectWallet } from "~/hooks/useConnectWallet";
 import { NftModelDocument } from "~/graphql";
+import { NftBlockchainState, NftModelBlockchainState } from "~/gql/graphql";
 
 const IDPages = () => {
   const router = useRouter();
@@ -142,13 +143,31 @@ const IDPages = () => {
               </Button>
 
               <Button
-                loading={isLoadingNftModel || isLoadingClaimNFT}
+                loading={
+                  isLoadingNftModel ||
+                  isLoadingClaimNFT ||
+                  data?.nftModel?.nfts?.[0]?.blockchainState ===
+                    NftBlockchainState.Transferring
+                }
+                disabled={
+                  data?.nftModel?.nfts?.[0]?.blockchainState ===
+                  NftBlockchainState.Transferred
+                }
                 onClick={handlePublish}
               >
                 Transfer me
               </Button>
 
-              <Button loading={isLoadingMintNFTModel} onClick={handleMint}>
+              <Button
+                disabled={
+                  data?.nftModel?.state === NftModelBlockchainState.Minted
+                }
+                loading={
+                  isLoadingMintNFTModel ||
+                  data?.nftModel?.state === NftModelBlockchainState.Minting
+                }
+                onClick={handleMint}
+              >
                 Publish
               </Button>
             </Group>

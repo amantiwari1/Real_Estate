@@ -19,6 +19,9 @@ import { showNotification } from "@mantine/notifications";
 import { FORM_ERROR } from "~/components/form/Form";
 import { z } from "zod";
 import RentalForm from "~/components/RentalForm";
+import createRental from "cadence/transactions/rental";
+import LoanForm from "~/components/LoanForm";
+import loanForm from "cadence/transactions/loan";
 
 const CreateRentFormValidation = z.object({
   amount: z.number(),
@@ -26,8 +29,15 @@ const CreateRentFormValidation = z.object({
   duration: z.number(),
 });
 
+const CreateLoanFormValidation = z.object({
+  amount: z.number(),
+  repayment: z.number(),
+  duration: z.number(),
+});
+
 const CollectionID = () => {
   const [opened, setOpened] = useState(false);
+  const [loanopened, setLoanopened] = useState(false);
 
   const router = useRouter();
   const id = router.query["id"]?.toString() as string;
@@ -123,6 +133,8 @@ const CollectionID = () => {
               </Button>
 
               <Button onClick={() => setOpened(true)}>Rental</Button>
+
+              <Button onClick={() => setLoanopened(true)}>Loan</Button>
             </div>
           </div>
         </div>
@@ -141,8 +153,62 @@ const CollectionID = () => {
           initialValues={{}}
           onSubmit={async (values) => {
             try {
+              // calculate the term = duration * 86400
+              const term = String(values.duration * 86400.0001);
+              console.log(term);
+              const expiry = String(2592000.0001);
               console.log("values", values);
+              createRental(
+                blockchainid,
+                String(values.amount + 0.0001),
+                String(values.deposit + 0.0001),
+                term,
+                expiry,
+                undefined
+              );
+              // TODO - Rent it
+            } catch (error: any) {
+              console.error(error);
+              showNotification({
+                title: "Something went wrong",
+                message: "Failed to create campaign",
+                color: "red",
+              });
+              return {
+                [FORM_ERROR]: error.toString(),
+              };
+            }
+          }}
+        />
+      </Modal>
 
+      <Modal
+        opened={loanopened}
+        onClose={() => setLoanopened(false)}
+        title="Enter Details for taking Loan"
+        centered
+      >
+        <LoanForm
+          className="my-4"
+          submitText="Loan NFT"
+          schema={CreateLoanFormValidation}
+          initialValues={{}}
+          onSubmit={async (values) => {
+            try {
+              // calculate the term = duration * 86400
+              const term = String(values.duration * 86400.0001);
+              const interestRate = String((values.repayment - values.amount)*0.0001); 
+              console.log(term);
+              const expiry = String(2592000.0001);
+              console.log("values", values);
+              loanForm(
+                blockchainid,
+                String(values.amount + 0.0001),
+                interestRate,
+                term,
+                true,
+                expiry,
+              );
               // TODO - Rent it
             } catch (error: any) {
               console.error(error);

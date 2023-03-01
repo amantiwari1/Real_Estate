@@ -40,6 +40,7 @@ export const NumberField = forwardRef<
             onBlur={onBlur} // notify when input is touched
             onChange={onChange} // send value to hook form
             checked={value}
+            // step={0.001} // step for incrementing/decrementing value
             ref={ref}
             {...props}
           />
