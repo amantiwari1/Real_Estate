@@ -38,7 +38,7 @@ We are Querying from the mainnet, for testing - https://www.flowty.io/listing/90
 5. Checkout Decentralized Domains Flown:
 explore and potentially purchase Flown domain names.
 
-6. Circle Payment:
+## Pay with USDC using Circle Payment:
 Hassle-free and simplified payment on blockchain without using web3 wallet and cryptocurrency
 
 > <img src="https://user-images.githubusercontent.com/95926324/221572205-dbe85d57-927e-4e95-9cc6-9024d89250f9.png" alt="circle" width="400px"></img>
