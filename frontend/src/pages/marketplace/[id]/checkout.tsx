@@ -53,6 +53,7 @@ const Checkout = () => {
     <Layout>
       <Center>
         <div style={{ height: "800px", width: "800px" }}>
+          <h1 className="text-center text-indigo-400">Pay with USDC using crypto or Credit Card (Circle)</h1>
           <CircleCheckout
             sessionId={data?.id as string}
             environment="sandbox"
