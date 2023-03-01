@@ -63,6 +63,8 @@ Niftory is a platform for building, launching, and tracking web3 application. It
 > User authentication using OAuth 2.0, as well as wallet management and verification
 > Blazing-fast GraphQL APIs for querying, minting and transferring NFTs
 
+<img width="834" alt="Screen Shot 2023-03-01 at 12 05 55 AM" src="https://user-images.githubusercontent.com/59703541/222050274-b539a78b-5e79-4e11-ada0-dca9300f2784.png">
+
 ## Advantages of Decenralizing Real Estate
  
 • Increased Transparency: Using blockchain technology can increase transparency and reduce the likelihood of fraud or disputes. This is because all the transactions and ownership details would be stored on a decentralized ledger, making it easier to verify the authenticity of the asset and its ownership.
