@@ -23,21 +23,26 @@ const Checkout = () => {
   const router = useRouter();
   const id = router.query["id"]?.toString();
 
+  const [avoidLooping, setAvoidLooping] = React.useState(false);
+  let avoudLoopingWidget = false;
+
   const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery(
     undefined,
     {
       refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     }
   );
 
-  const { mutateAsync } = api.circle.handlePaymentSuccess.useMutation({
-    onError: (error) => {
-      showNotification({
-        title: "Something went wrong",
-        message: error.message,
-      });
-    },
-  });
+  const { mutateAsync, isLoading: isLoadingHandling } =
+    api.circle.handlePaymentSuccess.useMutation({
+      onError: (error) => {
+        showNotification({
+          title: "Something went wrong",
+          message: error.message,
+        });
+      },
+    });
 
   if (isLoading) {
     return (
@@ -48,6 +53,8 @@ const Checkout = () => {
       </Layout>
     );
   }
+
+  console.log("rendering more");
 
   return (
     <Layout>
@@ -67,12 +74,23 @@ const Checkout = () => {
             onPaymentSuccess={async (res: PaymentSuccessResult) => {
               console.log({ res });
 
-              const data = await mutateAsync({
-                nftModelId: id as string,
-                paymentId: res.paymentId as string,
+              console.log({
+                avoudLoopingWidget,
+                avoidLooping,
+                isLoadingHandling,
               });
 
-              data.success && router.push(`/collection/${id}`);
+              if (!isLoadingHandling && !avoudLoopingWidget && !avoidLooping) {
+                console.log({ res1: res });
+                avoudLoopingWidget = true;
+                setAvoidLooping(true);
+                const data = await mutateAsync({
+                  nftModelId: id as string,
+                  paymentId: res.paymentId as string,
+                });
+
+                data.success && router.push(`/collection/${id}`);
+              }
             }}
           />
         </div>

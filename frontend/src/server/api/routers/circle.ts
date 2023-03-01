@@ -4,6 +4,7 @@ import { createTRPCRouter, privateProedure } from "~/server/api/trpc";
 import {
   Circle,
   CircleEnvironments,
+  type TransferDetailedTransferStatusEnum,
   type FiatPaymentPolymorphic,
 } from "@circle-fin/circle-sdk";
 import { z } from "zod";
@@ -26,8 +27,6 @@ export const circleRouter = createTRPCRouter({
   createCheckoutSesstion: privateProedure.query(async ({}) => {
     try {
       const data = await circle.checkoutSessions.createCheckoutSession({
-        successUrl: "https://www.example.com/success",
-
         amount: {
           amount: "1",
           currency: "USD",
@@ -76,26 +75,65 @@ export const circleRouter = createTRPCRouter({
 
       if (getPayment.status === "confirmed") {
         // TODO: Pay this NFT model's owner
-        const createTransferResponse = await circle.transfers.createTransfer({
-          amount: getPayment.amount,
-          destination: {
-            address: nftModel.nftModel?.attributes?.address,
-            type: "blockchain",
-            chain: "FLOW",
-          },
-          idempotencyKey: input.paymentId,
-          source: {
-            id: "1013850122",
-            type: "wallet",
-          },
-        });
+        const createTransferResponse = await circle.transfers
+          .createTransfer({
+            amount: getPayment.amount,
+            destination: {
+              address: nftModel.nftModel?.attributes?.address,
+              type: "blockchain",
+              chain: "FLOW",
+            },
+            idempotencyKey: input.paymentId,
+            source: {
+              id: "1013850122",
+              type: "wallet",
+            },
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+          });
 
         const createTransfer = createTransferResponse?.data.data;
 
         console.log({ createTransfer });
 
+        const MAX_RETRIES = 10;
+        const DELAY_MS = 3000;
+
+        let retries = 0;
+        let retry = true;
+
+        let status: TransferDetailedTransferStatusEnum | undefined = "pending";
+
+        while (retry) {
+          const delay = 2 ** retries * DELAY_MS;
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          const getTransferResponse = await circle.transfers.getTransfer(
+            createTransfer?.id as string
+          );
+
+          status = getTransferResponse?.data?.data?.status;
+
+          console.log("STATUS :", status);
+          switch (status) {
+            case "complete":
+              retry = false;
+            case "failed":
+              retry = false;
+            case "pending":
+              retry = true;
+            default:
+              break;
+          }
+          retries++;
+          if (!retry || retries >= MAX_RETRIES) {
+            break;
+          }
+        }
+
         // Transter NFT model to buyer after pay to owner condition
-        if (createTransfer?.status === "complete") {
+        if (status === "complete") {
+          console.log("STATUS :", createTransfer?.status);
           await request(
             URL,
             TransferNftToWalletDocument,
