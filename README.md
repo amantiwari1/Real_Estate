@@ -54,6 +54,8 @@ Hassle-free and simplified payment on blockchain without using web3 wallet and c
 
 >> 5. Buyer redirected to collection page
 
+<img width="964" alt="Screen Shot 2023-02-28 at 11 55 03 PM" src="https://user-images.githubusercontent.com/59703541/222048308-edd9f697-69ab-47bb-a771-5f616da1bec4.png">
+
 
 ## Advantages of Decenralizing Real Estate
  
