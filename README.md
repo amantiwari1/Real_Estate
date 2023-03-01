@@ -60,6 +60,12 @@ Hassle-free and simplified payment on blockchain without using web3 wallet and c
 
 • Speed: Traditional real estate transactions can be slow and require a lot of paperwork. Using NFTs on the blockchain could speed up the process by making it easier to transfer ownership of the asset.
 
+• Flowty Integration 
+
+Take Loan , Rent it and Even List it for sale 
+
+![image](https://user-images.githubusercontent.com/95926324/222017110-fb286250-4b7f-4907-99a7-c7132b923b05.png)
+
 # Why we chose Flow to build the decentralized real estate platform FlowEstate
 We found out Flow blockchain as a most suitable choice for building a real estate platform because of its scalability, high throughput, and ability to handle complex smart contracts.
 
