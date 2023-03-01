@@ -19,8 +19,11 @@ FlowEstate aims to create a platform for buying and selling physical Real Estate
 1. Marketplace:
 A one stop marketplace to check, buy and sell NFTs of Real Estate
 
+2. WalletLess Onboarding
+![image](https://user-images.githubusercontent.com/95926324/222019168-21c3657b-458a-4298-9ac7-20238bb65e00.png)
+
 2. Create NFT:
-generate a unique digital asset of your Real Estate using blockchain technology
+Generate a unique digital asset of your Real Estate using blockchain technology
 
 3. Check your collection:
 view and manage set of owned NFTs + you can check other user's collection using his Flown address
