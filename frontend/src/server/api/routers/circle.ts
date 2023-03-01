@@ -24,21 +24,36 @@ const headers = {
   "X-Niftory-Client-Secret": process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
 };
 export const circleRouter = createTRPCRouter({
-  createCheckoutSesstion: privateProedure.query(async ({}) => {
-    try {
-      const data = await circle.checkoutSessions.createCheckoutSession({
-        amount: {
-          amount: "1",
-          currency: "USD",
-        },
-      });
+  createCheckoutSesstion: privateProedure
+    .input(
+      z.object({
+        nftModelId: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      try {
+        const nftModel = await request(
+          URL,
+          NftModelDocument,
+          {
+            id: input.nftModelId,
+          },
+          headers
+        );
 
-      return data.data.data;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      console.log(error?.response?.data);
-    }
-  }),
+        const data = await circle.checkoutSessions.createCheckoutSession({
+          amount: {
+            amount: `${nftModel.nftModel?.attributes?.price ?? "1"}`,
+            currency: "USD",
+          },
+        });
+
+        return data.data.data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        console.log(error?.response?.data);
+      }
+    }),
 
   handlePaymentSuccess: privateProedure
     .input(
@@ -98,14 +113,14 @@ export const circleRouter = createTRPCRouter({
         console.log({ createTransfer });
 
         const MAX_RETRIES = 10;
-        const DELAY_MS = 3000;
+        const DELAY_MS = 200;
 
         let retries = 0;
         let retry = true;
 
         let status: TransferDetailedTransferStatusEnum | undefined = "pending";
 
-        while (retry) {
+        do {
           const delay = 2 ** retries * DELAY_MS;
           await new Promise((resolve) => setTimeout(resolve, delay));
           const getTransferResponse = await circle.transfers.getTransfer(
@@ -118,10 +133,13 @@ export const circleRouter = createTRPCRouter({
           switch (status) {
             case "complete":
               retry = false;
+              break;
             case "failed":
               retry = false;
+              break;
             case "pending":
               retry = true;
+              break;
             default:
               break;
           }
@@ -129,7 +147,7 @@ export const circleRouter = createTRPCRouter({
           if (!retry || retries >= MAX_RETRIES) {
             break;
           }
-        }
+        } while (retry);
 
         // Transter NFT model to buyer after pay to owner condition
         if (status === "complete") {

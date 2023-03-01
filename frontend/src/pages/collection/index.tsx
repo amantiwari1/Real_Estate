@@ -1,4 +1,4 @@
-import { Alert, Button, Center, Loader, SimpleGrid, Text } from "@mantine/core";
+import { Alert, Button, Center, Loader, Text } from "@mantine/core";
 import Link from "next/link";
 import React from "react";
 import RealEstateCard from "~/components/RealEstateCard";
@@ -57,7 +57,7 @@ const CollectionPage = () => {
       )}
 
       {nfts?.length > 0 && (
-        <SimpleGrid cols={4}>
+        <div className="grid gap-5 md:grid-cols-4">
           {nfts
             .filter((nft) =>
               [
@@ -76,7 +76,7 @@ const CollectionPage = () => {
                 key={nft?.id}
               />
             ))}
-        </SimpleGrid>
+        </div>
       )}
     </Layout>
   );
