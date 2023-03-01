@@ -232,7 +232,7 @@ const CollectionID = () => {
 
               showNotification({
                 title: "Success",
-                message: "NFT listed for rent",
+                message: "NFT listed for loan",
                 color: "green",
               });
 
