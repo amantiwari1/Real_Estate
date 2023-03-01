@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  Alert,
   Button,
   Center,
   Loader,
@@ -13,15 +14,15 @@ import React, { useState } from "react";
 import { nftDocument } from "~/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
-import createListing from "cadence/transactions/list";
-import FlowEstateForm from "~/components/FlowEstateForm";
 import { showNotification } from "@mantine/notifications";
 import { FORM_ERROR } from "~/components/form/Form";
 import { z } from "zod";
 import RentalForm from "~/components/RentalForm";
+import createListing from "cadence/transactions/list";
 import createRental from "cadence/transactions/rental";
 import LoanForm from "~/components/LoanForm";
 import loanForm from "cadence/transactions/loan";
+import { useConnectWallet } from "~/hooks/useConnectWallet";
 
 const CreateRentFormValidation = z.object({
   amount: z.number(),
@@ -36,19 +37,31 @@ const CreateLoanFormValidation = z.object({
 });
 
 const CollectionID = () => {
-  const [opened, setOpened] = useState(false);
-  const [loanopened, setLoanopened] = useState(false);
-
+  const { isAuth } = useConnectWallet();
   const router = useRouter();
   const id = router.query["id"]?.toString() as string;
-
   const { data, isLoading } = useGraphQL(
     nftDocument,
-    {},
+    {
+      enabled: router.isReady,
+    },
     {
       id: id,
     }
   );
+
+  const [opened, setOpened] = useState(false);
+  const [loanopened, setLoanopened] = useState(false);
+
+  const blockchainid = Number(data?.nft?.blockchainId);
+
+  if (!isAuth) {
+    return (
+      <Layout>
+        <Alert color="red">You need to sign in to view this page</Alert>
+      </Layout>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -59,8 +72,6 @@ const CollectionID = () => {
       </Layout>
     );
   }
-
-  const blockchainid = Number(data?.nft?.blockchainId);
 
   return (
     <Layout>
@@ -197,7 +208,9 @@ const CollectionID = () => {
             try {
               // calculate the term = duration * 86400
               const term = String(values.duration * 86400.0001);
-              const interestRate = String((values.repayment - values.amount)*0.0001); 
+              const interestRate = String(
+                (values.repayment - values.amount) * 0.0001
+              );
               console.log(term);
               const expiry = String(2592000.0001);
               console.log("values", values);
@@ -207,7 +220,7 @@ const CollectionID = () => {
                 interestRate,
                 term,
                 true,
-                expiry,
+                expiry
               );
               // TODO - Rent it
             } catch (error: any) {

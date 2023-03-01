@@ -3,8 +3,6 @@
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
 
-fcl.authenticate();
-
 // storefront initialised
 
 async function loanForm(
@@ -115,7 +113,7 @@ async function loanForm(
       arg(interestRate, t.UFix64),
       arg(term, t.UFix64),
       arg(autoRepaymentEnabled, t.Bool),
-      arg(loanExpiresAfter,t.UFix64),
+      arg(loanExpiresAfter, t.UFix64),
     ],
     // proposer : fcl.proposer,
     // payer: fcl.currentUser,

@@ -225,6 +225,7 @@ const nftsByWalletDocument = graphql(/* GraphQL */ `
           id
           title
           description
+          attributes
           rarity
           content {
             id

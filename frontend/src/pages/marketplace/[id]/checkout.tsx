@@ -23,21 +23,29 @@ const Checkout = () => {
   const router = useRouter();
   const id = router.query["id"]?.toString();
 
+  const [avoidLooping, setAvoidLooping] = React.useState(false);
+  let avoudLoopingWidget = false;
+
   const { data, isLoading } = api.circle.createCheckoutSesstion.useQuery(
-    undefined,
     {
+      nftModelId: id as string,
+    },
+    {
+      enabled: router.isReady,
       refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     }
   );
 
-  const { mutateAsync } = api.circle.handlePaymentSuccess.useMutation({
-    onError: (error) => {
-      showNotification({
-        title: "Something went wrong",
-        message: error.message,
-      });
-    },
-  });
+  const { mutateAsync, isLoading: isLoadingHandling } =
+    api.circle.handlePaymentSuccess.useMutation({
+      onError: (error) => {
+        showNotification({
+          title: "Something went wrong",
+          message: error.message,
+        });
+      },
+    });
 
   if (isLoading) {
     return (
@@ -49,33 +57,67 @@ const Checkout = () => {
     );
   }
 
+  console.log("rendering more");
+
   return (
     <Layout>
       <Center>
         <div style={{ height: "800px", width: "800px" }}>
-          <h1 className="text-center text-indigo-400">Pay with USDC using crypto or Credit Card (Circle)</h1>
-          <CircleCheckout
-            sessionId={data?.id as string}
-            environment="sandbox"
-            clientKey={data?.clientToken as string}
-            onError={(error) => {
-              showNotification({
-                title: "Something went wrong",
-                message: "Payment failed, Please try again later",
-              });
-              console.log(error);
-            }}
-            onPaymentSuccess={async (res: PaymentSuccessResult) => {
-              console.log({ res });
+          <h1 className="my-5 text-center text-indigo-400">
+            Pay with USDC using crypto or Credit Card (Circle)
+          </h1>
 
-              const data = await mutateAsync({
-                nftModelId: id as string,
-                paymentId: res.paymentId as string,
-              });
+          <div>
+            {(isLoadingHandling || isLoading) && (
+              <div className="h-[80vh]">
+                <Center h="100%">
+                  <Loader />
+                </Center>
+              </div>
+            )}
+          </div>
 
-              data.success && router.push(`/collection/${id}`);
-            }}
-          />
+          <div className={isLoadingHandling || isLoading ? "hidden" : ""}>
+            {router.isReady && !isLoading && (
+              <CircleCheckout
+                sessionId={data?.id as string}
+                environment="sandbox"
+                clientKey={data?.clientToken as string}
+                onError={(error) => {
+                  showNotification({
+                    title: "Something went wrong",
+                    message: "Payment failed, Please try again later",
+                  });
+                  console.log(error);
+                }}
+                onPaymentSuccess={async (res: PaymentSuccessResult) => {
+                  console.log({ res });
+
+                  console.log({
+                    avoudLoopingWidget,
+                    avoidLooping,
+                    isLoadingHandling,
+                  });
+
+                  if (
+                    !isLoadingHandling &&
+                    !avoudLoopingWidget &&
+                    !avoidLooping
+                  ) {
+                    console.log({ res1: res });
+                    avoudLoopingWidget = true;
+                    setAvoidLooping(true);
+                    const data = await mutateAsync({
+                      nftModelId: id as string,
+                      paymentId: res.paymentId as string,
+                    });
+
+                    data.success && router.push(`/collection/${data.id}`);
+                  }
+                }}
+              />
+            )}
+          </div>
         </div>
       </Center>
     </Layout>
