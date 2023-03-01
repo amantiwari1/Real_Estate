@@ -3,8 +3,6 @@
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
 
-fcl.authenticate();
-
 // storefront initialised
 
 async function createRental(

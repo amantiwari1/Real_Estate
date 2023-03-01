@@ -14,11 +14,11 @@ import React, { useState } from "react";
 import { nftDocument } from "~/graphql";
 import { useGraphQL } from "~/hooks/useGraphql";
 import Layout from "~/layouts/layout";
-import createListing from "cadence/transactions/list";
 import { showNotification } from "@mantine/notifications";
 import { FORM_ERROR } from "~/components/form/Form";
 import { z } from "zod";
 import RentalForm from "~/components/RentalForm";
+import createListing from "cadence/transactions/list";
 import createRental from "cadence/transactions/rental";
 import LoanForm from "~/components/LoanForm";
 import loanForm from "cadence/transactions/loan";
@@ -37,20 +37,23 @@ const CreateLoanFormValidation = z.object({
 });
 
 const CollectionID = () => {
-  const [opened, setOpened] = useState(false);
-  const [loanopened, setLoanopened] = useState(false);
   const { isAuth } = useConnectWallet();
-
   const router = useRouter();
   const id = router.query["id"]?.toString() as string;
-
   const { data, isLoading } = useGraphQL(
     nftDocument,
-    {},
+    {
+      enabled: router.isReady,
+    },
     {
       id: id,
     }
   );
+
+  const [opened, setOpened] = useState(false);
+  const [loanopened, setLoanopened] = useState(false);
+
+  const blockchainid = Number(data?.nft?.blockchainId);
 
   if (!isAuth) {
     return (
@@ -69,8 +72,6 @@ const CollectionID = () => {
       </Layout>
     );
   }
-
-  const blockchainid = Number(data?.nft?.blockchainId);
 
   return (
     <Layout>

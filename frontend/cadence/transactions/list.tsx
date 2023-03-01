@@ -3,8 +3,6 @@
 // @ts-ignore
 import * as fcl from "@onflow/fcl";
 
-fcl.authenticate();
-
 // storefront initialised
 
 async function createListing(
@@ -116,7 +114,7 @@ async function createListing(
     ],
     // proposer : fcl.proposer,
     // payer: fcl.currentUser,
-    limit: 999
+    limit: 999,
   });
 
   const txn = await fcl.tx(txId).onceSealed();

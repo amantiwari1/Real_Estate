@@ -23,8 +23,6 @@ const Checkout = () => {
   const router = useRouter();
   const id = router.query["id"]?.toString();
 
-  console.log({ id });
-
   const [avoidLooping, setAvoidLooping] = React.useState(false);
   let avoudLoopingWidget = false;
 
@@ -65,48 +63,61 @@ const Checkout = () => {
     <Layout>
       <Center>
         <div style={{ height: "800px", width: "800px" }}>
-          <h1 className="text-center text-indigo-400">
+          <h1 className="my-5 text-center text-indigo-400">
             Pay with USDC using crypto or Credit Card (Circle)
           </h1>
-          {router.isReady && !isLoading && (
-            <CircleCheckout
-              sessionId={data?.id as string}
-              environment="sandbox"
-              clientKey={data?.clientToken as string}
-              onError={(error) => {
-                showNotification({
-                  title: "Something went wrong",
-                  message: "Payment failed, Please try again later",
-                });
-                console.log(error);
-              }}
-              onPaymentSuccess={async (res: PaymentSuccessResult) => {
-                console.log({ res });
 
-                console.log({
-                  avoudLoopingWidget,
-                  avoidLooping,
-                  isLoadingHandling,
-                });
+          <div>
+            {(isLoadingHandling || isLoading) && (
+              <div className="h-[80vh]">
+                <Center h="100%">
+                  <Loader />
+                </Center>
+              </div>
+            )}
+          </div>
 
-                if (
-                  !isLoadingHandling &&
-                  !avoudLoopingWidget &&
-                  !avoidLooping
-                ) {
-                  console.log({ res1: res });
-                  avoudLoopingWidget = true;
-                  setAvoidLooping(true);
-                  const data = await mutateAsync({
-                    nftModelId: id as string,
-                    paymentId: res.paymentId as string,
+          <div className={isLoadingHandling || isLoading ? "hidden" : ""}>
+            {router.isReady && !isLoading && (
+              <CircleCheckout
+                sessionId={data?.id as string}
+                environment="sandbox"
+                clientKey={data?.clientToken as string}
+                onError={(error) => {
+                  showNotification({
+                    title: "Something went wrong",
+                    message: "Payment failed, Please try again later",
+                  });
+                  console.log(error);
+                }}
+                onPaymentSuccess={async (res: PaymentSuccessResult) => {
+                  console.log({ res });
+
+                  console.log({
+                    avoudLoopingWidget,
+                    avoidLooping,
+                    isLoadingHandling,
                   });
 
-                  data.success && router.push(`/collection/${id}`);
-                }
-              }}
-            />
-          )}
+                  if (
+                    !isLoadingHandling &&
+                    !avoudLoopingWidget &&
+                    !avoidLooping
+                  ) {
+                    console.log({ res1: res });
+                    avoudLoopingWidget = true;
+                    setAvoidLooping(true);
+                    const data = await mutateAsync({
+                      nftModelId: id as string,
+                      paymentId: res.paymentId as string,
+                    });
+
+                    data.success && router.push(`/collection/${data.id}`);
+                  }
+                }}
+              />
+            )}
+          </div>
         </div>
       </Center>
     </Layout>

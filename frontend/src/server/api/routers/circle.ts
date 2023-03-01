@@ -152,7 +152,7 @@ export const circleRouter = createTRPCRouter({
         // Transter NFT model to buyer after pay to owner condition
         if (status === "complete") {
           console.log("STATUS :", createTransfer?.status);
-          await request(
+          const data = await request(
             URL,
             TransferNftToWalletDocument,
             {
@@ -161,8 +161,10 @@ export const circleRouter = createTRPCRouter({
             },
             headers
           );
+
           return {
             success: true,
+            id: data.transfer?.id,
           };
         }
       }
