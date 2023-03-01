@@ -169,7 +169,7 @@ const CollectionID = () => {
               console.log(term);
               const expiry = String(2592000.0001);
               console.log("values", values);
-              createRental(
+              await createRental(
                 blockchainid,
                 String(values.amount + 0.0001),
                 String(values.deposit + 0.0001),
@@ -177,7 +177,14 @@ const CollectionID = () => {
                 expiry,
                 undefined
               );
-              // TODO - Rent it
+
+              showNotification({
+                title: "Success",
+                message: "NFT listed for rent",
+                color: "green",
+              });
+
+              setOpened(false);
             } catch (error: any) {
               console.error(error);
               showNotification({
@@ -214,7 +221,7 @@ const CollectionID = () => {
               console.log(term);
               const expiry = String(2592000.0001);
               console.log("values", values);
-              loanForm(
+              await loanForm(
                 blockchainid,
                 String(values.amount + 0.0001),
                 interestRate,
@@ -222,7 +229,14 @@ const CollectionID = () => {
                 true,
                 expiry
               );
-              // TODO - Rent it
+
+              showNotification({
+                title: "Success",
+                message: "NFT listed for rent",
+                color: "green",
+              });
+
+              setLoanopened(false);
             } catch (error: any) {
               console.error(error);
               showNotification({
