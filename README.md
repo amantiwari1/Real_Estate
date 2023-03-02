@@ -56,6 +56,10 @@ Hassle-free and simplified payment on blockchain without using web3 wallet and c
 
 <img width="964" alt="Screen Shot 2023-02-28 at 11 55 03 PM" src="https://user-images.githubusercontent.com/59703541/222048308-edd9f697-69ab-47bb-a771-5f616da1bec4.png">
 
+
+https://user-images.githubusercontent.com/53963065/222379402-56c678ae-a07d-466a-8ff3-eaf6d93952e8.mp4
+
+
 ## Niftory
 Niftory is a platform for building, launching, and tracking web3 application. It provide APIs needed to easily add NFTs into websites, apps, games and other experiences, without having to worry about smart contracts, gas fees or other esoteric blockchain infrastructure.
 
